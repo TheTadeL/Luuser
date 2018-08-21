@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "19100126579",
+    "firebase_url": "https://luuser-ad5ab.firebaseio.com",
+    "project_id": "luuser-ad5ab",
+    "storage_bucket": "luuser-ad5ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19100126579:android:a8456933052b76e2",
+        "android_client_info": {
+          "package_name": "ch.devtadel.luuser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19100126579-jurtinf0blj8fgbgqnmljsdke84kp3jn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_y3masOWEQFDKhUU76HlDv8KXq7MLtbE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

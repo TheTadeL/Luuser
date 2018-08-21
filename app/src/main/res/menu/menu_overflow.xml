@@ -3,4 +3,8 @@
     <item
         android:id="@+id/navigation_testeichbuehl"
         android:title="@string/testeichbuehl" />
+    <item
+        android:id="@+id/test_date"
+        android:title="TEST" />
+
 </menu>

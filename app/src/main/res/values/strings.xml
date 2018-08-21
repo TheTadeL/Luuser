@@ -3,4 +3,5 @@
     <string name="title_activity_login">Login</string>
 
     <string name="testeichbuehl">Schulhaus Eichbühl</string>
+    <string name="newClass">Neue Klasse</string>
 </resources>

@@ -11,10 +11,10 @@ import android.widget.TextView;
 import java.util.List;
 
 import ch.devtadel.luuser.R;
-import ch.devtadel.luuser.model.Klasse;
+import ch.devtadel.luuser.model.SchoolClass;
 
 public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.ViewHolder>{
-    private List<Klasse> dataset;
+    private List<SchoolClass> dataset;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -32,7 +32,7 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
         }
     }
 
-    public ClassListAdapter(List<Klasse> data) {
+    public ClassListAdapter(List<SchoolClass> data) {
         dataset = data;
     }
 
@@ -53,13 +53,13 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
         klassennameTV.setText(dataset.get(position).getName());
 
         TextView cntStudentsTV = (TextView) holder.classListItem.findViewById(R.id.tv_cnt_students);
-        cntStudentsTV.setText("x"+dataset.get(position).getAnzSchueler());
+        cntStudentsTV.setText(String.valueOf(dataset.get(position).getCntStudents()));
 
         TextView cntChecksTV = (TextView) holder.classListItem.findViewById(R.id.tv_cnt_checks);
-        cntChecksTV.setText("x"+dataset.get(position).getAnzKontrollen());
+        cntChecksTV.setText(String.valueOf(dataset.get(position).getCntChecks()));
 
         TextView cntLouseTV = (TextView) holder.classListItem.findViewById(R.id.tv_cnt_louse);
-        cntLouseTV.setText("x"+dataset.get(position).getAnzLause());
+        cntLouseTV.setText(String.valueOf(dataset.get(position).getCntLouse()));
     }
 
     @Override

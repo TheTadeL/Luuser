@@ -22,7 +22,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SchoolActivity" />
-        <activity android:name=".AddSchoolActivity"></activity>
+        <activity android:name=".AddSchoolActivity" />
+        <activity android:name=".NewCheckActivity"></activity>
     </application>
 
 </manifest>
