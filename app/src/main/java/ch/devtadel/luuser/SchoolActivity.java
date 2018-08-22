@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -35,10 +37,16 @@ public class SchoolActivity extends AppCompatActivity {
     public static List<SchoolClass> data = new ArrayList<>();
     public static School school;
 
+    private ConstraintLayout contentCON;
+
     private TextView nameTV;
     private TextView placeTV;
     private TextView louseInSchoolTV;
     private TextView checksInSchoolTV;
+    private TextView noClassesTV;
+
+    private ProgressBar schoolPB;
+    private ProgressBar classesPB;
 
     private BroadcastReceiver activityReceiver = new BroadcastReceiver() {
         @Override
@@ -58,6 +66,20 @@ public class SchoolActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school);
 
+        setTitle("Detailansicht Einrichtung");
+
+        //Daten zurücksetzen wenn neue Schule geöffnet wird.
+        data.clear();
+        school = null;
+
+        contentCON = findViewById(R.id.constraint_content_school);
+        contentCON.setVisibility(View.GONE);
+
+        schoolPB = findViewById(R.id.progressBar_school);
+        schoolPB.setVisibility(View.VISIBLE);
+        classesPB = findViewById(R.id.progressBar_classes);
+        classesPB.setVisibility(View.VISIBLE);
+
         //Receiver registrieren
         if(activityReceiver != null){
             IntentFilter intentFilter = new IntentFilter();
@@ -69,10 +91,12 @@ public class SchoolActivity extends AppCompatActivity {
 
         setupRecyclerView();
 
-        nameTV = findViewById(R.id.tv_schule_name);
-        placeTV = findViewById(R.id.tv_schule_ort);
+        nameTV = findViewById(R.id.tv_school_name);
+        placeTV = findViewById(R.id.tv_school_place);
         louseInSchoolTV = findViewById(R.id.tv_cnt_louse_school);
         checksInSchoolTV = findViewById(R.id.tv_cnt_checks_school);
+        noClassesTV = findViewById(R.id.tv_no_classes);
+        noClassesTV.setVisibility(View.GONE);
 
         Button newClassBTN = findViewById(R.id.btn_new_class);
         newClassBTN.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +118,7 @@ public class SchoolActivity extends AppCompatActivity {
             }
         });
 
+        //Wenn kein Schulname mitgegeben wurde, umleiten auf die MainActivity.
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null) {
             if (bundle.getString(SCHOOL_NAME) != null) {
@@ -155,6 +180,8 @@ public class SchoolActivity extends AppCompatActivity {
 
         nameTV.setText(school.getName());
         placeTV.setText(school.getPlace());
+        contentCON.setVisibility(View.VISIBLE);
+        schoolPB.setVisibility(View.GONE);
     }
 
     /**
@@ -167,6 +194,10 @@ public class SchoolActivity extends AppCompatActivity {
         }
         louseInSchoolTV.setText(String.valueOf(school.getCntLouse()));
         checksInSchoolTV.setText(String.valueOf(school.getCntChecks()));
+        classesPB.setVisibility(View.GONE);
+        if(data.size() == 0){
+            noClassesTV.setVisibility(View.VISIBLE);
+        }
     }
 
     private void newClassDialog(){
@@ -206,4 +237,5 @@ public class SchoolActivity extends AppCompatActivity {
         // show it
         alertDialog.show();
     }
+
 }

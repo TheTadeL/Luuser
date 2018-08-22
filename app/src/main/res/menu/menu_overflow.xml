@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_testeichbuehl"
-        android:title="@string/testeichbuehl" />
-    <item
-        android:id="@+id/test_date"
-        android:title="TEST" />
+        android:id="@+id/navigation_new_school"
+        android:title="@string/new_school" />
 
 </menu>

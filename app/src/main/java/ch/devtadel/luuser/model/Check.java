@@ -3,9 +3,36 @@ package ch.devtadel.luuser.model;
 import java.util.Date;
 
 public class Check {
+    private boolean noLouse;
+    private int louseCount;
+    private int studentCount;
     private Date date;
     private String className;
     private String schoolName;
+
+    public boolean isNoLouse() {
+        return noLouse;
+    }
+
+    public void setNoLouse(boolean noLouse) {
+        this.noLouse = noLouse;
+    }
+
+    public int getLouseCount() {
+        return louseCount;
+    }
+
+    public void setLouseCount(int louseCount) {
+        this.louseCount = louseCount;
+    }
+
+    public int getStudentCount() {
+        return studentCount;
+    }
+
+    public void setStudentCount(int studentCount) {
+        this.studentCount = studentCount;
+    }
 
     public Date getDate() {
         return date;

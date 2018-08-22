@@ -5,181 +5,218 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/iv_schule_bild"
-        android:layout_width="0dp"
-        android:layout_height="120dp"
-        android:elevation="5dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/haus" />
-
-    <TextView
-        android:id="@+id/tv_schule_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Primalschulhaus Eichbühl"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_schule_bild" />
-
-    <TextView
-        android:id="@+id/tv_schule_ort"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hünibach"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="@+id/tv_schule_name"
-        app:layout_constraintTop_toBottomOf="@+id/tv_schule_name" />
-
-    <Button
-        android:id="@+id/btn_new_check"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
-        android:text="Neue Kontrolle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_untersuchungen"
-        android:layout_width="150dp"
-        android:layout_height="64dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/cl_laeuse"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="60dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cl_untersuchungen"
-            app:layout_constraintStart_toStartOf="@+id/cl_untersuchungen"
-            app:layout_constraintTop_toTopOf="@+id/cl_untersuchungen"
-            app:srcCompat="@drawable/untersuchung" />
-
-        <TextView
-            android:id="@+id/tv_cnt_checks_school"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="x 0"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cl_untersuchungen"
-            app:layout_constraintStart_toEndOf="@+id/imageView" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <android.support.constraint.ConstraintLayout
-        android:id="@+id/cl_laeuse"
-        android:layout_width="150dp"
-        android:layout_height="64dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cl_untersuchungen"
-        app:layout_constraintTop_toTopOf="@+id/cl_untersuchungen">
-
-        <TextView
-            android:id="@+id/tv_cnt_louse_school"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="x 0"
-            android:textAppearance="@style/TextAppearance.AppCompat"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/cl_laeuse"
-            app:layout_constraintStart_toEndOf="@+id/imageView2" />
-
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="60dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/cl_laeuse"
-            app:layout_constraintStart_toStartOf="@+id/cl_laeuse"
-            app:layout_constraintTop_toTopOf="@+id/cl_laeuse"
-            app:srcCompat="@drawable/laus" />
-
-    </android.support.constraint.ConstraintLayout>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:text="Letzte Kontrolle:"
-        android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_schule_ort" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="21.08.2018"
-        app:layout_constraintBottom_toBottomOf="@+id/textView3"
-        app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:text="Klassen"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cl_untersuchungen" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_klassenliste"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <Button
-        android:id="@+id/btn_new_class"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginEnd="16dp"
-        android:background="#00FFFFFF"
-        android:text="neue klasse"
-        android:textColor="@color/colorPrimaryDark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_klassenliste" />
-
-    <EditText
-        android:id="@+id/editText"
+    <ProgressBar
+        android:id="@+id/progressBar_school"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:ems="10"
-        android:inputType="date"
-        app:layout_constraintBottom_toTopOf="@+id/btn_new_check"
-        app:layout_constraintEnd_toStartOf="@+id/btn_new_class"
-        app:layout_constraintTop_toBottomOf="@+id/rv_klassenliste" />
+        app:layout_constraintBottom_toBottomOf="@+id/constraint_content_school"
+        app:layout_constraintEnd_toEndOf="@+id/constraint_content_school"
+        app:layout_constraintStart_toStartOf="@+id/constraint_content_school"
+        app:layout_constraintTop_toTopOf="@+id/constraint_content_school" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint_content_school"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_schule_bild"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:elevation="5dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/haus" />
+
+        <TextView
+            android:id="@+id/tv_school_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Primalschulhaus Eichbühl"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="24sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_schule_bild" />
+
+        <TextView
+            android:id="@+id/tv_school_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hünibach"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_school_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_school_name" />
+
+        <Button
+            android:id="@+id/btn_new_check"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:text="Neue Kontrolle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_untersuchungen"
+            android:layout_width="150dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            app:layout_constraintEnd_toStartOf="@+id/cl_laeuse"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_last_check_title">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cl_untersuchungen"
+                app:layout_constraintStart_toStartOf="@+id/cl_untersuchungen"
+                app:layout_constraintTop_toTopOf="@+id/cl_untersuchungen"
+                app:srcCompat="@drawable/untersuchung" />
+
+            <TextView
+                android:id="@+id/tv_cnt_checks_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cl_untersuchungen"
+                app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_laeuse"
+            android:layout_width="150dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cl_untersuchungen"
+            app:layout_constraintTop_toTopOf="@+id/cl_untersuchungen">
+
+            <TextView
+                android:id="@+id/tv_cnt_louse_school"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="0"
+                android:textAppearance="@style/TextAppearance.AppCompat"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/cl_laeuse"
+                app:layout_constraintStart_toEndOf="@+id/imageView2" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="60dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="@+id/cl_laeuse"
+                app:layout_constraintStart_toStartOf="@+id/cl_laeuse"
+                app:layout_constraintTop_toTopOf="@+id/cl_laeuse"
+                app:srcCompat="@drawable/laus" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_last_check_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Letzte Kontrolle:"
+            android:textAppearance="@style/TextAppearance.AppCompat"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_school_place" />
+
+        <TextView
+            android:id="@+id/tv_last_check_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="21.08.2018"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_last_check_title"
+            app:layout_constraintStart_toEndOf="@+id/tv_last_check_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_last_check_title" />
+
+        <TextView
+            android:id="@+id/tv_classlist_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="24dp"
+            android:text="Klassen"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_untersuchungen" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_klassenliste"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:background="@color/colorPrimaryAlpha"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_classlist_title" />
+
+        <Button
+            android:id="@+id/btn_new_class"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_marginEnd="16dp"
+            android:background="#00FFFFFF"
+            android:text="neue klasse"
+            android:textColor="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_klassenliste" />
+
+        <TextView
+            android:id="@+id/tv_no_classes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Keine Klassen registriert"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_klassenliste"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/rv_klassenliste"
+            app:layout_constraintVertical_bias="0.492" />
+
+        <ProgressBar
+            android:id="@+id/progressBar_classes"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/rv_klassenliste"
+            app:layout_constraintEnd_toEndOf="@+id/rv_klassenliste"
+            app:layout_constraintStart_toStartOf="@+id/rv_klassenliste"
+            app:layout_constraintTop_toTopOf="@+id/rv_klassenliste" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>

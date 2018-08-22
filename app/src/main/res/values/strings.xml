@@ -4,4 +4,12 @@
 
     <string name="testeichbuehl">Schulhaus Eichbühl</string>
     <string name="newClass">Neue Klasse</string>
+    <string name="school_label">Schule:</string>
+    <string name="class_label">Klasse:</string>
+    <string name="new_check_button">Neue Kontrolle erfassen</string>
+    <string name="date_label">Datum:</string>
+    <string name="checked_students_label">untersuchte Schüler</string>
+    <string name="louse_count_label">Anzahl Läuse</string>
+    <string name="save">Erfassen</string>
+    <string name="new_school">Neue Schule registrieren</string>
 </resources>

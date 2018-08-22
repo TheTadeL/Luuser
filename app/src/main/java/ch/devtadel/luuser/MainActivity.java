@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.google.firebase.FirebaseApp;
 
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton addSchoolFAB;
     RecyclerView schoolListRV;
     RecyclerView.Adapter mainRecyclerAdapter;
+    Button toCheckActivityBTN;
 
     public static List<School> data = new ArrayList<>();
 
@@ -31,6 +33,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        toCheckActivityBTN = findViewById(R.id.btn_to_check_activity);
+        toCheckActivityBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CheckListActivity.class));
+            }
+        });
 
         FirebaseApp.initializeApp(this);
         setupRecyclerView();
@@ -46,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         addSchoolFAB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, AddSchoolActivity.class));
+                startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
             }
         });
 
@@ -68,11 +78,8 @@ public class MainActivity extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case R.id.navigation_testeichbuehl:
-                startActivity(new Intent(MainActivity.this, SchoolActivity.class).putExtra(SchoolActivity.SCHOOL_NAME, "test"));
-                return true;
-            case R.id.test_date:
-                startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
+            case R.id.navigation_new_school:
+                startActivity(new Intent(MainActivity.this, AddSchoolActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
