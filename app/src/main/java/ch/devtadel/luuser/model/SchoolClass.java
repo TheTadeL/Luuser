@@ -1,16 +1,27 @@
 package ch.devtadel.luuser.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SchoolClass {
     private String name;
     private int cntStudents;
     private int cntLouse;
     private int cntChecks;
 
+    public List<Check> getChecks() {
+        return checks;
+    }
+
+    private List<Check> checks;
+
     public SchoolClass(String name){
         this.name = name;
         this.cntStudents = 0;
         this.cntChecks = 0;
         this.cntLouse = 0;
+
+        checks = new ArrayList<>();
     }
 
     public SchoolClass(String name, int anzSchueler, int anzKontrollen, int anzLause){
@@ -18,6 +29,12 @@ public class SchoolClass {
         this.cntStudents = anzSchueler;
         this.cntChecks = anzKontrollen;
         this.cntLouse = anzLause;
+
+        checks = new ArrayList<>();
+    }
+
+    public void addCheck(Check c){
+        checks.add(c);
     }
 
     //GETTER / SETTER
@@ -30,19 +47,10 @@ public class SchoolClass {
     public int getCntStudents() {
         return cntStudents;
     }
-    public void setCntStudents(int cntStudents) {
-        this.cntStudents = cntStudents;
-    }
     public int getCntLouse() {
         return cntLouse;
     }
-    public void setCntLouse(int cntLouse) {
-        this.cntLouse = cntLouse;
-    }
     public int getCntChecks() {
         return cntChecks;
-    }
-    public void setCntChecks(int cntChecks) {
-        this.cntChecks = cntChecks;
     }
 }

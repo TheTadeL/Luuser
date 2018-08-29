@@ -3,5 +3,8 @@
     <item
         android:id="@+id/navigation_new_school"
         android:title="@string/new_school" />
+    <item
+        android:id="@+id/navigation_graph"
+        android:title="@string/graph_test" />
 
 </menu>

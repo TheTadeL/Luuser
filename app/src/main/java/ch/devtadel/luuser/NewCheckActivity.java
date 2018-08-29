@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -143,7 +144,7 @@ public class NewCheckActivity extends AppCompatActivity {
 
                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                     try {
-                        check.setDate(sdf.parse(dayCheck+"-"+monthCheck+"-"+yearCheck));
+                        check.setDate(sdf.parse(dayCheck+"-"+(monthCheck+1)+"-"+yearCheck));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }

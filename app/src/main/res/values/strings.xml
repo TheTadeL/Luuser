@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Luuser</string>
-    <string name="title_activity_login">Login</string>
 
     <string name="testeichbuehl">Schulhaus Eichbühl</string>
     <string name="newClass">Neue Klasse</string>
@@ -12,4 +11,16 @@
     <string name="louse_count_label">Anzahl Läuse</string>
     <string name="save">Erfassen</string>
     <string name="new_school">Neue Schule registrieren</string>
+    <string name="check_title">Kontrolle</string>
+    <string name="graph_test">Graph Test</string>
+    <string name="graph_missing_data">nicht genügend Daten vorhanden</string>
+
+    <!-- Hauptmenu -->
+    <string name="main_title_check_list">Kontrollen einsehen</string>
+    <string name="main_description_check_list">Kontrollen durchsuchen und filtern. Hier können auch Excel-Tabellen generiert werden.</string>
+    <string name="main_title_schoollist">Liste der eingetragenen Einrichtungen</string>
+    <string name="main_description_schoollist">Hier sind alle eingetragenen Einrichtungen wie zum Beispiel Schulen oder Kindergärten zu finden. Neue Einrichtungen können hier eingetragen werden.</string>
+    <string name="main_title_new_check">Neue Kontrolle erfassen</string>
+    <string name="main_description_new_check">Eine neue Kontrolle für eine beliebige Schule und Klasse erfassen.</string>
+    <!-- -->
 </resources>

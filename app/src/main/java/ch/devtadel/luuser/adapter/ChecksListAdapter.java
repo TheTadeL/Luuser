@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -71,11 +72,18 @@ public class ChecksListAdapter extends RecyclerView.Adapter<ChecksListAdapter.Vi
         TextView cntStudentsTV = (TextView) holder.checkListItem.findViewById(R.id.tv_check_count_students);
         cntStudentsTV.setText(String.valueOf(dataset.get(position).getStudentCount()));
 
-        Button followUpCheckBTN = holder.checkListItem.findViewById(R.id.btn_follow_up_check);
+        ImageButton followUpCheckBTN = holder.checkListItem.findViewById(R.id.btn_follow_up_check);
         followUpCheckBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(holder.checkListItem.getContext(), "Nachkontrolle hinzufügen", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        holder.checkListItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
     }

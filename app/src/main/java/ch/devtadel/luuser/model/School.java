@@ -15,6 +15,11 @@ public class School {
         this.place = place;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     // GETTER / SETTER
     public String getName() {
         return name;

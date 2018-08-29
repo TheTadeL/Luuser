@@ -1,104 +1,42 @@
 package ch.devtadel.luuser;
 
-import android.app.ActionBar;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.CardView;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-
-import com.google.firebase.FirebaseApp;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import ch.devtadel.luuser.DAL.FireStore.SchoolDao;
-import ch.devtadel.luuser.adapter.SchoolListAdapter;
-import ch.devtadel.luuser.model.School;
+import android.view.animation.AnimationUtils;
 
 public class MainActivity extends AppCompatActivity {
-    FloatingActionButton addSchoolFAB;
-    RecyclerView schoolListRV;
-    RecyclerView.Adapter mainRecyclerAdapter;
-    Button toCheckActivityBTN;
 
-    public static List<School> data = new ArrayList<>();
+    private CardView newCheckCV;
+    private CardView schoolListCV;
+    private CardView checkListCV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toCheckActivityBTN = findViewById(R.id.btn_to_check_activity);
-        toCheckActivityBTN.setOnClickListener(new View.OnClickListener() {
+        checkListCV = findViewById(R.id.cv_search_check);
+        checkListCV.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CheckListActivity.class));
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
             }
         });
-
-        FirebaseApp.initializeApp(this);
-        setupRecyclerView();
-
-        //UP-Button hinzufügen
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-
-        //Komponente initialisieren
-        addSchoolFAB = findViewById(R.id.fab_add_school);
-        addSchoolFAB.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
-            }
-        });
-
-        SchoolDao dao = new SchoolDao();
-        dao.loadSchoolList(mainRecyclerAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        // Fügt das menu der Actionbar hinzu.
-        getMenuInflater().inflate(R.menu.menu_overflow, menu);
-        return true;
+    public void newCheck(View view){
+        startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
     }
 
-    //Actionbar Komponente wird benutzt
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.navigation_new_school:
-                startActivity(new Intent(MainActivity.this, AddSchoolActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void schoolList(View view){
+        startActivity(new Intent(MainActivity.this, SchoolListActivity.class));
     }
 
-    /**
-     * Prozedur um den RecyclerView für die Userliste vorzubereiten.
-     */
-    private void setupRecyclerView(){
-        RecyclerView mainRecyclerView = findViewById(R.id.school_list);
-
-        //Performance verbessern. Möglich, da die Listeneinträge alle die selbe grösse haben sollen.
-        mainRecyclerView.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager mainLayoutManager = new LinearLayoutManager(MainActivity.this);
-        mainRecyclerView.setLayoutManager(mainLayoutManager);
-
-        mainRecyclerAdapter = new SchoolListAdapter(data);
-        mainRecyclerView.setAdapter(mainRecyclerAdapter);
+    public void checkList(View view){
+        startActivity(new Intent(MainActivity.this, CheckListActivity.class));
     }
 }

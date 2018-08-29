@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -21,9 +22,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import ch.devtadel.luuser.CheckListActivity;
-import ch.devtadel.luuser.MainActivity;
+import ch.devtadel.luuser.GraphActivity;
+import ch.devtadel.luuser.SchoolListActivity;
 import ch.devtadel.luuser.NewCheckActivity;
 import ch.devtadel.luuser.SchoolActivity;
 import ch.devtadel.luuser.model.Check;
@@ -54,10 +57,10 @@ public class SchoolDao {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            MainActivity.data.clear();
+                            SchoolListActivity.data.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 School school = new School(document.getData().get(FS_NAME).toString(), document.getData().get(FS_PLACE).toString());
-                                MainActivity.data.add(school);
+                                SchoolListActivity.data.add(school);
                             }
                             adapter.notifyDataSetChanged();
                         } else {
@@ -170,10 +173,10 @@ public class SchoolDao {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            SchoolActivity.data.clear();
+                            SchoolActivity.class_data.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 SchoolClass schoolClass = new SchoolClass(document.getData().get(FS_NAME).toString());
-                                SchoolActivity.data.add(schoolClass);
+                                SchoolActivity.class_data.add(schoolClass);
                             }
                             Intent intent = new Intent();
                             intent.setAction(SchoolActivity.ACTION_STRING_CLASSES_LOADED);
@@ -382,6 +385,75 @@ public class SchoolDao {
                                     .setAction(CheckListActivity.ACTION_STRING_VALUES_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getLouseDataForGraph(final Context context){
+        final Map<Date, String> returnMap = new HashMap<>();
+
+        db.collection(DB_CHECKS)
+                .orderBy(FS_DATE, Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            GraphActivity.data.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Date date = (Date)document.getData().get(FS_DATE);
+                                int value = Integer.valueOf(document.getData().get(FS_CNT_LOUSE).toString());
+                                if(returnMap.get(date) != null){
+                                    returnMap.replace(date, String.valueOf(Integer.valueOf(returnMap.get(date)) + value));
+                                } else {
+                                    returnMap.put(date, String.valueOf(value));
+                                }
+                            }
+
+                            Map<Date, String> finalMap = new TreeMap<>(returnMap);
+                            GraphActivity.data.putAll(finalMap);
+
+                            context.sendBroadcast(new Intent()
+                                    .setAction(GraphActivity.ACTION_STRING_GRAPH_READY)
+                                    .addCategory(Intent.CATEGORY_DEFAULT));
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getLouseDataForSchoolGraph(final Context context, String schoolname){
+        final Map<Date, String> returnMap = new HashMap<>();
+
+        db.collection(DB_CHECKS)
+                .whereEqualTo(FS_SCHOOL_NAME, schoolname)
+                .orderBy(FS_DATE, Query.Direction.DESCENDING)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            SchoolActivity.graph_data.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Date date = (Date)document.getData().get(FS_DATE);
+                                int value = Integer.valueOf(document.getData().get(FS_CNT_LOUSE).toString());
+                                if(returnMap.get(date) != null){
+                                    returnMap.replace(date, String.valueOf(Integer.valueOf(returnMap.get(date)) + value));
+                                } else {
+                                    returnMap.put(date, String.valueOf(value));
+                                }
+                            }
+
+                            Map<Date, String> finalMap = new TreeMap<>(returnMap);
+                            SchoolActivity.graph_data.putAll(finalMap);
+
+                            context.sendBroadcast(new Intent()
+                                    .setAction(SchoolActivity.ACTION_STRING_GRAPH_LOADED)
+                                    .addCategory(Intent.CATEGORY_DEFAULT));
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
