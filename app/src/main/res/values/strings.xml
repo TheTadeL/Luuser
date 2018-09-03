@@ -22,5 +22,11 @@
     <string name="main_description_schoollist">Hier sind alle eingetragenen Einrichtungen wie zum Beispiel Schulen oder Kindergärten zu finden. Neue Einrichtungen können hier eingetragen werden.</string>
     <string name="main_title_new_check">Neue Kontrolle erfassen</string>
     <string name="main_description_new_check">Eine neue Kontrolle für eine beliebige Schule und Klasse erfassen.</string>
+    <string name="test">TEST</string>
+    <!-- -->
+
+    <!-- Profil -->
+    <string name="verified">Verifiziert</string>
+    <string name="not_verified">Nicht Verifiziert</string>
     <!-- -->
 </resources>

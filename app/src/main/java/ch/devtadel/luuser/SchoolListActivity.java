@@ -59,31 +59,6 @@ public class SchoolListActivity extends AppCompatActivity {
         dao.loadSchoolList(mainRecyclerAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        // Fügt das menu der Actionbar hinzu.
-        getMenuInflater().inflate(R.menu.menu_overflow, menu);
-        return true;
-    }
-
-    //Actionbar Komponente wird benutzt
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            case R.id.navigation_new_school:
-                startActivity(new Intent(SchoolListActivity.this, AddSchoolActivity.class));
-                return true;
-            case R.id.navigation_graph:
-                startActivity(new Intent(SchoolListActivity.this, GraphActivity.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     /**
      * Prozedur um den RecyclerView für die Userliste vorzubereiten.
      */

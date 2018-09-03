@@ -32,6 +32,7 @@ import ch.devtadel.luuser.SchoolActivity;
 import ch.devtadel.luuser.model.Check;
 import ch.devtadel.luuser.model.School;
 import ch.devtadel.luuser.model.SchoolClass;
+import ch.devtadel.luuser.model.User;
 
 public class SchoolDao {
     private static final String TAG = "SchoolDao";
@@ -44,11 +45,16 @@ public class SchoolDao {
     public static final String FS_CNT_LOUSE = "Anzahl_Laeuse";
     public static final String FS_DATE = "Datum";
     public static final String FS_NO_LOUSE = "Lausfrei";
+    public static final String FS_PRENAME = "Vorname";
+    public static final String FS_SURNAME = "Nachname";
+    public static final String FS_EMAIL = "Email";
+    public static final String FS_UID = "uid";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static final String DB_SCHOOLS = "Schulen";
     public static final String DB_CLASSES = "Klassen";
     public static final String DB_CHECKS = "Kontrollen";
+    public static final String DB_USER = "Benutzer";
 
     public void loadSchoolList(final RecyclerView.Adapter adapter){
         db.collection(DB_SCHOOLS)
@@ -460,4 +466,31 @@ public class SchoolDao {
                     }
                 });
     }
+
+    public void createUserInFS(User user, String uid){
+        //User erstellen
+        Map<String, String> newUser = new HashMap<>();
+        newUser.put(FS_UID, uid);
+        newUser.put(FS_SURNAME, user.getSurname());
+        newUser.put(FS_PRENAME, user.getPrename());
+        newUser.put(FS_PLACE, user.getPlace());
+        newUser.put(FS_EMAIL, user.getEmail());
+
+        //User in der Datenbank abspeichern
+        db.collection(DB_USER)
+                .add(newUser)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding document", e);
+                    }
+                });
+    }
+
 }

@@ -4,7 +4,11 @@
         android:id="@+id/navigation_new_school"
         android:title="@string/new_school" />
     <item
-        android:id="@+id/navigation_graph"
-        android:title="@string/graph_test" />
+        android:id="@+id/navigation_test"
+        android:title="@string/test" />
+
+    <item
+    android:id="@+id/navigation_test2"
+    android:title="@string/test" />
 
 </menu>
