@@ -277,7 +277,7 @@ public class SchoolActivity extends AppCompatActivity {
 
     private void newClassDialog(){
         LayoutInflater li = LayoutInflater.from(this);
-        View promptView = li.inflate(R.layout.add_class_prompt, null);
+        View promptView = li.inflate(R.layout.prompt_add_class, null);
 
         //Promptbuilder.
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);

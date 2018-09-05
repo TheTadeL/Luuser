@@ -12,7 +12,9 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -24,11 +26,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
+import ch.devtadel.luuser.CalendarActivity;
+import ch.devtadel.luuser.CheckActivity;
 import ch.devtadel.luuser.CheckListActivity;
 import ch.devtadel.luuser.GraphActivity;
 import ch.devtadel.luuser.SchoolListActivity;
 import ch.devtadel.luuser.NewCheckActivity;
 import ch.devtadel.luuser.SchoolActivity;
+import ch.devtadel.luuser.helper.AdminHelper;
 import ch.devtadel.luuser.model.Check;
 import ch.devtadel.luuser.model.School;
 import ch.devtadel.luuser.model.SchoolClass;
@@ -49,12 +54,14 @@ public class SchoolDao {
     public static final String FS_SURNAME = "Nachname";
     public static final String FS_EMAIL = "Email";
     public static final String FS_UID = "uid";
+    public static final String FS_YEAR = "Jahr";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static final String DB_SCHOOLS = "Schulen";
     public static final String DB_CLASSES = "Klassen";
     public static final String DB_CHECKS = "Kontrollen";
     public static final String DB_USER = "Benutzer";
+    public static final String DB_ADMINS = "Administratoren";
 
     public void loadSchoolList(final RecyclerView.Adapter adapter){
         db.collection(DB_SCHOOLS)
@@ -351,6 +358,7 @@ public class SchoolDao {
                                 check.setStudentCount(Integer.valueOf(document.getData().get(FS_CNT_STUDENTS).toString()));
                                 check.setLouseCount(Integer.valueOf(document.getData().get(FS_CNT_LOUSE).toString()));
                                 check.setDate((Date)document.getData().get(FS_DATE));
+                                check.setDocumentId(document.getId());
 
                                 CheckListActivity.data.add(check);
                             }
@@ -383,12 +391,49 @@ public class SchoolDao {
                                 check.setStudentCount(Integer.valueOf(document.getData().get(FS_CNT_STUDENTS).toString()));
                                 check.setLouseCount(Integer.valueOf(document.getData().get(FS_CNT_LOUSE).toString()));
                                 check.setDate((Date)document.getData().get(FS_DATE));
+                                check.setDocumentId(document.getId());
 
                                 CheckListActivity.data.add(check);
                             }
                             adapter.notifyDataSetChanged();
                             context.sendBroadcast(new Intent()
                                     .setAction(CheckListActivity.ACTION_STRING_VALUES_LOADED)
+                                    .addCategory(Intent.CATEGORY_DEFAULT));
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getChecksToCalendar(final Context context, final Date date){
+        String year = new SimpleDateFormat("yyyy").format(date);
+        final SimpleDateFormat monthFormatter = new SimpleDateFormat("MM");
+        final String month = monthFormatter.format(date);
+        db.collection(DB_CHECKS)
+                .whereEqualTo(FS_YEAR, year)    //Todo: und nur von dem angemeldeten Ort.
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            CalendarActivity.data.clear();
+
+                            Log.d(TAG, "Month param: " + month);
+
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Date checkDate = (Date)document.getData().get(FS_DATE);
+                                String checkMonth = monthFormatter.format(checkDate);
+                                if(true) {  //Todo: gleicher monat
+                                    Log.d(TAG, "Month check: " + checkMonth);
+
+                                    CalendarActivity.data.add(checkDate);
+                                    Log.d(TAG, " "+checkDate.toString());
+                                }
+                            }
+                            context.sendBroadcast(new Intent()
+                                    .setAction(CalendarActivity.ACTION_STRING_CALENDARDATA_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
                         } else {
@@ -493,4 +538,56 @@ public class SchoolDao {
                 });
     }
 
+    public void loadAdmins(final Context context){
+        db.collection(DB_ADMINS)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()) {
+                            String[] admins = new String[task.getResult().size()];
+                            int i = 0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                admins[i] = document.getData().get(FS_UID).toString();
+                                i++;
+                            }
+                            context.sendBroadcast(new Intent()
+                                    .setAction(AdminHelper.ACTION_STRING_ADMINS_LOADED)
+                                    .addCategory(Intent.CATEGORY_DEFAULT)
+                                    .putExtra(AdminHelper.ADMINS, admins));
+                        } else {
+                            //Todo: Adminliste konnte nicht geladen werden.
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getCheckById(String documentId, final Context context){
+        db.collection(DB_CHECKS)
+                .document(documentId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if(task.isSuccessful()){
+                            Check check = new Check();
+                            check.setStudentCount(Integer.valueOf(task.getResult().get(FS_CNT_STUDENTS).toString()));
+                            check.setLouseCount(Integer.valueOf(task.getResult().get(FS_CNT_LOUSE).toString()));
+                            check.setDate((Date)task.getResult().get(FS_DATE));
+                            check.setClassName(task.getResult().get(FS_CLASS_NAME).toString());
+                            check.setSchoolName(task.getResult().get(FS_SCHOOL_NAME).toString());
+                            check.setNoLouse((boolean)task.getResult().get(FS_NO_LOUSE));
+
+                            CheckActivity.check = check;
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            CheckActivity.check = null;
+                        }
+                        context.sendBroadcast(new Intent()
+                                .setAction(CheckActivity.ACTION_STRING_CHECK_LOADED)
+                                .addCategory(Intent.CATEGORY_DEFAULT));
+                    }
+                });
+    }
 }

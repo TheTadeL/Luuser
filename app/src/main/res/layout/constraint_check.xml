@@ -9,7 +9,7 @@
     android:paddingBottom="1dp">
 
     <TextView
-        android:id="@+id/tv_check_school_name"
+        android:id="@+id/tv_checkitem_school_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_check_class_name"
+        android:id="@+id/tv_checkitem_class_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -29,8 +29,8 @@
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="16dp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/tv_check_school_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_check_school_name" />
+        app:layout_constraintStart_toEndOf="@+id/tv_checkitem_school_name"
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_school_name" />
 
     <TextView
         android:id="@+id/tv_date_label"
@@ -42,10 +42,10 @@
         android:text="Kontrolldatum:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_check_school_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_checkitem_school_name" />
 
     <TextView
-        android:id="@+id/tv_check_date"
+        android:id="@+id/tv_checkitem_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -60,13 +60,13 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_check_date"
-        app:layout_constraintStart_toEndOf="@+id/tv_check_date"
-        app:layout_constraintTop_toTopOf="@+id/tv_check_date"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_date"
+        app:layout_constraintStart_toEndOf="@+id/tv_checkitem_date"
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_date"
         app:srcCompat="@drawable/students" />
 
     <TextView
-        android:id="@+id/tv_check_count_students"
+        android:id="@+id/tv_checkitem_count_students"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
@@ -79,20 +79,20 @@
         android:id="@+id/imageView8"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_check_count_students"
-        app:layout_constraintStart_toEndOf="@+id/tv_check_count_students"
-        app:layout_constraintTop_toTopOf="@+id/tv_check_count_students"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_students"
+        app:layout_constraintStart_toEndOf="@+id/tv_checkitem_count_students"
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_students"
         app:srcCompat="@drawable/laus" />
 
     <TextView
-        android:id="@+id/tv_check_count_louse"
+        android:id="@+id/tv_checkitem_count_louse"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:text="0"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_check_count_students"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_students"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
-        app:layout_constraintTop_toTopOf="@+id/tv_check_count_students" />
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_students" />
 
     <ImageButton
         android:id="@+id/btn_follow_up_check"
@@ -106,5 +106,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_add_black_24px" />
+
+    <TextView
+        android:id="@+id/tv_document_ref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/tv_checkitem_class_name"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

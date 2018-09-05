@@ -1,5 +1,7 @@
 package ch.devtadel.luuser.model;
 
+import com.google.firebase.firestore.DocumentReference;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +15,7 @@ public class Check {
     private String className;
     private String schoolName;
     private List<FollowUpCheck> followUpChecks;
+    private String documentId;
 
     public String getDateString(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -58,5 +61,17 @@ public class Check {
     }
     public void setSchoolName(String schoolName) {
         this.schoolName = schoolName;
+    }
+    public List<FollowUpCheck> getFollowUpChecks() {
+        return followUpChecks;
+    }
+    public void setFollowUpChecks(List<FollowUpCheck> followUpChecks) {
+        this.followUpChecks = followUpChecks;
+    }
+    public String getDocumentId() {
+        return documentId;
+    }
+    public void setDocumentId(String id) {
+        this.documentId = id;
     }
 }

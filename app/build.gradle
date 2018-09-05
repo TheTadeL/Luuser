@@ -40,6 +40,9 @@ dependencies {
     //CircleView
     implementation 'de.hdodenhof:circleimageview:2.2.0'
 
+    //MaterialCalendar
+    implementation 'com.applandeo:material-calendar-view:1.0.1'
+
     implementation files('libs/poishadow-all.jar')
 }
 

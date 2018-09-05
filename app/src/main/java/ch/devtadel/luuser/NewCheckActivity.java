@@ -24,6 +24,8 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,6 +57,8 @@ public class NewCheckActivity extends AppCompatActivity {
     public static List<String> schoolNames = new ArrayList<>();
     public static List<String> classNames = new ArrayList<>();
 
+    private FirebaseAuth firebaseAuth;
+
     private BroadcastReceiver activityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -85,6 +89,16 @@ public class NewCheckActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_check);
+
+        //Check ob der User authoriziert ist, um Einträge zu machen.
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null){
+            startActivity(new Intent(NewCheckActivity.this, MainActivity.class));
+            Toast.makeText(NewCheckActivity.this, "Bitte loggen Sie sich ein um Einträge zu machen", Toast.LENGTH_LONG).show();
+        } else if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
+            startActivity(new Intent(NewCheckActivity.this, MainActivity.class));
+            Toast.makeText(NewCheckActivity.this, "Bitte verifizieren Sie ihre Email-Adresse um Einträge zu machen", Toast.LENGTH_LONG).show();
+        }
 
         setTitle("Kontrolleneditor");
 

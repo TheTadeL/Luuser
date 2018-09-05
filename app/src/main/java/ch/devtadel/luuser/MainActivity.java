@@ -48,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_test2:
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class).putExtra(ProfileActivity.ME, true));
                 return true;
+            case R.id.navigation_test3:
+                startActivity(new Intent(MainActivity.this, CalendarActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

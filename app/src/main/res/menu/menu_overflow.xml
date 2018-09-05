@@ -11,4 +11,8 @@
     android:id="@+id/navigation_test2"
     android:title="@string/test" />
 
+    <item
+    android:id="@+id/navigation_test3"
+    android:title="@string/test" />
+
 </menu>
