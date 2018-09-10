@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,6 +63,7 @@ public class SchoolDao {
     public static final String DB_CHECKS = "Kontrollen";
     public static final String DB_USER = "Benutzer";
     public static final String DB_ADMINS = "Administratoren";
+    public static final String[] DB_COLLECTIONS = {DB_SCHOOLS, DB_CLASSES, DB_CHECKS, DB_USER, DB_ADMINS};
 
     public void loadSchoolList(final RecyclerView.Adapter adapter){
         db.collection(DB_SCHOOLS)
@@ -587,6 +589,54 @@ public class SchoolDao {
                         context.sendBroadcast(new Intent()
                                 .setAction(CheckActivity.ACTION_STRING_CHECK_LOADED)
                                 .addCategory(Intent.CATEGORY_DEFAULT));
+                    }
+                });
+    }
+
+    public void newField(final Context context, final String collectionStr, final String fieldNameStr, String datatypeStr, String defaultValue){
+        boolean valid = true;
+
+        Object data = " ";
+
+        //Datentyp bestimmen
+        switch(datatypeStr){
+            case "Boolean":
+                if(defaultValue.equals("true")){
+                    data = true;
+                } else {
+                    data = false;
+                }
+                break;
+            case "String":
+                data = defaultValue;
+                break;
+            case "Integer":
+                data = Integer.valueOf(defaultValue);
+                break;
+            default:
+                valid = false;
+        }
+        final Object finalData = data;
+
+
+        db.collection(collectionStr)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            WriteBatch batch = db.batch();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                batch.update(document.getReference(), fieldNameStr, finalData);
+                            }
+                            batch.commit()
+                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            Toast.makeText(context, fieldNameStr + " with the Value " + finalData.toString() + "commited", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                        }
                     }
                 });
     }

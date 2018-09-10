@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="dev_datatypes">
+        <item>String</item>
+        <item>Boolean</item>
+        <item>Integer</item>
+    </array>
+
+</resources>

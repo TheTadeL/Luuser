@@ -1,5 +1,6 @@
 package ch.devtadel.luuser;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -44,7 +45,6 @@ public class NewCheckActivity extends AppCompatActivity {
     private static int yearCheck;
     private static int monthCheck;
     private static int dayCheck;
-    private static Calendar calendar;
 
     private static TextView dateTV;
 
@@ -94,23 +94,17 @@ public class NewCheckActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
             startActivity(new Intent(NewCheckActivity.this, MainActivity.class));
-            Toast.makeText(NewCheckActivity.this, "Bitte loggen Sie sich ein um Einträge zu machen", Toast.LENGTH_LONG).show();
+            Toast.makeText(NewCheckActivity.this, R.string.pls_login, Toast.LENGTH_LONG).show();
         } else if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
-            startActivity(new Intent(NewCheckActivity.this, MainActivity.class));
-            Toast.makeText(NewCheckActivity.this, "Bitte verifizieren Sie ihre Email-Adresse um Einträge zu machen", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(NewCheckActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            Toast.makeText(NewCheckActivity.this, R.string.pls_verify, Toast.LENGTH_LONG).show();
         }
+
+        setupContentViews();
 
         setTitle("Kontrolleneditor");
 
-        //Spinner initialisieren
-        schoolSP = findViewById(R.id.spinner_school);
-        classSP = findViewById(R.id.spinner_class);
-
-        studentCountET = findViewById(R.id.et_student_count);
-        louseCountET = findViewById(R.id.et_louse_count);
-
         final SchoolDao dao = new SchoolDao();
-
         schoolSP.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -132,14 +126,6 @@ public class NewCheckActivity extends AppCompatActivity {
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
         }
-
-        calendar = Calendar.getInstance();
-        yearCheck = calendar.get(Calendar.YEAR);
-        monthCheck = calendar.get(Calendar.MONTH);
-        dayCheck = calendar.get(Calendar.DAY_OF_MONTH);
-
-        dateTV = findViewById(R.id.tv_date);
-        dateTV.setText(dayCheck+"."+(monthCheck+1)+"."+yearCheck);
 
         ImageButton datePickerBTN = findViewById(R.id.ibtn_pick_date);
         datePickerBTN.setOnClickListener(new View.OnClickListener() {
@@ -243,5 +229,26 @@ public class NewCheckActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    /**
+     * Prozedur um alle Views zu initialisieren.
+     * Soll Platz in der OnCreate()-Methode sparen.
+     */
+    @SuppressLint("SetTextI18n")
+    private void setupContentViews(){
+        //Spinner
+        schoolSP = findViewById(R.id.spinner_school);
+        classSP = findViewById(R.id.spinner_class);
+
+        //EditText
+        studentCountET = findViewById(R.id.et_student_count);
+        louseCountET = findViewById(R.id.et_louse_count);
+
+        //Date-TextView
+        Calendar calendar = Calendar.getInstance();
+        dateTV = findViewById(R.id.tv_date);
+        //das heutige Datum setzen.
+        dateTV.setText(calendar.get(Calendar.DAY_OF_MONTH)+"."+(calendar.get(Calendar.MONTH)+1)+"."+calendar.get(Calendar.YEAR));
     }
 }

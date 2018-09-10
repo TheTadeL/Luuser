@@ -14,6 +14,10 @@
     <string name="check_title">Kontrolle</string>
     <string name="graph_test">Graph Test</string>
     <string name="graph_missing_data">nicht genügend Daten vorhanden</string>
+    <string name="pls_verify">Bitte verifizieren Sie ihre Email-Adresse um Einträge zu machen</string>
+    <string name="pls_login">Bitte loggen Sie sich ein um Einträge zu machen</string>
+    <string name="welcome">Willkommen bei</string>
+    <string name="welcome_back">Willkommen zurück,</string>
 
     <!-- Hauptmenu -->
     <string name="main_title_check_list">Kontrollen einsehen</string>
@@ -37,32 +41,32 @@
     <!-- -->
 
     <!-- Kalender -->
-    <string name="material_calendar_monday">M</string>
-    <string name="material_calendar_tuesday">T</string>
-    <string name="material_calendar_wednesday">W</string>
-    <string name="material_calendar_thursday">T</string>
-    <string name="material_calendar_friday">RsaF</string>
-    <string name="material_calendar_saturday">S</string>
-    <string name="material_calendar_sunday">S</string>
+    <string name="material_calendar_monday">Mo</string>
+    <string name="material_calendar_tuesday">Di</string>
+    <string name="material_calendar_wednesday">Mi</string>
+    <string name="material_calendar_thursday">Do</string>
+    <string name="material_calendar_friday">Fr</string>
+    <string name="material_calendar_saturday">Sa</string>
+    <string name="material_calendar_sunday">So</string>
 
     <array name="material_calendar_months_array">
-        <item>January</item>
-        <item>February</item>
-        <item>March</item>
+        <item>Januar</item>
+        <item>Februar</item>
+        <item>März</item>
         <item>April</item>
-        <item>May</item>
-        <item>June</item>
-        <item>July</item>
+        <item>Mai</item>
+        <item>Juni</item>
+        <item>Juli</item>
         <item>August</item>
         <item>September</item>
-        <item>October</item>
+        <item>Oktober</item>
         <item>November</item>
-        <item>December</item>
+        <item>Dezember</item>
     </array>
 
-    <string name="material_calendar_today_button">Today</string>
+    <string name="material_calendar_today_button">Heute</string>
     <string name="material_calendar_positive_button">OK</string>
-    <string name="material_calendar_negative_button">Cancel</string>
+    <string name="material_calendar_negative_button">Abbrechen</string>
     <!-- -->
 
 </resources>

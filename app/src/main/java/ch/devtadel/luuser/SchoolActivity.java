@@ -90,17 +90,6 @@ public class SchoolActivity extends AppCompatActivity {
         graph_data.clear();
         school = null;
 
-        contentCON = findViewById(R.id.constraint_content_school);
-        contentCON.setVisibility(View.GONE);
-
-        schoolPB = findViewById(R.id.progressBar_school);
-        schoolPB.setVisibility(View.VISIBLE);
-        classesPB = findViewById(R.id.progressBar_classes);
-        classesPB.setVisibility(View.VISIBLE);
-
-        graph = findViewById(R.id.school_graph);
-        graph.setVisibility(View.GONE);
-
         //Receiver registrieren
         if(activityReceiver != null){
             IntentFilter intentFilter = new IntentFilter();
@@ -111,15 +100,8 @@ public class SchoolActivity extends AppCompatActivity {
             registerReceiver(activityReceiver, intentFilter);
         }
 
+        setupContentViews();
         setupRecyclerView();
-
-        nameTV = findViewById(R.id.tv_school_name);
-        placeTV = findViewById(R.id.tv_school_place);
-        louseInSchoolTV = findViewById(R.id.tv_cnt_louse_school);
-        noClassesTV = findViewById(R.id.tv_no_classes);
-        noClassesTV.setVisibility(View.GONE);
-        missingDataTV = findViewById(R.id.tv_missing_data);
-        missingDataTV.setVisibility(View.GONE);
 
         Button newClassBTN = findViewById(R.id.btn_new_class);
         newClassBTN.setOnClickListener(new View.OnClickListener() {
@@ -241,22 +223,26 @@ public class SchoolActivity extends AppCompatActivity {
         }
         louseInSchoolTV.setText(String.valueOf(louseCnt));
 
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, 2018);
-        cal.set(Calendar.MONTH, 0);
-        cal.set(Calendar.DAY_OF_YEAR, 1);
-        Date start = cal.getTime();
+//        Calendar cal = Calendar.getInstance();
+//        cal.set(Calendar.YEAR, 2018);
+//        cal.set(Calendar.MONTH, 0);
+//        cal.set(Calendar.DAY_OF_YEAR, 1);
+//        Date start = cal.getTime();
+//
+//        cal.set(Calendar.YEAR, 2018);
+//        cal.set(Calendar.MONTH, 11);
+//        cal.set(Calendar.DAY_OF_MONTH, 31);
+//        Date end = cal.getTime();
+//
+//        graph.getViewport().setMinX(start.getTime());
+//        graph.getViewport().setMaxX(end.getTime());
+//        graph.getViewport().setXAxisBoundsManual(true);
 
-        cal.set(Calendar.YEAR, 2018);
-        cal.set(Calendar.MONTH, 11);
-        cal.set(Calendar.DAY_OF_MONTH, 31);
-        Date end = cal.getTime();
-
-        graph.getViewport().setMinX(start.getTime());
-        graph.getViewport().setMaxX(end.getTime());
+        graph.getViewport().setMinX(points[0].getX());
+        graph.getViewport().setMaxX(points[points.length-1].getX());
         graph.getViewport().setXAxisBoundsManual(true);
 
-        graph.getGridLabelRenderer().setNumHorizontalLabels(10);
+//        graph.getGridLabelRenderer().setNumHorizontalLabels(10);
 
         graph.setTitle("Anzahl Kinder mit Läusen");
         graph.setTitleTextSize(48f);
@@ -289,7 +275,7 @@ public class SchoolActivity extends AppCompatActivity {
         promptTitle.setText(R.string.newClass);
         final EditText userInput = promptView.findViewById(R.id.et_new_class_name);
 
-        // set dialog message
+        // Dialognachricht setzen
         alertDialogBuilder
                 .setCancelable(true)
                 .setPositiveButton("Speichern",
@@ -306,11 +292,40 @@ public class SchoolActivity extends AppCompatActivity {
                             }
                         });
 
-        // create alert dialog
+        // Dialog erstellen
         AlertDialog alertDialog = alertDialogBuilder.create();
 
-        // show it
+        // Dialog zeigen
         alertDialog.show();
+    }
+
+    /**
+     * Prozedur um alle Views zu initialisieren.
+     * Soll Platz in der OnCreate()-Methode sparen.
+     */
+    private void setupContentViews(){
+        //ConstraintLayout
+        contentCON = findViewById(R.id.constraint_content_school);
+        contentCON.setVisibility(View.GONE);
+
+        //Progressbar
+        schoolPB = findViewById(R.id.progressBar_school);
+        schoolPB.setVisibility(View.VISIBLE);
+        classesPB = findViewById(R.id.progressBar_classes);
+        classesPB.setVisibility(View.VISIBLE);
+
+        //Graph
+        graph = findViewById(R.id.school_graph);
+        graph.setVisibility(View.GONE);
+
+        //TextView
+        nameTV = findViewById(R.id.tv_school_name);
+        placeTV = findViewById(R.id.tv_school_place);
+        louseInSchoolTV = findViewById(R.id.tv_cnt_louse_school);
+        noClassesTV = findViewById(R.id.tv_no_classes);
+        noClassesTV.setVisibility(View.GONE);
+        missingDataTV = findViewById(R.id.tv_missing_data);
+        missingDataTV.setVisibility(View.GONE);
     }
 
 }

@@ -35,18 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Firebase Authorization
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
 
-        progressBar = findViewById(R.id.pb_login);
-        progressBar.setVisibility(View.GONE);
+        //Views initialisieren
+        setupContentViews();
 
-        successTV = findViewById(R.id.tv_login_success);
-        successTV.setVisibility(View.GONE);
-
-        emailET = findViewById(R.id.tv_login_email);
-        passwordET = findViewById(R.id.tv_login_password);
-        loginBTN = findViewById(R.id.btn_login);
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                     } else {
                                         progressBar.setVisibility(View.GONE);
                                         Toast.makeText(LoginActivity.this, "falsche Mailadresse oder Passwort", Toast.LENGTH_LONG).show();
@@ -100,5 +95,26 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    /**
+     * Prozedur um alle Views zu initialisieren.
+     * Soll Platz in der OnCreate()-Methode sparen.
+     */
+    private void setupContentViews(){
+        //ProgressBar
+        progressBar = findViewById(R.id.pb_login);
+        progressBar.setVisibility(View.GONE);
+
+        //TextView
+        successTV = findViewById(R.id.tv_login_success);
+        successTV.setVisibility(View.GONE);
+
+        //EditText
+        emailET = findViewById(R.id.tv_login_email);
+        passwordET = findViewById(R.id.tv_login_password);
+
+        //Button
+        loginBTN = findViewById(R.id.btn_login);
     }
 }

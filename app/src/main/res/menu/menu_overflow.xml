@@ -5,7 +5,7 @@
         android:title="@string/new_school" />
     <item
         android:id="@+id/navigation_test"
-        android:title="@string/test" />
+        android:title="Developer" />
 
     <item
     android:id="@+id/navigation_test2"
