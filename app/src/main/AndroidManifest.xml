@@ -34,7 +34,8 @@
         <activity android:name=".InfoActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".CalendarActivity" />
-        <activity android:name=".DeveloperActivity"></activity>
+        <activity android:name=".DeveloperActivity" />
+        <activity android:name=".BugReportActivity"></activity>
     </application>
 
 </manifest>

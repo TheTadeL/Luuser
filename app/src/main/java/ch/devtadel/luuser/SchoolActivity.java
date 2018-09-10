@@ -238,9 +238,11 @@ public class SchoolActivity extends AppCompatActivity {
 //        graph.getViewport().setMaxX(end.getTime());
 //        graph.getViewport().setXAxisBoundsManual(true);
 
-        graph.getViewport().setMinX(points[0].getX());
-        graph.getViewport().setMaxX(points[points.length-1].getX());
-        graph.getViewport().setXAxisBoundsManual(true);
+        if(points.length > 0) {
+            graph.getViewport().setMinX(points[0].getX());
+            graph.getViewport().setMaxX(points[points.length - 1].getX());
+            graph.getViewport().setXAxisBoundsManual(true);
+        }
 
 //        graph.getGridLabelRenderer().setNumHorizontalLabels(10);
 

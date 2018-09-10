@@ -16,6 +16,7 @@ public class Check {
     private String schoolName;
     private List<FollowUpCheck> followUpChecks;
     private String documentId;
+    private String checkerMail;
 
     public String getDateString(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -73,5 +74,11 @@ public class Check {
     }
     public void setDocumentId(String id) {
         this.documentId = id;
+    }
+    public String getCheckerMail() {
+        return checkerMail;
+    }
+    public void setCheckerMail(String checkerMail) {
+        this.checkerMail = checkerMail;
     }
 }

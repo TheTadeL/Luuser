@@ -7,4 +7,5 @@ public class Todo {
         + NewCheckActivity => TODO
         + AddSchoolActivity => TODO
     */
+    //Todo: letzte Untersuchung => Datum holen.
 }

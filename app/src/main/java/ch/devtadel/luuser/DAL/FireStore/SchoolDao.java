@@ -2,6 +2,7 @@ package ch.devtadel.luuser.DAL.FireStore;
 
 import android.content.Context;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,6 +12,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,6 +59,7 @@ public class SchoolDao {
     public static final String FS_EMAIL = "Email";
     public static final String FS_UID = "uid";
     public static final String FS_YEAR = "Jahr";
+    public static final String FS_ERSTELLER = "Erstellt_durch";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static final String DB_SCHOOLS = "Schulen";
@@ -233,7 +237,7 @@ public class SchoolDao {
                 });
     }
 
-    public void createCheck(final Check check, final Context context){
+    public void createCheck(final Check check, final Context context, FirebaseUser user){
         //Schule erstellen
         Map<String, Object> checkMap = new HashMap<>();
         checkMap.put(FS_SCHOOL_NAME, check.getSchoolName());
@@ -242,6 +246,7 @@ public class SchoolDao {
         checkMap.put(FS_CNT_STUDENTS, check.getStudentCount());
         checkMap.put(FS_CNT_LOUSE, check.getLouseCount());
         checkMap.put(FS_NO_LOUSE, check.isNoLouse());
+        checkMap.put(FS_ERSTELLER, user.getEmail());
 
         //User in der Datenbank abspeichern
         db.collection(DB_CHECKS)
@@ -580,6 +585,7 @@ public class SchoolDao {
                             check.setClassName(task.getResult().get(FS_CLASS_NAME).toString());
                             check.setSchoolName(task.getResult().get(FS_SCHOOL_NAME).toString());
                             check.setNoLouse((boolean)task.getResult().get(FS_NO_LOUSE));
+                            check.setCheckerMail(task.getResult().get(FS_ERSTELLER).toString());
 
                             CheckActivity.check = check;
                         } else {
@@ -589,6 +595,30 @@ public class SchoolDao {
                         context.sendBroadcast(new Intent()
                                 .setAction(CheckActivity.ACTION_STRING_CHECK_LOADED)
                                 .addCategory(Intent.CATEGORY_DEFAULT));
+                    }
+                });
+    }
+
+    public void getCheckerToCheck(final Context context, final String email){
+        db.collection(DB_USER)
+                .whereEqualTo(FS_EMAIL, email)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String username = "";
+                        if (task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                username = document.getData().get(FS_SURNAME).toString();
+                                username += " " + document.getData().get(FS_PRENAME).toString();
+                            }
+                            context.sendBroadcast(new Intent()
+                                .setAction(CheckActivity.ACTION_STRING_CHECKER_LOADED)
+                                .addCategory(Intent.CATEGORY_DEFAULT)
+                                .putExtra(CheckActivity.CHECKER, username));
+                        } else {
+                            Log.d(TAG, "User nicht gefunden!");
+                        }
                     }
                 });
     }

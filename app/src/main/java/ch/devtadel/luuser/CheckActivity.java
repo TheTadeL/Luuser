@@ -16,27 +16,39 @@ import ch.devtadel.luuser.model.Check;
 
 public class CheckActivity extends AppCompatActivity {
     public static final String DOCUMENT_ID = "document id";
+    public static final String CHECKER = "checker";
     public static final String ACTION_STRING_CHECK_LOADED = "check loaded";
+    public static final String ACTION_STRING_CHECKER_LOADED = "checker loaded";
     public static Check check;
 
     private ConstraintLayout contentCL;
     private ConstraintLayout errorCL;
     private ProgressBar progressBar;
+    private ProgressBar checkerPB;
 
     private TextView classTV;
     private TextView schoolTV;
+    private TextView checkDateTV;
+    private TextView countStudentsTV;
+    private TextView countLouseTV;
+    private TextView checkerTV;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            //Wenn check "null" ist, fehler anzeigen:
-            if(check != null){
-                //Todo: Daten abfüllen
-                showCheck();
-                contentCL.setVisibility(View.VISIBLE);
-                progressBar.setVisibility(View.GONE);
-            } else {
-                showErrorView();
+            if(intent.getAction().equals(ACTION_STRING_CHECK_LOADED)) {
+                //Wenn check "null" ist, fehler anzeigen:
+                if (check != null) {
+                    showCheck();
+                    contentCL.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    showErrorView();
+                }
+            } else if(intent.getAction().equals(ACTION_STRING_CHECKER_LOADED)){
+                String checkerName = intent.getExtras().getString(CHECKER);
+                checkerTV.setText(checkerName);
+                checkerPB.setVisibility(View.GONE);
             }
         }
     };
@@ -51,22 +63,12 @@ public class CheckActivity extends AppCompatActivity {
         if(broadcastReceiver != null){
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(ACTION_STRING_CHECK_LOADED);
+            intentFilter.addAction(ACTION_STRING_CHECKER_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(broadcastReceiver, intentFilter);
         }
 
-        progressBar = findViewById(R.id.pb_check);
-        progressBar.setVisibility(View.VISIBLE);
-
-        //ErrorView
-        errorCL = findViewById(R.id.constraint_check_error);
-        errorCL.setVisibility(View.GONE);
-
-        //ContentView
-        contentCL = findViewById(R.id.constraint_check_content);
-        contentCL.setVisibility(View.GONE);
-        classTV = findViewById(R.id.tv_check_class_name);
-        schoolTV = findViewById(R.id.tv_check_school_name);
+        setupContentViews();
 
         Bundle bundle = getIntent().getExtras();
         if(bundle != null){
@@ -88,6 +90,7 @@ public class CheckActivity extends AppCompatActivity {
         if(broadcastReceiver != null){
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(ACTION_STRING_CHECK_LOADED);
+            intentFilter.addAction(ACTION_STRING_CHECKER_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(broadcastReceiver, intentFilter);
         }
@@ -109,11 +112,51 @@ public class CheckActivity extends AppCompatActivity {
     private void showCheck(){
         classTV.setText(check.getClassName());
         schoolTV.setText(check.getSchoolName());
+        checkDateTV.setText(check.getDateString());
+
+        countStudentsTV.setText(String.valueOf(check.getStudentCount()));
+        countLouseTV.setText(String.valueOf(check.getLouseCount()));
+
+        //Checker suchen
+        SchoolDao dao = new SchoolDao();
+        dao.getCheckerToCheck(getBaseContext(), check.getCheckerMail());
     }
 
     private void showErrorView(){
         progressBar.setVisibility(View.GONE);
         contentCL.setVisibility(View.GONE);
         errorCL.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Prozedur um alle Views zu initialisieren.
+     * Soll Platz in der OnCreate()-Methode sparen.
+     */
+    private void setupContentViews(){
+        //ProgressBar
+        progressBar = findViewById(R.id.pb_check);
+        progressBar.setVisibility(View.VISIBLE);
+
+        checkerPB = findViewById(R.id.pb_check_load_name);
+        checkerPB.setVisibility(View.VISIBLE);
+
+        /* == ErrorView == */
+        errorCL = findViewById(R.id.constraint_check_error);
+        errorCL.setVisibility(View.GONE);
+        /* === === === === */
+
+        /* == ContentView == */
+        //ConstraintLayout
+        contentCL = findViewById(R.id.constraint_check_content);
+        contentCL.setVisibility(View.GONE);
+
+        //TextView
+        classTV = findViewById(R.id.tv_check_class_name);
+        schoolTV = findViewById(R.id.tv_check_school_name);
+        checkDateTV = findViewById(R.id.tv_check_date);
+        countStudentsTV = findViewById(R.id.tv_check_cnt_students);
+        countLouseTV = findViewById(R.id.tv_check_cnt_louse);
+        checkerTV = findViewById(R.id.tv_check_name);
+        /* === === === === */
     }
 }

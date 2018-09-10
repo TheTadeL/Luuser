@@ -93,7 +93,7 @@ public class NewCheckActivity extends AppCompatActivity {
         //Check ob der User authoriziert ist, um Einträge zu machen.
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
-            startActivity(new Intent(NewCheckActivity.this, MainActivity.class));
+            startActivity(new Intent(NewCheckActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             Toast.makeText(NewCheckActivity.this, R.string.pls_login, Toast.LENGTH_LONG).show();
         } else if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
             startActivity(new Intent(NewCheckActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -156,7 +156,7 @@ public class NewCheckActivity extends AppCompatActivity {
                     check.setNoLouse(check.getLouseCount() == 0);
 
                     SchoolDao dao = new SchoolDao();
-                    dao.createCheck(check, getBaseContext());
+                    dao.createCheck(check, getBaseContext(), firebaseAuth.getCurrentUser());
                 }
             }
         });
@@ -237,6 +237,12 @@ public class NewCheckActivity extends AppCompatActivity {
      */
     @SuppressLint("SetTextI18n")
     private void setupContentViews(){
+        //Datum
+        Calendar cal = Calendar.getInstance();
+        dayCheck = cal.get(Calendar.DAY_OF_MONTH);
+        monthCheck = cal.get(Calendar.MONTH);
+        yearCheck = cal.get(Calendar.YEAR);
+
         //Spinner
         schoolSP = findViewById(R.id.spinner_school);
         classSP = findViewById(R.id.spinner_class);
@@ -246,9 +252,8 @@ public class NewCheckActivity extends AppCompatActivity {
         louseCountET = findViewById(R.id.et_louse_count);
 
         //Date-TextView
-        Calendar calendar = Calendar.getInstance();
         dateTV = findViewById(R.id.tv_date);
         //das heutige Datum setzen.
-        dateTV.setText(calendar.get(Calendar.DAY_OF_MONTH)+"."+(calendar.get(Calendar.MONTH)+1)+"."+calendar.get(Calendar.YEAR));
+        dateTV.setText(dayCheck+"."+(monthCheck+1)+"."+yearCheck);
     }
 }

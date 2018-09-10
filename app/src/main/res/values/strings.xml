@@ -14,6 +14,7 @@
     <string name="check_title">Kontrolle</string>
     <string name="graph_test">Graph Test</string>
     <string name="graph_missing_data">nicht genügend Daten vorhanden</string>
+    <string name="main_not_verified">Ihre Email-Adresse ist nicht verifizert</string>
     <string name="pls_verify">Bitte verifizieren Sie ihre Email-Adresse um Einträge zu machen</string>
     <string name="pls_login">Bitte loggen Sie sich ein um Einträge zu machen</string>
     <string name="welcome">Willkommen bei</string>
@@ -32,6 +33,9 @@
     <!-- Profil -->
     <string name="verified">Verifiziert</string>
     <string name="not_verified">Nicht Verifiziert</string>
+    <string name="verify_how_to">Um den Registrierungsprozess abzuschliessen, müssen Sie ihre Email-Adresse verifizieren.</string>
+    <string name="verify_how_to_1">Klicken Sie dafür auf den Verifizierungslink, welchen Sie von uns per Email zugesendet bekommen haben. Sie werden auf eine externe Seite umgeleitet, wo Sie sehen können ob die verifizierung funktioniert hat.</string>
+    <string name="verify_how_to_2">Um die Verifizierung abzuschliessen, müssen Sie sich, falls Sie bereits eingeloggt sind, ausloggen und erneut einloggen. Ihr Profil sollte nun verifiziert sein.</string>
     <!-- -->
 
     <!-- Kontrolle -->

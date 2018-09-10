@@ -135,6 +135,19 @@
                 app:layout_constraintTop_toTopOf="@+id/tv_profile_verified" />
         </android.support.constraint.ConstraintLayout>
 
+        <Button
+            android:id="@+id/btn_profile_verify"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:onClick="verifyEmail"
+            android:text="email-adresse verifizieren"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_change_email" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout

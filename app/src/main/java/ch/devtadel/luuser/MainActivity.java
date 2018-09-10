@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -17,34 +18,40 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private boolean loggedIn = false;
+    private boolean verified = false;
 
     private TextView welcomeTV;
+    private TextView notVerifiedTV;
 
     private CardView newCheckCV;
     private CardView schoolListCV;
     private CardView checkListCV;
     private CardView loginCV;
     private CardView logoutCV;
+    private CardView profileCV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Views initialisieren
-        setupContentViews();
-
         //Check ob der User authoriziert ist, um Einträge zu machen.
         firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
+            //Nicht eingeloggt.
             loggedIn = false;
         } else if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
-            //Todo: wenn eingeloggt aber nicht verifiziert;
+            //Eingelogt nicht Verifiziert.
             loggedIn = true;
+            verified = false;
         } else {
+            //Eingeloggt & Verifiziert
             loggedIn = true;
+            verified = true;
         }
 
+        //Views initialisieren
+        setupContentViews();
         setupMenuCards();
     }
 
@@ -86,6 +93,17 @@ public class MainActivity extends AppCompatActivity {
             schoolListCV.setVisibility(View.VISIBLE);
             logoutCV.setVisibility(View.VISIBLE);
             loginCV.setVisibility(View.GONE);
+
+            //Profil sichtbar wenn eingeloggt;
+            profileCV.setVisibility(View.VISIBLE);
+
+            if(!verified) {
+                profileCV.setCardBackgroundColor(getResources().getColor(R.color.colorNotVerifiedBG, null));
+                notVerifiedTV.setVisibility(View.VISIBLE);
+            } else {
+                profileCV.setCardBackgroundColor(getResources().getColor(R.color.common_google_signin_btn_text_dark_default, null));
+                notVerifiedTV.setVisibility(View.GONE);
+            }
             // Die Willkommen Nachricht setzen (" Willkommen zurück, <Vorname> ")
             String prename = " ";
             try {
@@ -95,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
             }
             welcomeTV.setText(getResources().getString(R.string.welcome_back) + prename);
         } else {
+            profileCV.setVisibility(View.GONE);
             newCheckCV.setVisibility(View.GONE);
             schoolListCV.setVisibility(View.GONE);
             loginCV.setVisibility(View.VISIBLE);
@@ -105,11 +124,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newCheck(View view){
-        startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
+        if(loggedIn && verified) {
+            startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
+        } else if(!loggedIn) {
+            Toast.makeText(getBaseContext(),R.string.pls_login, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getBaseContext(),R.string.pls_verify, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void schoolList(View view){
-        startActivity(new Intent(MainActivity.this, SchoolListActivity.class));
+        if(loggedIn && verified) {
+            startActivity(new Intent(MainActivity.this, SchoolListActivity.class));
+        } else if(!loggedIn) {
+            Toast.makeText(getBaseContext(),R.string.pls_login, Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(getBaseContext(),R.string.pls_verify, Toast.LENGTH_LONG).show();
+        }
     }
 
     public void checkList(View view){
@@ -143,11 +174,13 @@ public class MainActivity extends AppCompatActivity {
     private void setupContentViews(){
         //TextView
         welcomeTV = findViewById(R.id.tv_welcome_msg);
+        notVerifiedTV = findViewById(R.id.tv_main_not_verified);
 
         //CardView
         checkListCV = findViewById(R.id.cv_main_search_check);
         schoolListCV = findViewById(R.id.cv_main_school_list);
         newCheckCV = findViewById(R.id.cv_main_new_check);
+        profileCV = findViewById(R.id.cv_main_profile);
         loginCV = findViewById(R.id.cv_main_signin);
         logoutCV = findViewById(R.id.cv_main_signout);
     }

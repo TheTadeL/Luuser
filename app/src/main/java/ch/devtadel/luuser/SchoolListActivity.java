@@ -11,8 +11,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,9 @@ import ch.devtadel.luuser.model.School;
 
 public class SchoolListActivity extends AppCompatActivity {
     FloatingActionButton addSchoolFAB;
-    RecyclerView schoolListRV;
     RecyclerView.Adapter mainRecyclerAdapter;
+
+    private FirebaseAuth firebaseAuth;
 
     public static List<School> data = new ArrayList<>();
 
@@ -32,6 +35,16 @@ public class SchoolListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_list);
+
+        //Check ob der User authoriziert ist, um Einträge zu machen.
+        firebaseAuth = FirebaseAuth.getInstance();
+        if(firebaseAuth.getCurrentUser() == null){
+            startActivity(new Intent(SchoolListActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            Toast.makeText(SchoolListActivity.this, R.string.pls_login, Toast.LENGTH_LONG).show();
+        } else if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
+            startActivity(new Intent(SchoolListActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            Toast.makeText(SchoolListActivity.this, R.string.pls_verify, Toast.LENGTH_LONG).show();
+        }
 
         System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
