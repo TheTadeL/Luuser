@@ -6,6 +6,7 @@ import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -66,10 +67,11 @@ public class SchoolDao {
     public static final String DB_CLASSES = "Klassen";
     public static final String DB_CHECKS = "Kontrollen";
     public static final String DB_USER = "Benutzer";
+    public static final String FS_START_YEAR = "Jahrgang";
     public static final String DB_ADMINS = "Administratoren";
     public static final String[] DB_COLLECTIONS = {DB_SCHOOLS, DB_CLASSES, DB_CHECKS, DB_USER, DB_ADMINS};
 
-    public void loadSchoolList(final RecyclerView.Adapter adapter){
+    public void loadSchoolList(final RecyclerView.Adapter adapter, final RecyclerView recyclerView){
         db.collection(DB_SCHOOLS)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -82,6 +84,7 @@ public class SchoolDao {
                                 SchoolListActivity.data.add(school);
                             }
                             adapter.notifyDataSetChanged();
+                            recyclerView.setVisibility(View.VISIBLE);
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -110,9 +113,10 @@ public class SchoolDao {
                     }
                 });
     }
-    public void setupClassSpinner(final Context context, final String schoolName){
+    public void setupClassSpinner(final Context context, final String schoolName, final int startYear){
         db.collection(DB_CLASSES)
                 .whereEqualTo(FS_SCHOOL_NAME, schoolName)
+                .whereEqualTo(FS_START_YEAR, startYear)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -184,9 +188,10 @@ public class SchoolDao {
                 });
     }
 
-    public void getClassesToPage(School school, final RecyclerView.Adapter adapter, final Context context){
+    public void getClassesToPage(School school, final RecyclerView.Adapter adapter, final Context context, final int startYear){
         db.collection(DB_CLASSES)
                 .whereEqualTo(FS_SCHOOL_NAME, school.getName())
+                .whereEqualTo(FS_START_YEAR, startYear)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -194,7 +199,7 @@ public class SchoolDao {
                         if (task.isSuccessful()) {
                             SchoolActivity.class_data.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                SchoolClass schoolClass = new SchoolClass(document.getData().get(FS_NAME).toString());
+                                SchoolClass schoolClass = new SchoolClass(document.getData().get(FS_NAME).toString(), Integer.valueOf(document.getData().get(FS_START_YEAR).toString()));
                                 SchoolActivity.class_data.add(schoolClass);
                             }
                             Intent intent = new Intent();
@@ -206,10 +211,9 @@ public class SchoolDao {
                         }
                     }
                 });
-        adapter.notifyDataSetChanged();
-
     }
 
+    //Todo: schoolClass beim erstellen mit Jahrgang ausstatten
     public void addClass(SchoolClass schoolClass, final School school, final RecyclerView.Adapter adapter, final Context context){
         //Schule erstellen
         Map<String, String> classMap = new HashMap<>();
@@ -224,7 +228,7 @@ public class SchoolDao {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "DocumentSnapshot added with ID: " + task.getResult().getId());
-                            getClassesToPage(school, adapter, context);
+                            getClassesToPage(school, adapter, context, 2018); //TODO: STARTYEAR
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -405,6 +409,39 @@ public class SchoolDao {
                             adapter.notifyDataSetChanged();
                             context.sendBroadcast(new Intent()
                                     .setAction(CheckListActivity.ACTION_STRING_VALUES_LOADED)
+                                    .addCategory(Intent.CATEGORY_DEFAULT));
+
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getChecksToSchool(final Context context, String schoolName){
+        db.collection(DB_CHECKS)
+                .whereEqualTo(FS_SCHOOL_NAME, schoolName)
+                .limit(300)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            SchoolActivity.check_data.clear();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Check check = new Check();
+
+                                check.setSchoolName(document.getData().get(FS_SCHOOL_NAME).toString());
+                                check.setClassName(document.getData().get(FS_CLASS_NAME).toString());
+                                check.setStudentCount(Integer.valueOf(document.getData().get(FS_CNT_STUDENTS).toString()));
+                                check.setLouseCount(Integer.valueOf(document.getData().get(FS_CNT_LOUSE).toString()));
+                                check.setDate((Date)document.getData().get(FS_DATE));
+                                check.setDocumentId(document.getId());
+
+                                SchoolActivity.check_data.add(check);
+                            }
+                            context.sendBroadcast(new Intent()
+                                    .setAction(SchoolActivity.ACTION_STRING_CHECKS_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
                         } else {

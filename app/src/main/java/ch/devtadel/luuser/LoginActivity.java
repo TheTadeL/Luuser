@@ -2,9 +2,11 @@ package ch.devtadel.luuser;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String EMAIL = "email";
 
     private Button loginBTN;
+    private Button registerBTN;
     private EditText emailET;
     private EditText passwordET;
     private TextView successTV;
@@ -35,12 +38,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //UP-Button hinzufügen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         // Firebase Authorization
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
 
         //Views initialisieren
         setupContentViews();
+
+        registerBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
 
         loginBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +88,18 @@ public class LoginActivity extends AppCompatActivity {
                 successTV.setVisibility(View.VISIBLE);
                 emailET.setText(bundle.getString(EMAIL));
             }
+        }
+    }
+
+    //Actionbar Komponente wird benutzt
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -108,7 +136,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //TextView
         successTV = findViewById(R.id.tv_login_success);
-        successTV.setVisibility(View.GONE);
+        successTV.setVisibility(View.INVISIBLE);
 
         //EditText
         emailET = findViewById(R.id.tv_login_email);
@@ -116,5 +144,6 @@ public class LoginActivity extends AppCompatActivity {
 
         //Button
         loginBTN = findViewById(R.id.btn_login);
+        registerBTN = findViewById(R.id.btn_login_register);
     }
 }

@@ -3,13 +3,13 @@
 
     <string name="testeichbuehl">Schulhaus Eichbühl</string>
     <string name="newClass">Neue Klasse</string>
-    <string name="school_label">Schule:</string>
+    <string name="school_label">Einrichtung:</string>
     <string name="class_label">Klasse:</string>
     <string name="new_check_button">Neue Kontrolle erfassen</string>
-    <string name="date_label">Datum:</string>
-    <string name="checked_students_label">untersuchte Schüler</string>
-    <string name="louse_count_label">Anzahl Läuse</string>
-    <string name="save">Erfassen</string>
+    <string name="date_label">Kontrolldatum:</string>
+    <string name="checked_students_label">Untersuchte Schüler:</string>
+    <string name="louse_count_label">Anzahl Schüler mit Läusen:</string>
+    <string name="save">KONTROLLE ERFASSEN</string>
     <string name="new_school">Neue Schule registrieren</string>
     <string name="check_title">Kontrolle</string>
     <string name="graph_test">Graph Test</string>
@@ -71,6 +71,12 @@
     <string name="material_calendar_today_button">Heute</string>
     <string name="material_calendar_positive_button">OK</string>
     <string name="material_calendar_negative_button">Abbrechen</string>
+    <string name="info_questions">Bei Fragen oder Anliegen bin ich über die obenstehende Email-Adresse erreichbar.</string>
+    <string name="developed_by">Entwickelt von</string>
+    <string name="developer">Mateusz Rüfenacht</string>
+    <string name="supportemail">dev.tadel@gmail.com</string>
+    <string name="problems">Bei Problemen oder Verbesserungsvorschlägen,  füllen Sie bitte das Kontaktformular aus:</string>
+    <string name="to_contact_activity">zum kontaktformular</string>
     <!-- -->
 
 </resources>

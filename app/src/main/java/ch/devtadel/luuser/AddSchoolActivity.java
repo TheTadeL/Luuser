@@ -19,7 +19,7 @@ public class AddSchoolActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_school);
 
-        setTitle("Schuleditor");
+        setTitle("Einrichtung erfassen");
 
         //
         nameET = findViewById(R.id.et_new_school_name);

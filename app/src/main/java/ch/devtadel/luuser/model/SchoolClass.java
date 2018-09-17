@@ -8,6 +8,7 @@ public class SchoolClass {
     private int cntStudents;
     private int cntLouse;
     private int cntChecks;
+    private int year;
 
     public List<Check> getChecks() {
         return checks;
@@ -15,11 +16,22 @@ public class SchoolClass {
 
     private List<Check> checks;
 
+    public SchoolClass(String name, int year){
+        this.name = name;
+        this.cntStudents = 0;
+        this.cntChecks = 0;
+        this.cntLouse = 0;
+        this.year = year;
+
+        checks = new ArrayList<>();
+    }
+
     public SchoolClass(String name){
         this.name = name;
         this.cntStudents = 0;
         this.cntChecks = 0;
         this.cntLouse = 0;
+        this.year = -1;
 
         checks = new ArrayList<>();
     }
@@ -52,5 +64,11 @@ public class SchoolClass {
     }
     public int getCntChecks() {
         return cntChecks;
+    }
+    public int getYear() {
+        return year;
+    }
+    public void setYear(int year) {
+        this.year = year;
     }
 }

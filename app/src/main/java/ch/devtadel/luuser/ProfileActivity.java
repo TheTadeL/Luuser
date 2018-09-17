@@ -3,10 +3,12 @@ package ch.devtadel.luuser;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -35,6 +37,12 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        //UP-Button hinzufügen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -69,23 +77,41 @@ public class ProfileActivity extends AppCompatActivity {
         //
 
         //Profil einrichten.
-        if(myProfile){
-            FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-            displayNameTV.setText(firebaseUser.getDisplayName());
-            placeTV.setText("<Placeholder>"); //Todo: Platzhalter
-            emailTV.setText(firebaseUser.getEmail());
-            myProfileCL.setVisibility(View.VISIBLE);
-            if(firebaseUser.isEmailVerified()){
-                verifiedTV.setText(R.string.verified);
-                verifiedTV.setTextColor(getResources().getColor(R.color.colorVerified, null));
+        if(firebaseAuth.getCurrentUser() != null) {
+            if (myProfile) {
+                setTitle("Mein Profil");
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                displayNameTV.setText(firebaseUser.getDisplayName());
+                placeTV.setText("<Placeholder>"); //Todo: Platzhalter
+                emailTV.setText(firebaseUser.getEmail());
+                myProfileCL.setVisibility(View.VISIBLE);
+                if (firebaseUser.isEmailVerified()) {
+                    verifiedTV.setText(R.string.verified);
+                    verifiedTV.setTextColor(getResources().getColor(R.color.colorVerified, null));
+                } else {
+                    verifiedTV.setText(R.string.not_verified);
+                    verifiedTV.setTextColor(getResources().getColor(R.color.colorNotVerified, null));
+                    verifyBTN.setVisibility(View.VISIBLE);
+                }
             } else {
-                verifiedTV.setText(R.string.not_verified);
-                verifiedTV.setTextColor(getResources().getColor(R.color.colorNotVerified, null));
+                setTitle("Profil");
+                otherProfileCL.setVisibility(View.VISIBLE);
             }
-        } else {
-            otherProfileCL.setVisibility(View.VISIBLE);
         }
     }
+
+    //Actionbar Komponente wird benutzt
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 
     /**
      * verifyBTN onClick
@@ -156,5 +182,6 @@ public class ProfileActivity extends AppCompatActivity {
         verifiedTV = findViewById(R.id.tv_profile_verified);
 
         verifyBTN = findViewById(R.id.btn_profile_verify);
+        verifyBTN.setVisibility(View.GONE);
     }
 }

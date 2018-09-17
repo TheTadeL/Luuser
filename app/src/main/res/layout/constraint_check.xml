@@ -6,31 +6,33 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
     android:elevation="5dp"
-    android:paddingBottom="1dp">
+    android:paddingBottom="1dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <TextView
         android:id="@+id/tv_checkitem_school_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:text="Schulhaus Grauababa"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_class_name" />
 
     <TextView
         android:id="@+id/tv_checkitem_class_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Kl. 2m"
         android:textAppearance="@style/TextAppearance.AppCompat"
         android:textSize="16dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_checkitem_school_name"
-        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_school_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_date_label"
@@ -42,7 +44,7 @@
         android:text="Kontrolldatum:"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_checkitem_school_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_checkitem_class_name" />
 
     <TextView
         android:id="@+id/tv_checkitem_date"

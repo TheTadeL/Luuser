@@ -1,7 +1,9 @@
 package ch.devtadel.luuser;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,6 +26,12 @@ public class DeveloperActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_developer);
 
+        //UP-Button hinzufügen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         setupContentViews();
         commitBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,6 +45,18 @@ public class DeveloperActivity extends AppCompatActivity {
                 dao.newField(getBaseContext(), collection, fieldName, datatype, defaultValue);
             }
         });
+    }
+
+    //Actionbar Komponente wird benutzt
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**

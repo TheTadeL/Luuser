@@ -20,7 +20,7 @@ import ch.devtadel.luuser.CheckActivity;
 import ch.devtadel.luuser.R;
 import ch.devtadel.luuser.model.Check;
 
-public class ChecksListAdapter extends RecyclerView.Adapter<ChecksListAdapter.ViewHolder>{
+public class SchoolCheckListAdapter extends RecyclerView.Adapter<SchoolCheckListAdapter.ViewHolder>{
     private List<Check> dataset;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -33,14 +33,14 @@ public class ChecksListAdapter extends RecyclerView.Adapter<ChecksListAdapter.Vi
         }
     }
 
-    public ChecksListAdapter(List<Check> data) {
+    public SchoolCheckListAdapter(List<Check> data) {
         dataset = data;
     }
 
     // Views mit dem Layoutmanager erstellen
     @NonNull
     @Override
-    public ChecksListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SchoolCheckListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         // Neue View erstellen.
         ConstraintLayout constraintLayout = (ConstraintLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.constraint_check, parent, false);
@@ -51,7 +51,7 @@ public class ChecksListAdapter extends RecyclerView.Adapter<ChecksListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         TextView schoolNameTV = holder.checkListItem.findViewById(R.id.tv_checkitem_school_name);
-        schoolNameTV.setText(dataset.get(position).getSchoolName());
+        schoolNameTV.setVisibility(View.GONE);
 
         TextView classNameTV = holder.checkListItem.findViewById(R.id.tv_checkitem_class_name);
         classNameTV.setText(String.valueOf(dataset.get(position).getClassName()));
@@ -82,9 +82,11 @@ public class ChecksListAdapter extends RecyclerView.Adapter<ChecksListAdapter.Vi
             @Override
             public void onClick(View view) {
                 holder.checkListItem.getContext().startActivity(new Intent(holder.checkListItem.getContext(), CheckActivity.class)
-                    .putExtra(CheckActivity.DOCUMENT_ID, documentRefTV.getText().toString()));
+                        .putExtra(CheckActivity.DOCUMENT_ID, documentRefTV.getText().toString()));
             }
         });
+
+        holder.checkListItem.setBackgroundColor(holder.checkListItem.getResources().getColor(R.color.common_google_signin_btn_text_dark_default, null));
     }
 
     @Override

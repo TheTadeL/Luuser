@@ -6,18 +6,23 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -34,18 +39,30 @@ import java.util.TreeMap;
 
 import ch.devtadel.luuser.DAL.FireStore.SchoolDao;
 import ch.devtadel.luuser.adapter.ClassListAdapter;
+import ch.devtadel.luuser.adapter.SchoolCheckListAdapter;
+import ch.devtadel.luuser.helper.DateHelper;
+import ch.devtadel.luuser.model.Check;
 import ch.devtadel.luuser.model.School;
 import ch.devtadel.luuser.model.SchoolClass;
 
+//Todo: Umleitung zum Checkerprofil
+//Todo: Letzte Kontrolle Datum anzeigen
+//Todo: Anzahl Läuse / Anzahl Schüler bei Klassen
+
 public class SchoolActivity extends AppCompatActivity {
     private static final String TAG = "SchoolActivity";
-    public static final String SCHOOL_NAME = "school";
+    public static final String SCHOOL_NAME = "school_name";
+    public static final String SCHOOL_YEAR = "school_year";
+    public static final String TO_NEW_CLASS = "new class";
     public static final String ACTION_STRING_SCHOOL_LOADED = "schoolLoaded";
     public static final String ACTION_STRING_CLASSES_LOADED = "classesLoaded";
     public static final String ACTION_STRING_GRAPH_LOADED = "graphLoaded";
+    public static final String ACTION_STRING_CHECKS_LOADED = "checksLoaded";
 
-    private RecyclerView.Adapter mainRecyclerAdapter;
-    public static List<SchoolClass> class_data = new ArrayList<>();
+    private RecyclerView.Adapter classesRecyclerAdapter;
+    private RecyclerView.Adapter checksRecyclerAdapter;
+    public static List<SchoolClass> class_data = new ArrayList<>(); //Todo: Klassenliste sortieren (SchoolDao)
+    public static List<Check> check_data = new ArrayList<>(); //Todo: Checkliste sortieren (SchoolDao)
     public static Map<Date, String> graph_data = new TreeMap<>();
     public static School school;
 
@@ -57,10 +74,17 @@ public class SchoolActivity extends AppCompatActivity {
     private TextView noClassesTV;
     private TextView missingDataTV;
 
+    private EditText schoolYearET;
+
     private GraphView graph;
 
     private ProgressBar schoolPB;
     private ProgressBar classesPB;
+
+    private boolean toCreateClass = false;
+    private boolean addClass = true;
+
+    private int startYear;
 
     private BroadcastReceiver activityReceiver = new BroadcastReceiver() {
         @Override
@@ -70,10 +94,20 @@ public class SchoolActivity extends AppCompatActivity {
                 loadSchoolPage();
             } else if(intent.getAction().equals(ACTION_STRING_CLASSES_LOADED)){
                 Log.d(TAG, "CLASSES LOADED BROADCAST RECEIVED!");
+                classesRecyclerAdapter.notifyDataSetChanged();
                 loadClasses();
+                if(toCreateClass){
+                    newClassDialog(startYear);
+                    toCreateClass = false;
+                }
+                SchoolDao dao = new SchoolDao();
+                dao.getChecksToSchool(getBaseContext(), school.getName());  //Kontrollliste laden wenn Klassen geladen haben    //Todo: Auf Schuljahr beschränken!
             } else if(intent.getAction().equals(ACTION_STRING_GRAPH_LOADED)){
                 Log.d(TAG, "GRAPH LOADED BROADCAST RECEIVED!");
                 graph.addSeries(loadGraph());
+            } else if(intent.getAction().equals(ACTION_STRING_CHECKS_LOADED)){
+                Log.d(TAG, "CHECKS LOADED BROADCAST RECEIVED!");
+                checksRecyclerAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -82,6 +116,12 @@ public class SchoolActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school);
+
+        //UP-Button hinzufügen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         setTitle("Detailansicht Einrichtung");
 
@@ -96,20 +136,13 @@ public class SchoolActivity extends AppCompatActivity {
             intentFilter.addAction(ACTION_STRING_SCHOOL_LOADED);
             intentFilter.addAction(ACTION_STRING_CLASSES_LOADED);
             intentFilter.addAction(ACTION_STRING_GRAPH_LOADED);
+            intentFilter.addAction(ACTION_STRING_CHECKS_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
         }
 
         setupContentViews();
-        setupRecyclerView();
-
-        Button newClassBTN = findViewById(R.id.btn_new_class);
-        newClassBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newClassDialog();
-            }
-        });
+        setupRecyclerViews();
 
         Button newCheckBTN = findViewById(R.id.btn_new_check);
         newCheckBTN.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +159,10 @@ public class SchoolActivity extends AppCompatActivity {
         //Wenn kein Schulname mitgegeben wurde, umleiten auf die SchoolListActivity.
         Bundle bundle = getIntent().getExtras();
         if(bundle!=null) {
+            if (bundle.getBoolean(TO_NEW_CLASS)){
+                toCreateClass = true;
+                startYear = bundle.getInt(SCHOOL_YEAR);
+            }
             if (bundle.getString(SCHOOL_NAME) != null) {
                 SchoolDao dao = new SchoolDao();
                 dao.getSchoolToPage(bundle.getString(SCHOOL_NAME), this);
@@ -154,26 +191,48 @@ public class SchoolActivity extends AppCompatActivity {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(ACTION_STRING_SCHOOL_LOADED);
             intentFilter.addAction(ACTION_STRING_CLASSES_LOADED);
+            intentFilter.addAction(ACTION_STRING_CHECKS_LOADED);
             intentFilter.addAction(ACTION_STRING_GRAPH_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
         }
     }
 
+    //Actionbar Komponente wird benutzt
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     /**
      * Prozedur um den RecyclerView für die Userliste vorzubereiten.
      */
-    private void setupRecyclerView(){
-        RecyclerView mainRecyclerView = findViewById(R.id.rv_klassenliste);
+    private void setupRecyclerViews(){
+        RecyclerView classesRecyclerView = findViewById(R.id.rv_klassenliste);
+        RecyclerView checksRecyclerView = findViewById(R.id.rv_school_checks);
 
         //Performance verbessern. Möglich, da die Listeneinträge alle die selbe grösse haben sollen.
-        mainRecyclerView.setHasFixedSize(true);
+        classesRecyclerView.setHasFixedSize(true);
+        checksRecyclerView.setHasFixedSize(true);
 
-        RecyclerView.LayoutManager mainLayoutManager = new LinearLayoutManager(SchoolActivity.this, LinearLayoutManager.HORIZONTAL, false);
-        mainRecyclerView.setLayoutManager(mainLayoutManager);
+        RecyclerView.LayoutManager classesLayoutManager = new LinearLayoutManager(SchoolActivity.this, LinearLayoutManager.HORIZONTAL, false);
+        classesRecyclerView.setLayoutManager(classesLayoutManager);
 
-        mainRecyclerAdapter = new ClassListAdapter(class_data);
-        mainRecyclerView.setAdapter(mainRecyclerAdapter);
+        RecyclerView.LayoutManager checksLayoutManager = new LinearLayoutManager(SchoolActivity.this);
+        checksRecyclerView.setLayoutManager(checksLayoutManager);
+
+
+        classesRecyclerAdapter = new ClassListAdapter(class_data);
+        classesRecyclerView.setAdapter(classesRecyclerAdapter);
+
+        checksRecyclerAdapter = new SchoolCheckListAdapter(check_data);
+        checksRecyclerView.setAdapter(checksRecyclerAdapter);
     }
 
     /**
@@ -182,7 +241,7 @@ public class SchoolActivity extends AppCompatActivity {
     private void loadSchoolPage(){
         //Recycler wird in der Funktion notifiziert.
         SchoolDao dao = new SchoolDao();
-        dao.getClassesToPage(school, mainRecyclerAdapter, this);
+        dao.getClassesToPage(school, classesRecyclerAdapter, this, Integer.valueOf(schoolYearET.getText().toString()));
         dao.getLouseDataForSchoolGraph(getBaseContext(), school.getName());
 
         nameTV.setText(school.getName());
@@ -263,7 +322,15 @@ public class SchoolActivity extends AppCompatActivity {
         return series;
     }
 
-    private void newClassDialog(){
+    public void toNewClass(View view){
+        if(DateHelper.validYear(schoolYearET)){
+            newClassDialog(Integer.valueOf(schoolYearET.getText().toString()));
+        } else {
+            newClassDialog(-1);
+        }
+    }
+
+    private void newClassDialog(int year){
         LayoutInflater li = LayoutInflater.from(this);
         View promptView = li.inflate(R.layout.prompt_add_class, null);
 
@@ -275,6 +342,43 @@ public class SchoolActivity extends AppCompatActivity {
 
         final TextView promptTitle = promptView.findViewById(R.id.prompt_title);
         promptTitle.setText(R.string.newClass);
+        final TextView schoolNameTV = promptView.findViewById(R.id.tv_new_class_schol_name);
+        schoolNameTV.setText(school.getName());
+        final TextView schoolPlaceTV = promptView.findViewById(R.id.tv_new_class_place);
+        schoolPlaceTV.setText("("+school.getPlace()+")");
+
+        final EditText startYearET = promptView.findViewById(R.id.TextView144);
+
+        //Wenn ein StartJahr mitgegeben wurde
+        String printString = "";
+        if(year != -1) {
+            startYearET.setText(String.valueOf(year));
+            printString = "( " + (year - 2000) + " / " + (year - 1999) + " )";
+        } else {
+            startYearET.setText(String.valueOf(DateHelper.getSchoolYear()));
+            printString = "( " + (DateHelper.getSchoolYear() - 2000) + " / " + (DateHelper.getSchoolYear() - 1999) + " )";
+        }
+        final TextView finalStartYearTV = promptView.findViewById(R.id.tv_newclass_startyear_final);
+        finalStartYearTV.setText(printString);
+
+        startYearET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(DateHelper.startYearToFinal(charSequence, getBaseContext(), startYearET, finalStartYearTV)){
+                    addClass = true;
+                } else {
+                    addClass = false;
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
         final EditText userInput = promptView.findViewById(R.id.et_new_class_name);
 
         // Dialognachricht setzen
@@ -283,8 +387,24 @@ public class SchoolActivity extends AppCompatActivity {
                 .setPositiveButton("Speichern",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
-                                SchoolDao dao = new SchoolDao();
-                                dao.addClass(new SchoolClass(userInput.getText().toString()), school, mainRecyclerAdapter, getBaseContext());
+                                //Check, ob eine Klasse mit diesem Namen bereits existiert.
+                                for(SchoolClass schoolClass : class_data){
+                                    if(schoolClass.getName().equals(userInput.getText().toString())){
+                                        addClass = false;
+                                    }
+                                }
+                                if(addClass) {
+                                    SchoolDao dao = new SchoolDao();
+                                    dao.addClass(new SchoolClass(userInput.getText().toString(), Integer.valueOf(startYearET.getText().toString())), school, classesRecyclerAdapter, getBaseContext());
+
+                                    //Activity neu laden
+                                    Intent intent = getIntent();
+                                    intent.putExtra(TO_NEW_CLASS, false);
+                                    finish();
+                                    startActivity(intent);
+                                } else {
+                                    Toast.makeText(getBaseContext(), "Eine Klasse mit diesem Namen existiert bereits!", Toast.LENGTH_LONG).show();
+                                }
                             }
                         })
                 .setNegativeButton("Abbrechen",
@@ -328,6 +448,30 @@ public class SchoolActivity extends AppCompatActivity {
         noClassesTV.setVisibility(View.GONE);
         missingDataTV = findViewById(R.id.tv_missing_data);
         missingDataTV.setVisibility(View.GONE);
-    }
 
+        //EditText
+        schoolYearET = findViewById(R.id.et_school_year);
+        int startYear = DateHelper.getSchoolYear();
+        schoolYearET.setText(String.valueOf(startYear));
+        schoolYearET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                noClassesTV.setVisibility(View.GONE);
+                classesPB.setVisibility(View.VISIBLE);
+                if(DateHelper.startYearToFinal(charSequence, getBaseContext(), schoolYearET, null)){
+                    SchoolDao dao = new SchoolDao();
+                    dao.getClassesToPage(school, classesRecyclerAdapter, getBaseContext(), Integer.valueOf(schoolYearET.getText().toString()));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+    }
 }

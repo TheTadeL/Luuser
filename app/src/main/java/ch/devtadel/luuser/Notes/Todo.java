@@ -1,4 +1,4 @@
-package ch.devtadel.luuser;
+package ch.devtadel.luuser.Notes;
 
 public class Todo {
     //Todo: Nur Besitzer eines Eintrags kann den Eintrag auch verändern / löschen.

@@ -1,8 +1,8 @@
 package ch.devtadel.luuser;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,6 +26,7 @@ import ch.devtadel.luuser.model.School;
 public class SchoolListActivity extends AppCompatActivity {
     FloatingActionButton addSchoolFAB;
     RecyclerView.Adapter mainRecyclerAdapter;
+    RecyclerView mainRecyclerView;
 
     private FirebaseAuth firebaseAuth;
 
@@ -35,6 +36,12 @@ public class SchoolListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_list);
+
+        //UP-Button hinzufügen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         //Check ob der User authoriziert ist, um Einträge zu machen.
         firebaseAuth = FirebaseAuth.getInstance();
@@ -53,11 +60,6 @@ public class SchoolListActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         setupRecyclerView();
 
-        //UP-Button hinzufügen
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
 
         //Komponente initialisieren
         addSchoolFAB = findViewById(R.id.fab_add_school);
@@ -69,14 +71,26 @@ public class SchoolListActivity extends AppCompatActivity {
         });
 
         SchoolDao dao = new SchoolDao();
-        dao.loadSchoolList(mainRecyclerAdapter);
+        dao.loadSchoolList(mainRecyclerAdapter, mainRecyclerView);
+    }
+
+    //Actionbar Komponente wird benutzt
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     /**
      * Prozedur um den RecyclerView für die Userliste vorzubereiten.
      */
     private void setupRecyclerView(){
-        RecyclerView mainRecyclerView = findViewById(R.id.school_list);
+        mainRecyclerView = findViewById(R.id.school_list);
 
         //Performance verbessern. Möglich, da die Listeneinträge alle die selbe grösse haben sollen.
         mainRecyclerView.setHasFixedSize(true);

@@ -2,32 +2,98 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingRight="8dp">
 
     <TextView
         android:id="@+id/prompt_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Neue Klasse "
+        android:text="Neue Klasse erfassen"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/et_new_class_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
         android:ems="10"
         android:hint="Klassenname"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextView144" />
+
+    <TextView
+        android:id="@+id/textView28"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Einrichtung: "
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_new_class_place"
         app:layout_constraintStart_toStartOf="@+id/prompt_title"
+        app:layout_constraintTop_toTopOf="@+id/tv_new_class_schol_name" />
+
+    <TextView
+        android:id="@+id/tv_new_class_schol_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="TextView"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/prompt_title" />
+
+    <TextView
+        android:id="@+id/tv_new_class_place"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/tv_new_class_schol_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_new_class_schol_name" />
+
+    <TextView
+        android:id="@+id/textView33"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Jahrgang: "
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/tv_new_class_place" />
+
+    <EditText
+        android:id="@+id/TextView144"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryAlpha"
+        android:ems="10"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:text="2018"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="@+id/textView33"
+        app:layout_constraintStart_toStartOf="@+id/tv_new_class_place"
+        app:layout_constraintTop_toTopOf="@+id/textView33" />
+
+    <TextView
+        android:id="@+id/tv_newclass_startyear_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:text="( 18 / 19 )"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/TextView144"
+        app:layout_constraintStart_toEndOf="@+id/TextView144"
+        app:layout_constraintTop_toTopOf="@+id/TextView144" />
+
 </android.support.constraint.ConstraintLayout>

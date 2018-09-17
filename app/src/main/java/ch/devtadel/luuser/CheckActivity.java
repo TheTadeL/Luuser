@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.constraint.ConstraintLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -59,6 +61,12 @@ public class CheckActivity extends AppCompatActivity {
         setContentView(R.layout.activity_check);
         setTitle(R.string.check_title);
 
+        //UP-Button hinzufügen
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
         //Receiver registrieren
         if(broadcastReceiver != null){
             IntentFilter intentFilter = new IntentFilter();
@@ -101,6 +109,18 @@ public class CheckActivity extends AppCompatActivity {
         super.onPause();
         if(broadcastReceiver != null){
             unregisterReceiver(broadcastReceiver);
+        }
+    }
+
+    //Actionbar Komponente wird benutzt
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 
