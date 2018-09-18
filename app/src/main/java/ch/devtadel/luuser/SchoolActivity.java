@@ -53,10 +53,12 @@ public class SchoolActivity extends AppCompatActivity {
     public static final String SCHOOL_NAME = "school_name";
     public static final String SCHOOL_YEAR = "school_year";
     public static final String TO_NEW_CLASS = "new class";
+    public static final String LAST_CHECK_DATE = "last check date";
     public static final String ACTION_STRING_SCHOOL_LOADED = "schoolLoaded";
     public static final String ACTION_STRING_CLASSES_LOADED = "classesLoaded";
     public static final String ACTION_STRING_GRAPH_LOADED = "graphLoaded";
     public static final String ACTION_STRING_CHECKS_LOADED = "checksLoaded";
+    public static final String ACTION_STRING_LAST_CHECK_LOADED = "lastCheckLoaded";
 
     private RecyclerView.Adapter classesRecyclerAdapter;
     private RecyclerView.Adapter checksRecyclerAdapter;
@@ -73,6 +75,7 @@ public class SchoolActivity extends AppCompatActivity {
     private TextView noClassesTV;
     private TextView missingDataTV;
     private TextView finalSchoolYearTV;
+    private TextView lastCheckTV;
 
     private EditText schoolYearET;
 
@@ -102,12 +105,16 @@ public class SchoolActivity extends AppCompatActivity {
                 }
                 SchoolDao dao = new SchoolDao();
                 dao.getChecksToSchool(getBaseContext(), school.getName());  //Kontrollliste laden wenn Klassen geladen haben    //Todo: Auf Schuljahr beschränken!
+                dao.getLastCheckToSchool(getBaseContext(), school.getName());
             } else if(intent.getAction().equals(ACTION_STRING_GRAPH_LOADED)){
                 Log.d(TAG, "GRAPH LOADED BROADCAST RECEIVED!");
                 graph.addSeries(loadGraph());
             } else if(intent.getAction().equals(ACTION_STRING_CHECKS_LOADED)){
                 Log.d(TAG, "CHECKS LOADED BROADCAST RECEIVED!");
                 checksRecyclerAdapter.notifyDataSetChanged();
+            } else if(intent.getAction().equals(ACTION_STRING_LAST_CHECK_LOADED)){
+                Log.d(TAG, "LAST CHECK LOADED BROADCAST RECEIVED!");
+                lastCheckTV.setText(intent.getExtras().getString(LAST_CHECK_DATE));
             }
         }
     };
@@ -137,6 +144,7 @@ public class SchoolActivity extends AppCompatActivity {
             intentFilter.addAction(ACTION_STRING_CLASSES_LOADED);
             intentFilter.addAction(ACTION_STRING_GRAPH_LOADED);
             intentFilter.addAction(ACTION_STRING_CHECKS_LOADED);
+            intentFilter.addAction(ACTION_STRING_LAST_CHECK_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
         }
@@ -193,6 +201,7 @@ public class SchoolActivity extends AppCompatActivity {
             intentFilter.addAction(ACTION_STRING_CLASSES_LOADED);
             intentFilter.addAction(ACTION_STRING_CHECKS_LOADED);
             intentFilter.addAction(ACTION_STRING_GRAPH_LOADED);
+            intentFilter.addAction(ACTION_STRING_LAST_CHECK_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
         }
@@ -241,7 +250,7 @@ public class SchoolActivity extends AppCompatActivity {
     private void loadSchoolPage(){
         //Recycler wird in der Funktion notifiziert.
         SchoolDao dao = new SchoolDao();
-        dao.getClassesToPage(school, classesRecyclerAdapter, this, Integer.valueOf(schoolYearET.getText().toString()));
+        dao.getClassesToPage(school, this, Integer.valueOf(schoolYearET.getText().toString()));
         dao.getLouseDataForSchoolGraph(getBaseContext(), school.getName());
 
         nameTV.setText(school.getName());
@@ -449,6 +458,7 @@ public class SchoolActivity extends AppCompatActivity {
         missingDataTV = findViewById(R.id.tv_missing_data);
         missingDataTV.setVisibility(View.GONE);
         finalSchoolYearTV = findViewById(R.id.tv_school_final_start_year);
+        lastCheckTV = findViewById(R.id.tv_last_check_date);
 
         //EditText
         schoolYearET = findViewById(R.id.et_school_year);
@@ -467,7 +477,7 @@ public class SchoolActivity extends AppCompatActivity {
                 classesPB.setVisibility(View.VISIBLE);
                 if(DateHelper.startYearToFinal(charSequence, getBaseContext(), schoolYearET, null)){
                     SchoolDao dao = new SchoolDao();
-                    dao.getClassesToPage(school, classesRecyclerAdapter, getBaseContext(), Integer.valueOf(schoolYearET.getText().toString()));
+                    dao.getClassesToPage(school, getBaseContext(), Integer.valueOf(schoolYearET.getText().toString()));
                     schoolYearET.clearFocus();
                 }
             }

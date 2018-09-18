@@ -26,8 +26,11 @@ import com.google.firebase.firestore.WriteBatch;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -188,7 +191,7 @@ public class SchoolDao {
                 });
     }
 
-    public void getClassesToPage(School school, final RecyclerView.Adapter adapter, final Context context, final int startYear){
+    public void getClassesToPage(School school, final Context context, final int startYear){
         db.collection(DB_CLASSES)
                 .whereEqualTo(FS_SCHOOL_NAME, school.getName())
                 .whereEqualTo(FS_START_YEAR, startYear)
@@ -214,7 +217,7 @@ public class SchoolDao {
     }
 
     //Todo: schoolClass beim erstellen mit Jahrgang ausstatten
-    public void addClass(SchoolClass schoolClass, final School school, final RecyclerView.Adapter adapter, final Context context){
+    public void addClass(final SchoolClass schoolClass, final School school, final RecyclerView.Adapter adapter, final Context context){
         //Schule erstellen
         Map<String, Object> classMap = new HashMap<>();
         classMap.put(FS_NAME, schoolClass.getName());
@@ -229,7 +232,7 @@ public class SchoolDao {
                     public void onComplete(@NonNull Task<DocumentReference> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "DocumentSnapshot added with ID: " + task.getResult().getId());
-                            getClassesToPage(school, adapter, context, 2018); //TODO: STARTYEAR
+                            getClassesToPage(school, context, schoolClass.getYear());
                             adapter.notifyDataSetChanged();
                         }
                     }
@@ -251,7 +254,7 @@ public class SchoolDao {
         checkMap.put(FS_CNT_STUDENTS, check.getStudentCount());
         checkMap.put(FS_CNT_LOUSE, check.getLouseCount());
         checkMap.put(FS_NO_LOUSE, check.isNoLouse());
-        checkMap.put(FS_ERSTELLER, user.getEmail());
+        checkMap.put(FS_ERSTELLER, user.getUid());
         checkMap.put(FS_START_YEAR, check.getClassStartYear());
 
         //User in der Datenbank abspeichern
@@ -341,6 +344,8 @@ public class SchoolDao {
                     }
                 });
     }
+
+
 
     public void getChecksToPage(final RecyclerView.Adapter adapter, final Context context, String key, String value){
         Object v = "";
@@ -446,6 +451,38 @@ public class SchoolDao {
                                     .setAction(SchoolActivity.ACTION_STRING_CHECKS_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    public void getLastCheckToSchool(final Context context, String schoolName){
+        db.collection(DB_CHECKS)
+                .whereEqualTo(FS_SCHOOL_NAME, schoolName)
+                .orderBy(FS_DATE, Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            Date lastDate = null;
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                lastDate = (Date)document.getData().get(FS_DATE);
+                            }
+                            SimpleDateFormat sdf = new SimpleDateFormat("EE, dd.MM.yyyy");
+                            String lastDateString;
+                            if(lastDate != null) {
+                                lastDateString = sdf.format(lastDate);
+                            } else {
+                                lastDateString = "keine";
+                            }
+                            context.sendBroadcast(new Intent()
+                                    .setAction(SchoolActivity.ACTION_STRING_LAST_CHECK_LOADED)
+                                    .addCategory(Intent.CATEGORY_DEFAULT)
+                                    .putExtra(SchoolActivity.LAST_CHECK_DATE, lastDateString));
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
                         }
@@ -638,23 +675,26 @@ public class SchoolDao {
                 });
     }
 
-    public void getCheckerToCheck(final Context context, final String email){
+    public void getCheckerToCheck(final Context context, final String uid){
         db.collection(DB_USER)
-                .whereEqualTo(FS_EMAIL, email)
+                .whereEqualTo(FS_UID, uid)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         String username = "";
+                        String userUid = "";
                         if (task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 username = document.getData().get(FS_SURNAME).toString();
                                 username += " " + document.getData().get(FS_PRENAME).toString();
+                                userUid = document.getData().get(FS_UID).toString();
                             }
                             context.sendBroadcast(new Intent()
                                 .setAction(CheckActivity.ACTION_STRING_CHECKER_LOADED)
                                 .addCategory(Intent.CATEGORY_DEFAULT)
-                                .putExtra(CheckActivity.CHECKER, username));
+                                .putExtra(CheckActivity.CHECKER, username)
+                                .putExtra(CheckActivity.CHECKER_UID, userUid));
                         } else {
                             Log.d(TAG, "User nicht gefunden!");
                         }
@@ -709,4 +749,30 @@ public class SchoolDao {
                     }
                 });
     }
+
+    //================= ADMINISTRATOREN ====================//
+
+    public void getAdminListToCheck(final Context context){
+        db.collection(DB_ADMINS)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            List<String> UIDs = new ArrayList<>();
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                UIDs.add(document.getData().get(FS_UID).toString());
+                            }
+                            CheckActivity.adminList.clear();
+                            CheckActivity.adminList.addAll(UIDs);
+
+                            context.sendBroadcast(new Intent()
+                                .setAction(CheckActivity.ACTION_STRING_ADMINLIST_LOADED)
+                                .addCategory(Intent.CATEGORY_DEFAULT));
+                        }
+                    }
+                });
+    }
+
+    //======================================================//
 }

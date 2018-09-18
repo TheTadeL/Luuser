@@ -77,6 +77,10 @@
     <string name="supportemail">dev.tadel@gmail.com</string>
     <string name="problems">Bei Problemen oder Verbesserungsvorschlägen,  füllen Sie bitte das Kontaktformular aus:</string>
     <string name="to_contact_activity">zum kontaktformular</string>
+    <string name="contact_idea_title"><![CDATA[Ideen & Verbesserungsvorschläge]]></string>
     <!-- -->
+
+    <string name="donation_message">Diese App habe ich in meiner Freizeit entwickelt und stelle sie Ihnen gratis zur Verfügung. Falls Sie jedoch eine kleine Spende leisten möchten, können Sie mir diese hier zukommen lassen.</string>
+    <string name="donation_message2">Diese App in meiner Freizeit entwickelt und wird Ihnen gratis zur Verfügung gestellt. Falls Sie jedoch eine kleine Spende leisten möchten, können Sie mir diese hier zukommen lassen.</string>
 
 </resources>

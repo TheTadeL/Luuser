@@ -61,7 +61,7 @@ public class InfoActivity extends AppCompatActivity {
         toBugReportBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(InfoActivity.this, BugReportActivity.class));
+                startActivity(new Intent(InfoActivity.this, ContactActivity.class));
             }
         });
     }

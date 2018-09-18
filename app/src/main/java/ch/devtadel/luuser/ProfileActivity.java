@@ -17,9 +17,6 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class ProfileActivity extends AppCompatActivity {
     public static final String ME = "my Profile";
     public static final String USERMAIL = "email";
@@ -162,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
         reportProblemBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ProfileActivity.this, BugReportActivity.class));
+                startActivity(new Intent(ProfileActivity.this, ContactActivity.class));
                 alertDialog.cancel();
             }
         });
