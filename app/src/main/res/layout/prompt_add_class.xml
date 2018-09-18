@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
     android:paddingRight="8dp">
 
     <TextView
@@ -29,7 +32,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextView144" />
+        app:layout_constraintTop_toBottomOf="@+id/prompt_new_class_start_year" />
 
     <TextView
         android:id="@+id/textView28"
@@ -72,7 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_new_class_place" />
 
     <EditText
-        android:id="@+id/TextView144"
+        android:id="@+id/prompt_new_class_start_year"
         android:layout_width="56dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimaryAlpha"
@@ -92,8 +95,8 @@
         android:layout_marginStart="2dp"
         android:text="( 18 / 19 )"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/TextView144"
-        app:layout_constraintStart_toEndOf="@+id/TextView144"
-        app:layout_constraintTop_toTopOf="@+id/TextView144" />
+        app:layout_constraintBottom_toBottomOf="@+id/prompt_new_class_start_year"
+        app:layout_constraintStart_toEndOf="@+id/prompt_new_class_start_year"
+        app:layout_constraintTop_toTopOf="@+id/prompt_new_class_start_year" />
 
 </android.support.constraint.ConstraintLayout>

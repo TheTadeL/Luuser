@@ -21,9 +21,8 @@ public abstract class DateHelper {
         if (!charSequence.equals("") && charSequence.length() == 4) {
             int startYear = Integer.valueOf(startYearET.getText().toString());
             if (startYear - 2000 > 0 && startYear-2000 <= 2999) {
-                String printString = "( " + (startYear - 2000) + " / " + (startYear - 1999) + " )";
                 if(finalStartYearTV != null)
-                    finalStartYearTV.setText(printString);
+                    finalStartYearTV.setText(DateHelper.getShortYearString(startYear));
                 startYearET.setTextColor(context.getResources().getColor(R.color.colorVerified, null));
             } else {
                 startYearET.setTextColor(context.getResources().getColor(R.color.colorNotVerified, null));
@@ -62,5 +61,13 @@ public abstract class DateHelper {
         }
 
         return schoolYear;
+    }
+
+    public static String getShortYearString(int year){
+        return "( " + (year-2000) + " / " + (year-1999) + " )";
+    }
+
+    public static String getLongYearString(int year){
+        return "( " + year + " / " + (year+1) + " )";
     }
 }

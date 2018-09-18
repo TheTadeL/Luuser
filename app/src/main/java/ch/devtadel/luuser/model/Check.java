@@ -17,6 +17,7 @@ public class Check {
     private List<FollowUpCheck> followUpChecks;
     private String documentId;
     private String checkerMail;
+    private int classStartYear;
 
     public String getDateString(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
@@ -80,5 +81,13 @@ public class Check {
     }
     public void setCheckerMail(String checkerMail) {
         this.checkerMail = checkerMail;
+    }
+
+    public int getClassStartYear() {
+        return classStartYear;
+    }
+
+    public void setClassStartYear(int classStartYear) {
+        this.classStartYear = classStartYear;
     }
 }

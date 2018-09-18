@@ -66,7 +66,7 @@ public class SchoolListActivity extends AppCompatActivity {
         addSchoolFAB.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SchoolListActivity.this, NewCheckActivity.class));
+                startActivity(new Intent(SchoolListActivity.this, AddSchoolActivity.class));
             }
         });
 

@@ -31,7 +31,6 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +72,7 @@ public class SchoolActivity extends AppCompatActivity {
     private TextView louseInSchoolTV;
     private TextView noClassesTV;
     private TextView missingDataTV;
+    private TextView finalSchoolYearTV;
 
     private EditText schoolYearET;
 
@@ -347,16 +347,16 @@ public class SchoolActivity extends AppCompatActivity {
         final TextView schoolPlaceTV = promptView.findViewById(R.id.tv_new_class_place);
         schoolPlaceTV.setText("("+school.getPlace()+")");
 
-        final EditText startYearET = promptView.findViewById(R.id.TextView144);
+        final EditText startYearET = promptView.findViewById(R.id.prompt_new_class_start_year);
 
         //Wenn ein StartJahr mitgegeben wurde
         String printString = "";
         if(year != -1) {
             startYearET.setText(String.valueOf(year));
-            printString = "( " + (year - 2000) + " / " + (year - 1999) + " )";
+            printString = DateHelper.getShortYearString(year);
         } else {
             startYearET.setText(String.valueOf(DateHelper.getSchoolYear()));
-            printString = "( " + (DateHelper.getSchoolYear() - 2000) + " / " + (DateHelper.getSchoolYear() - 1999) + " )";
+            printString = DateHelper.getShortYearString(DateHelper.getSchoolYear());
         }
         final TextView finalStartYearTV = promptView.findViewById(R.id.tv_newclass_startyear_final);
         finalStartYearTV.setText(printString);
@@ -379,23 +379,23 @@ public class SchoolActivity extends AppCompatActivity {
             }
         });
 
-        final EditText userInput = promptView.findViewById(R.id.et_new_class_name);
+        final EditText classNameET = promptView.findViewById(R.id.et_new_class_name);
 
         // Dialognachricht setzen
         alertDialogBuilder
                 .setCancelable(true)
-                .setPositiveButton("Speichern",
+                .setPositiveButton("Speichern",  //TODO: Wenn das Jahrgangsdatum in der Activity un im Dialog nicht dasselbe ist, muss in der Datenbank geprüft werden, ob die Klasse nicht schon existiert!!
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,int id) {
                                 //Check, ob eine Klasse mit diesem Namen bereits existiert.
                                 for(SchoolClass schoolClass : class_data){
-                                    if(schoolClass.getName().equals(userInput.getText().toString())){
+                                    if(schoolClass.getName().equals(classNameET.getText().toString())){
                                         addClass = false;
                                     }
                                 }
                                 if(addClass) {
                                     SchoolDao dao = new SchoolDao();
-                                    dao.addClass(new SchoolClass(userInput.getText().toString(), Integer.valueOf(startYearET.getText().toString())), school, classesRecyclerAdapter, getBaseContext());
+                                    dao.addClass(new SchoolClass(classNameET.getText().toString(), Integer.valueOf(startYearET.getText().toString())), school, classesRecyclerAdapter, getBaseContext());
 
                                     //Activity neu laden
                                     Intent intent = getIntent();
@@ -448,11 +448,14 @@ public class SchoolActivity extends AppCompatActivity {
         noClassesTV.setVisibility(View.GONE);
         missingDataTV = findViewById(R.id.tv_missing_data);
         missingDataTV.setVisibility(View.GONE);
+        finalSchoolYearTV = findViewById(R.id.tv_school_final_start_year);
 
         //EditText
         schoolYearET = findViewById(R.id.et_school_year);
         int startYear = DateHelper.getSchoolYear();
         schoolYearET.setText(String.valueOf(startYear));
+        schoolYearET.clearFocus();
+        finalSchoolYearTV.setText(DateHelper.getShortYearString(startYear));
         schoolYearET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -465,12 +468,23 @@ public class SchoolActivity extends AppCompatActivity {
                 if(DateHelper.startYearToFinal(charSequence, getBaseContext(), schoolYearET, null)){
                     SchoolDao dao = new SchoolDao();
                     dao.getClassesToPage(school, classesRecyclerAdapter, getBaseContext(), Integer.valueOf(schoolYearET.getText().toString()));
+                    schoolYearET.clearFocus();
                 }
             }
-
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+        schoolYearET.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if(!hasFocus){
+                    if(!DateHelper.validYear(schoolYearET)){
+                        schoolYearET.setText(String.valueOf(DateHelper.getSchoolYear()));
+                        finalSchoolYearTV.setText(DateHelper.getShortYearString(Integer.valueOf(schoolYearET.getText().toString())));
+                    }
+                }
             }
         });
     }

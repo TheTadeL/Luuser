@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/control_panel_gradient"
+    android:background="@color/colorPrimaryLight"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -25,7 +25,6 @@
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/common_google_signin_btn_text_dark"
             android:textSize="24sp" />
 
         <android.support.v7.widget.CardView

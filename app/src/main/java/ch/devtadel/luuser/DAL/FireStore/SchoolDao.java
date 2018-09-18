@@ -216,8 +216,9 @@ public class SchoolDao {
     //Todo: schoolClass beim erstellen mit Jahrgang ausstatten
     public void addClass(SchoolClass schoolClass, final School school, final RecyclerView.Adapter adapter, final Context context){
         //Schule erstellen
-        Map<String, String> classMap = new HashMap<>();
+        Map<String, Object> classMap = new HashMap<>();
         classMap.put(FS_NAME, schoolClass.getName());
+        classMap.put(FS_START_YEAR, schoolClass.getYear());
         classMap.put(FS_SCHOOL_NAME, school.getName());
 
         //User in der Datenbank abspeichern
@@ -251,6 +252,7 @@ public class SchoolDao {
         checkMap.put(FS_CNT_LOUSE, check.getLouseCount());
         checkMap.put(FS_NO_LOUSE, check.isNoLouse());
         checkMap.put(FS_ERSTELLER, user.getEmail());
+        checkMap.put(FS_START_YEAR, check.getClassStartYear());
 
         //User in der Datenbank abspeichern
         db.collection(DB_CHECKS)

@@ -6,16 +6,19 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
@@ -124,7 +127,7 @@ public class NewCheckActivity extends AppCompatActivity {
 
         //Das jetzige Jahr setzen(Jahrgang)
         startYearET.setText(String.valueOf(DateHelper.getSchoolYear()));
-        finalStartYearTV.setText("( " + (DateHelper.getSchoolYear() - 2000) + " / " + (DateHelper.getSchoolYear() - 1999) + " )");
+        finalStartYearTV.setText(DateHelper.getShortYearString(DateHelper.getSchoolYear()));
 
         startYearET.addTextChangedListener(new TextWatcher() {
             @Override
@@ -200,12 +203,13 @@ public class NewCheckActivity extends AppCompatActivity {
                     check.setLouseCount(Integer.valueOf(louseCountET.getText().toString()));
                     check.setStudentCount(Integer.valueOf(studentCountET.getText().toString()));
                     check.setNoLouse(check.getLouseCount() == 0);
+                    check.setClassStartYear(Integer.valueOf(startYearET.getText().toString()));
 
-                    SchoolDao dao = new SchoolDao();
-                    dao.createCheck(check, getBaseContext(), firebaseAuth.getCurrentUser());
+                    newConfirmNewCheckPrompt(check);
                 }
             }
         });
+        //TODO: PROMPT EINGABEN ÜBERPRÜFEN
     }
 
     @Override
@@ -289,6 +293,10 @@ public class NewCheckActivity extends AppCompatActivity {
         return valid;
     }
 
+    /**
+     * SchoolActivity wird im "neue Klasse - Modus" gestartet, um eine neue Klasse zu erstellen.
+     * @param view
+     */
     public void toNewSchoolClass(View view){
         if(schoolSP.getSelectedItem() != null && !TextUtils.isEmpty(schoolSP.getSelectedItem().toString())){
             Intent intent = new Intent(NewCheckActivity.this, SchoolActivity.class)
@@ -314,6 +322,55 @@ public class NewCheckActivity extends AppCompatActivity {
         dao.setupClassSpinner(getApplicationContext(), schoolSP.getSelectedItem().toString(), startYear);
         classSP.setVisibility(View.INVISIBLE);
         classPB.setVisibility(View.VISIBLE);
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void newConfirmNewCheckPrompt(final Check check){
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptView = li.inflate(R.layout.prompt_new_check, null);
+
+        //Promptbuilder.
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        //View dem Dialog zuweisen.
+        alertDialogBuilder.setView(promptView);
+
+        final TextView promptDateTV = promptView.findViewById(R.id.prompt_new_check_date);
+        promptDateTV.setText(dayCheck+"."+(monthCheck+1)+"."+yearCheck);
+        final TextView promptClassTV = promptView.findViewById(R.id.prompt_new_check_class);
+        promptClassTV.setText(check.getClassName());
+        final TextView promptLongYearTV = promptView.findViewById(R.id.prompt_new_check_long_year);
+        promptLongYearTV.setText(DateHelper.getLongYearString(check.getClassStartYear()));
+        final TextView promptSchoolTV = promptView.findViewById(R.id.prompt_new_check_school);
+        promptSchoolTV.setText(check.getSchoolName());
+        final TextView promptCntStudentsTV = promptView.findViewById(R.id.prompt_new_check_cnt_students);
+        promptCntStudentsTV.setText(String.valueOf(check.getStudentCount()));
+        final TextView promptCntLouseTV = promptView.findViewById(R.id.prompt_new_check_cnt_louse);
+        promptCntLouseTV.setText(String.valueOf(check.getLouseCount()));
+
+        // Dialognachricht setzen
+        alertDialogBuilder
+                .setCancelable(true)
+                .setPositiveButton("Speichern",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                //TODO: AUF Speichern gedrückt.
+                                SchoolDao dao = new SchoolDao();
+                                dao.createCheck(check, getBaseContext(), firebaseAuth.getCurrentUser());
+                            }
+                        })
+                .setNegativeButton("Abbrechen",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                dialog.cancel();
+                            }
+                        });
+
+        // Dialog erstellen
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // Dialog zeigen
+        alertDialog.show();
     }
 
     /**
