@@ -124,6 +124,7 @@
                     android:ems="10"
                     android:hint="@string/hint_start_year"
                     android:inputType="number"
+                    android:selectAllOnFocus="true"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toStartOf="@+id/tv_new_check_final_startyear"
                     app:layout_constraintStart_toEndOf="@+id/textView43"
@@ -252,6 +253,14 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_student_count_label" />
 
+                <!-- Dummy item to prevent EditText from receiving focus -->
+                <LinearLayout
+                    android:layout_width="0px"
+                    android:layout_height="0px"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    tools:ignore="UselessLeaf" />
+
                 <EditText
                     android:id="@+id/et_louse_count"
                     android:layout_width="75dp"
@@ -261,6 +270,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:padding="5dp"
+                    android:selectAllOnFocus="true"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_louse_count_label"
@@ -312,6 +322,7 @@
                     android:ems="10"
                     android:inputType="number"
                     android:padding="5dp"
+                    android:selectAllOnFocus="true"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_student_count_label"

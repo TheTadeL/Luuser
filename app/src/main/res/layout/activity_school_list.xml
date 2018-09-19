@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,7 +46,7 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout13"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="52dp"
         android:background="@drawable/title_gradient"
         android:elevation="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,18 +57,22 @@
             android:id="@+id/textView50"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
             android:labelFor="@+id/et_school_list_canton"
             android:text="@string/canton_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Dummy item to prevent EditText from receiving focus -->
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            tools:ignore="UselessLeaf" />
 
         <EditText
             android:id="@+id/et_school_list_canton"
@@ -79,7 +85,7 @@
             android:nextFocusLeft="@id/et_school_list_canton"
             android:nextFocusUp="@id/et_school_list_canton"
             android:selectAllOnFocus="true"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold|italic"
             app:layout_constraintStart_toEndOf="@+id/textView50"
             app:layout_constraintTop_toTopOf="@+id/textView50" />

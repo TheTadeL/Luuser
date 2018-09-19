@@ -223,6 +223,7 @@
     <string name="desc_iv_profilepic">Profilepicture</string>
     <string name="desc_ibtn_pick_date">Calendar Image</string>
     <string name="desc_icon_add">Plus Icon</string>
+    <string name="desc_image_tadel">TadeL Icon</string>
     <!-- /CONTENT DESCRIPTIONS -->
 
 </resources>
