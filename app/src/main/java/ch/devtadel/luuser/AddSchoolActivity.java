@@ -13,6 +13,7 @@ public class AddSchoolActivity extends AppCompatActivity {
 
     private EditText nameET;
     private EditText placeET;
+    private EditText cantonET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +25,12 @@ public class AddSchoolActivity extends AppCompatActivity {
         //
         nameET = findViewById(R.id.et_new_school_name);
         placeET = findViewById(R.id.et_new_school_place);
+        cantonET = findViewById(R.id.et_new_school_canton);
         Button saveSchoolBTN = findViewById(R.id.btn_save_new_school);
         saveSchoolBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                School newSchool = new School(nameET.getText().toString(), placeET.getText().toString());
+            public void onClick(View view) {    //TODO: Meldung & Weiterleiten
+                School newSchool = new School(nameET.getText().toString(), placeET.getText().toString(), cantonET.getText().toString());
 
                 SchoolDao dao = new SchoolDao();
                 dao.createSchoolInFS(newSchool);

@@ -39,7 +39,7 @@
         android:layout_marginEnd="8dp"
         android:background="@drawable/button_bg_gradient"
         android:elevation="5dp"
-        android:text="Excel Datei generieren"
+        android:text="@string/btn_generate_excel"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -105,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Filtern nach"
+                android:text="@string/filter_label"
                 app:layout_constraintBottom_toTopOf="@+id/spinner_key"
                 app:layout_constraintStart_toStartOf="parent" />
 

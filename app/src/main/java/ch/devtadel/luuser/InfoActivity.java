@@ -11,9 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class InfoActivity extends AppCompatActivity {
+import ch.devtadel.luuser.helper.Animator;
 
-    public static final String VERSION_NR = "0.1.12";
+public class InfoActivity extends AppCompatActivity {
+    public static final String VERSION_NR = "0.2.0";
+
+    private Animator animator;
 
     private CardView toWebsiteCV;
     private Button toBugReportBTN;
@@ -48,11 +51,13 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     private void setupContentViews(){
+        animator = new Animator();
+
         toWebsiteCV = findViewById(R.id.cv_info_to_website);
         toWebsiteCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.tadel.ch"));
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://tadel.ch"));
                 startActivity(browserIntent);
             }
         });

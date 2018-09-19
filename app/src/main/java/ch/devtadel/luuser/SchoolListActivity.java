@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -21,12 +22,17 @@ import java.util.List;
 
 import ch.devtadel.luuser.DAL.FireStore.SchoolDao;
 import ch.devtadel.luuser.adapter.SchoolListAdapter;
+import ch.devtadel.luuser.helper.UserHelper;
 import ch.devtadel.luuser.model.School;
 
 public class SchoolListActivity extends AppCompatActivity {
     FloatingActionButton addSchoolFAB;
     RecyclerView.Adapter mainRecyclerAdapter;
     RecyclerView mainRecyclerView;
+
+    private EditText cantonET;
+
+    private String canton = UserHelper.DEFAULT_CANTON; //Todo: angemeldeter Kanton
 
     private FirebaseAuth firebaseAuth;
 
@@ -36,6 +42,9 @@ public class SchoolListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_list);
+
+        cantonET = findViewById(R.id.et_school_list_canton);
+        cantonET.setText(canton);
 
         //UP-Button hinzufügen
         ActionBar actionBar = getSupportActionBar();
@@ -56,10 +65,9 @@ public class SchoolListActivity extends AppCompatActivity {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl");
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl");
-
         FirebaseApp.initializeApp(this);
-        setupRecyclerView();
 
+        setupRecyclerView();
 
         //Komponente initialisieren
         addSchoolFAB = findViewById(R.id.fab_add_school);
@@ -71,7 +79,7 @@ public class SchoolListActivity extends AppCompatActivity {
         });
 
         SchoolDao dao = new SchoolDao();
-        dao.loadSchoolList(mainRecyclerAdapter, mainRecyclerView);
+        dao.loadSchoolList(mainRecyclerAdapter, mainRecyclerView, canton);
     }
 
     //Actionbar Komponente wird benutzt

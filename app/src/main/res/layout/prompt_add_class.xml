@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
+    android:paddingLeft="8dp"
     android:paddingRight="8dp">
 
     <TextView
@@ -15,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Neue Klasse erfassen"
+        android:text="@string/create_class"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -26,8 +27,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="Klassenname"
+        android:hint="@string/classname"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +42,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
-        android:text="Einrichtung: "
+        android:text="@string/school_label"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_new_class_place"
         app:layout_constraintStart_toStartOf="@+id/prompt_title"
@@ -51,7 +53,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="TextView"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/prompt_title" />
@@ -60,7 +61,6 @@
         android:id="@+id/tv_new_class_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintStart_toStartOf="@+id/tv_new_class_schol_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_new_class_schol_name" />
 
@@ -68,10 +68,11 @@
         android:id="@+id/textView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Jahrgang: "
+        android:layout_marginTop="8dp"
+        android:labelFor="@+id/prompt_new_class_start_year"
+        android:text="@string/label_start_year"
         android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/textView28"
+        app:layout_constraintStart_toStartOf="@+id/textView28"
         app:layout_constraintTop_toBottomOf="@+id/tv_new_class_place" />
 
     <EditText
@@ -82,7 +83,6 @@
         android:ems="10"
         android:inputType="number"
         android:selectAllOnFocus="true"
-        android:text="2018"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="@+id/textView33"
         app:layout_constraintStart_toStartOf="@+id/tv_new_class_place"
@@ -93,7 +93,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text="( 18 / 19 )"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/prompt_new_class_start_year"
         app:layout_constraintStart_toEndOf="@+id/prompt_new_class_start_year"

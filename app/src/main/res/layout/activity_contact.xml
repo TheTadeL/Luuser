@@ -19,7 +19,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="Wählen Sie ihr Anliegen"
+            android:text="@string/contact_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +32,13 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="toBugReport"
             app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView53"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground">
+            app:layout_constraintTop_toBottomOf="@+id/textView53">
 
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
@@ -50,11 +51,11 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/desc_image_contact_bug"
                     android:src="@drawable/bug"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/tv_contact_title1"
@@ -63,7 +64,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Fehler melden"
+                    android:text="@string/bug_report"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -78,7 +79,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Wenn Sie einen Fehler, wie zum Beispiel das Abstürzen oder fehlerhaftes Verhalten der App bemerken, können Sie diese hier melden"
+                    android:text="@string/bug_report_description"
                     android:textAlignment="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -97,6 +98,7 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="toIdeas"
             app:cardElevation="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -113,6 +115,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/desc_image_contact_idea"
                     android:src="@drawable/idea"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -140,7 +143,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Haben Sie Ideen oder Verbesserungsvorschläge zum Beispiel zu den Funktionen oder zum Design der App? Hier können Sie diese einbringen"
+                    android:text="@string/ideas_description"
                     android:textAlignment="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -160,6 +163,7 @@
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:foreground="?android:attr/selectableItemBackground"
+            android:onClick="toBeer"
             app:cardElevation="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -171,12 +175,13 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView20"
+                    android:id="@+id/image_contact_beer"
                     android:layout_width="0dp"
                     android:layout_height="75dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/desc_image_contact_beer"
                     android:src="@drawable/beer"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -189,12 +194,12 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="Ein Bier ausgeben"
+                    android:text="@string/beer_title"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView20" />
+                    app:layout_constraintTop_toBottomOf="@+id/image_contact_beer" />
 
                 <TextView
                     android:id="@+id/tv_contact_description3"

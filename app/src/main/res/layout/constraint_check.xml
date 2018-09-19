@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
@@ -15,9 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Schulhaus Grauababa"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="16dp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tv_checkitem_class_name" />
 
@@ -27,9 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Kl. 2m"
         android:textAppearance="@style/TextAppearance.AppCompat"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/tv_checkitem_school_name"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +39,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Kontrolldatum:"
+        android:text="@string/date_label"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_checkitem_class_name" />
@@ -51,7 +49,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="21.08.2018"
         android:textAppearance="@style/TextAppearance.AppCompat"
         app:layout_constraintBottom_toBottomOf="@+id/tv_date_label"
         app:layout_constraintStart_toEndOf="@+id/tv_date_label"
@@ -62,6 +59,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_marginStart="24dp"
+        android:contentDescription="@string/desc_iv_students"
         app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_date"
         app:layout_constraintStart_toEndOf="@+id/tv_checkitem_date"
         app:layout_constraintTop_toTopOf="@+id/tv_checkitem_date"
@@ -72,7 +70,6 @@
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/imageView7"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toTopOf="@+id/imageView7" />
@@ -81,6 +78,7 @@
         android:id="@+id/imageView8"
         android:layout_width="20dp"
         android:layout_height="20dp"
+        android:contentDescription="@string/desc_iv_louse"
         app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_students"
         app:layout_constraintStart_toEndOf="@+id/tv_checkitem_count_students"
         app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_students"
@@ -91,7 +89,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
-        android:text="0"
         app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_students"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_students" />
@@ -104,6 +101,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:background="#00000000"
+        android:contentDescription="@string/desc_icon_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

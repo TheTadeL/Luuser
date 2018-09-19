@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -21,7 +21,6 @@
             android:layout_marginStart="18dp"
             android:layout_marginTop="16dp"
             android:elevation="10dp"
-            android:text="Willkommen zurück, Mateusz!"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -58,15 +57,16 @@
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_new_check" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/iv_new_check"
                     android:layout_width="0dp"
                     android:layout_height="75dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
+                    android:contentDescription="@string/desc_iv_new_check"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -108,12 +108,13 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:id="@+id/imageView9"
+                    android:id="@+id/iv_school_list"
                     android:layout_width="0dp"
                     android:layout_height="75dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
+                    android:contentDescription="@string/desc_iv_school_list"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -131,7 +132,7 @@
                     android:textSize="18sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_school_list" />
 
                 <TextView
                     android:id="@+id/textView14"
@@ -190,6 +191,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="12dp"
+                    android:contentDescription="@string/desc_image_search_check"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -266,17 +268,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:text="Mein Profil"
+                        android:text="@string/profile_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView14" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_profile" />
 
                     <ImageView
-                        android:id="@+id/imageView14"
+                        android:id="@+id/iv_profile"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/desc_iv_profile"
                         android:padding="2dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -314,18 +317,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:text="Informationen"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                         android:textSize="18sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView13" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_info" />
 
                     <ImageView
-                        android:id="@+id/imageView13"
+                        android:id="@+id/iv_info"
                         android:layout_width="0dp"
                         android:layout_height="38dp"
                         android:layout_marginTop="8dp"
+                        android:contentDescription="@string/desc_iv_info"
                         android:padding="2dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -364,19 +367,20 @@
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:text="Logout"
+                        android:text="@string/signout_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_signout"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView10" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_signout" />
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/iv_signout"
                         android:layout_width="wrap_content"
                         android:layout_height="38dp"
                         android:layout_marginTop="8dp"
+                        android:contentDescription="@string/desc_iv_signout"
                         android:padding="6dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/logout" />
@@ -413,19 +417,20 @@
                         android:layout_marginBottom="8dp"
                         android:layout_marginEnd="8dp"
                         android:layout_marginStart="8dp"
-                        android:text="Login"
+                        android:text="@string/signin_label"
                         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="@+id/imageView11"
+                        app:layout_constraintEnd_toEndOf="@+id/iv_signin"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageView11" />
+                        app:layout_constraintTop_toBottomOf="@+id/iv_signin" />
 
                     <ImageView
-                        android:id="@+id/imageView11"
+                        android:id="@+id/iv_signin"
                         android:layout_width="wrap_content"
                         android:layout_height="38dp"
                         android:layout_marginTop="8dp"
+                        android:contentDescription="@string/desc_iv_signin"
                         android:padding="6dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/login" />

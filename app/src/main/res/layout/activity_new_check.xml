@@ -34,7 +34,7 @@
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:onClick="toNewSchool"
-                    android:text="neue einrichtung"
+                    android:text="@string/btn_new_school"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintEnd_toEndOf="@+id/spinner_school"
                     app:layout_constraintTop_toBottomOf="@+id/spinner_school" />
@@ -49,7 +49,7 @@
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:onClick="toNewSchoolClass"
-                    android:text="neue klasse"
+                    android:text="@string/btn_new_class"
                     android:textColor="@color/colorPrimary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/spinner_class"
@@ -106,7 +106,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Klassenjahrgang:"
+                    android:text="@string/class_start_year_label"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="@+id/et_new_check_starting_year"
@@ -122,7 +122,7 @@
                     android:layout_marginTop="8dp"
                     android:background="#11FF0000"
                     android:ems="10"
-                    android:hint="z.B. 2018"
+                    android:hint="@string/hint_start_year"
                     android:inputType="number"
                     android:textAlignment="center"
                     app:layout_constraintEnd_toStartOf="@+id/tv_new_check_final_startyear"
@@ -134,7 +134,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
-                    android:text="( 18/19 )"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/et_new_check_starting_year"
@@ -189,7 +188,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:elevation="5dp"
-                android:text="Kontrollierte Klasse"
+                android:text="@string/checked_class_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -212,6 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:labelFor="@+id/tv_date"
                     android:text="@string/date_label"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
@@ -227,6 +227,7 @@
                     android:layout_marginStart="16dp"
                     android:background="#11FF0000"
                     android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
                     android:paddingTop="2dp"
                     android:textAlignment="viewEnd"
                     android:textSize="18sp"
@@ -237,18 +238,19 @@
                     app:layout_constraintTop_toTopOf="@+id/ibtn_pick_date" />
 
                 <TextView
-                    android:id="@+id/textView11"
+                    android:id="@+id/tv_louse_count_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
+                    android:labelFor="@+id/et_louse_count"
                     android:text="@string/louse_count_label"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_student_count_label" />
 
                 <EditText
                     android:id="@+id/et_louse_count"
@@ -261,28 +263,30 @@
                     android:padding="5dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                    app:layout_constraintStart_toEndOf="@+id/textView11"
-                    app:layout_constraintTop_toTopOf="@+id/textView11" />
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_louse_count_label"
+                    app:layout_constraintStart_toEndOf="@+id/tv_louse_count_label"
+                    app:layout_constraintTop_toTopOf="@+id/tv_louse_count_label" />
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/iv_louse"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginTop="8dp"
+                    android:contentDescription="@string/desc_iv_louse"
                     app:layout_constraintBottom_toBottomOf="@+id/et_louse_count"
                     app:layout_constraintEnd_toEndOf="@+id/et_louse_count"
                     app:layout_constraintTop_toTopOf="@+id/et_louse_count"
                     app:srcCompat="@drawable/laus" />
 
                 <TextView
-                    android:id="@+id/textView"
+                    android:id="@+id/tv_student_count_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="24dp"
+                    android:labelFor="@+id/et_student_count"
                     android:text="@string/checked_students_label"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
@@ -290,10 +294,11 @@
                     app:layout_constraintTop_toBottomOf="@+id/ibtn_pick_date" />
 
                 <ImageView
-                    android:id="@+id/imageView4"
+                    android:id="@+id/iv_students"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/desc_iv_students"
                     app:layout_constraintBottom_toBottomOf="@+id/et_student_count"
                     app:layout_constraintEnd_toEndOf="@+id/et_student_count"
                     app:layout_constraintTop_toTopOf="@+id/et_student_count"
@@ -309,10 +314,10 @@
                     android:padding="5dp"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_student_count_label"
                     app:layout_constraintEnd_toEndOf="@+id/et_louse_count"
                     app:layout_constraintStart_toStartOf="@+id/et_louse_count"
-                    app:layout_constraintTop_toTopOf="@+id/textView" />
+                    app:layout_constraintTop_toTopOf="@+id/tv_student_count_label" />
 
                 <ImageButton
                     android:id="@+id/ibtn_pick_date"
@@ -321,6 +326,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/calendar_button_bg_gradient"
+                    android:contentDescription="@string/desc_ibtn_pick_date"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@android:drawable/ic_menu_today" />
@@ -333,7 +339,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:elevation="5dp"
-                android:text="Kontrolldaten"
+                android:text="@string/check_data_title"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:textSize="20sp"
                 android:textStyle="bold"

@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">Luuser</string>
 
-    <string name="testeichbuehl">Schulhaus Eichbühl</string>
+    <!-- AddSchool -->
+    <string name="new_school_title">Neue Einrichtung hinzufügen</string>
+    <string name="place_label">Ort:</string>
+    <string name="name_label">Name:</string>
+    <string name="canton_label">Name:</string>
+    <string name="hint_school_name">z.B: Primarschule Muster</string>
+    <string name="hint_place">z.B: Hünibach</string>
+    <string name="hint_canton">z.B. Bern</string>
+    <string name="btn_save">SPEICHERN</string>
+    <!-- /AddSchool -->
+
+
+
     <string name="newClass">Neue Klasse</string>
     <string name="school_label">Einrichtung:</string>
     <string name="class_label">Klasse:</string>
@@ -10,7 +22,6 @@
     <string name="checked_students_label">Untersuchte Schüler:</string>
     <string name="louse_count_label">Anzahl Schüler mit Läusen:</string>
     <string name="save">KONTROLLE ERFASSEN</string>
-    <string name="new_school">Neue Schule registrieren</string>
     <string name="check_title">Kontrolle</string>
     <string name="graph_test">Graph Test</string>
     <string name="graph_missing_data">nicht genügend Daten vorhanden</string>
@@ -20,14 +31,25 @@
     <string name="welcome">Willkommen bei</string>
     <string name="welcome_back">Willkommen zurück,</string>
 
-    <!-- Hauptmenu -->
-    <string name="main_title_check_list">Kontrollen einsehen</string>
-    <string name="main_description_check_list">Kontrollen durchsuchen und filtern. Hier können auch Excel-Tabellen generiert werden.</string>
-    <string name="main_title_schoollist">Liste der eingetragenen Einrichtungen</string>
-    <string name="main_description_schoollist">Hier sind alle eingetragenen Einrichtungen wie zum Beispiel Schulen oder Kindergärten zu finden. Neue Einrichtungen können hier eingetragen werden.</string>
-    <string name="main_title_new_check">Neue Kontrolle erfassen</string>
-    <string name="main_description_new_check">Eine neue Kontrolle für eine beliebige Schule und Klasse erfassen.</string>
-    <string name="test">TEST</string>
+    <!-- Prompts -->
+    <string name="classname">Klassenname</string>
+    <string name="create_class">Neue Klasse erfassen</string>
+    <string name="add_event">EVENT HINZUFÜGEN</string>
+    <string name="check_input_title">Eingaben Überprüfen</string>
+    <string name="students_count">Schüler insgesamt:</string>
+    <string name="students_count_w_louse">Schüler mit Läusen:</string>
+    <string name="signout_confirm">Wollen Sie sich wirklich Abmelden?</string>
+    <string name="verify_email">Email-Verifizierung</string>
+    <string name="btn_new_link">NEUEN LINK ANFORDERN</string>
+    <string name="btn_report_problem">PROBLEM MELDEN</string>
+    <!-- -->
+
+    <!-- Meatball -->
+    <string name="new_school">Neue Einrichtung registrieren</string>
+    <string name="contact">Kontakt</string>
+    <string name="bug_report">Fehler melden</string>
+    <string name="sign_out">Abmelden</string>
+    <string name="dev">DEVELOPER</string>
     <!-- -->
 
     <!-- Profil -->
@@ -38,11 +60,109 @@
     <string name="verify_how_to_2">Um die Verifizierung abzuschliessen, müssen Sie sich, falls Sie bereits eingeloggt sind, ausloggen und erneut einloggen. Ihr Profil sollte nun verifiziert sein.</string>
     <!-- -->
 
-    <!-- Kontrolle -->
+    <!-- Check -->
     <string name="check_error_message">Fehler beim Laden der Kontrolldaten</string>
     <string name="check_error_btn">fehler melden</string>
     <string name="check_class_label">Klasse</string>
+    <string name="checker_label">Kontrolliert durch:</string>
+    <string name="checked_kids_label">Untersuchte Kinder:</string>
+    <string name="checked_louse_label">Kinder mit Läusen:</string>
+    <string name="btn_profile">PROFIL</string>
+    <string name="btn_delete">LÖSCHEN</string>
+    <string name="btn_change">BEARBEITEN</string>
+    <string name="panel_admin_title">Administrator Kontrollpanel</string>
+    <string name="btn_follow_up_check">nachkontrolle</string>
     <!-- -->
+
+    <!-- CheckList -->
+    <string name="btn_generate_excel">Excel Datei generieren</string>
+    <string name="filter_label">Filtern nach</string>
+    <!-- /CheckList -->
+
+    <!-- Contact -->
+    <string name="contact_title">Wählen Sie ihr Anliegen</string>
+    <string name="bug_report_description">Wenn Sie einen Fehler, wie zum Beispiel das Abstürzen oder fehlerhaftes Verhalten der App bemerken, können Sie diese hier melden</string>
+    <string name="ideas_description">Haben Sie Ideen oder Verbesserungsvorschläge zum Beispiel zu den Funktionen oder zum Design der App? Hier können Sie diese einbringen</string>
+    <string name="beer_title">Ein Bier ausgeben</string>
+    <string name="donation_message">Diese App habe ich in meiner Freizeit entwickelt und stelle sie Ihnen gratis zur Verfügung. Falls Sie jedoch eine kleine Spende leisten möchten, können Sie mir diese hier zukommen lassen</string>
+    <!-- /Contact -->
+
+    <!-- Developer -->
+    <string name="developer_title">Create New Field in Firestore</string>
+    <string name="collection_label">Collection</string>
+    <string name="datatype_label">Datatype</string>
+    <string name="fieldname_label">Fieldname</string>
+    <string name="default_value_label">Default Value</string>
+    <string name="btn_commit">COMMIT</string>
+    <!-- /Developer -->
+
+    <!-- Info -->
+    <string name="tadel">TadeL</string>
+    <string name="tadel_website">www.tadel.ch</string>
+    <string name="tadel_website_title">Zum Portfolio</string>
+    <!-- /Info -->
+
+    <!-- Login -->
+    <string name="login_title">Login</string>
+    <string name="register_success">Benutzerkonto erfolgreich erstellt</string>
+    <string name="btn_register">KONTO ERSTELLEN</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="hint_email">Email-Adresse</string>
+    <string name="hint_password">Passwort</string>
+    <!-- /Login -->
+
+    <!-- Main -->
+    <string name="info_label">Informationen</string>
+    <string name="signout_label">Abmelden</string>
+    <string name="signin_label">Login</string>
+    <string name="profile_label">Mein Profil</string>
+    <string name="main_title_check_list">Kontrollen einsehen</string>
+    <string name="main_description_check_list">Kontrollen durchsuchen und filtern. Hier können auch Excel-Tabellen generiert werden.</string>
+    <string name="main_title_schoollist">Liste der eingetragenen Einrichtungen</string>
+    <string name="main_description_schoollist">Hier sind alle eingetragenen Einrichtungen wie zum Beispiel Schulen oder Kindergärten zu finden. Neue Einrichtungen können hier eingetragen werden.</string>
+    <string name="main_title_new_check">Neue Kontrolle erfassen</string>
+    <string name="main_description_new_check">Eine neue Kontrolle für eine beliebige Schule und Klasse erfassen.</string>
+    <string name="test">TEST</string>
+    <!-- /Main -->
+
+    <!-- NewCheck -->
+    <string name="btn_new_school">NEUE EINRICHTUNG</string>
+    <string name="btn_new_class">NEUE KLASSE</string>
+    <string name="class_start_year_label">Klassenjahrgang:</string>
+    <string name="hint_start_year">z.B. 2018</string>
+    <string name="label_start_year">Schulstart:</string>
+    <string name="checked_class_title">Kontrollierte Klasse</string>
+    <string name="check_data_title">Kontrolldaten</string>
+    <!-- /NewCheck -->
+
+    <!-- Register -->
+    <string name="register_title">Neues Luuser Konto anlegen</string>
+    <string name="hint_prename">Vorname</string>
+    <string name="hint_surname">Nachname</string>
+    <string name="hint_place_label">Ort</string>
+    <string name="hint_password_confirm">Passwort bestätigen</string>
+    <string name="btn_create">ERSTELLEN</string>
+    <!-- /Register -->
+
+    <!-- Profile -->
+    <string name="btn_change_email">ÄNDERN</string>
+    <string name="btn_report_user">PERSON MELDEN</string>
+    <string name="btn_verify_email">EMAIL-ADRESSE VERIFIZIEREN</string>
+    <string name="email_label">Email-Adresse:</string>
+    <string name="email_hint">Die Email-Adresse ist für andere Benutzer nicht sichtbar!</string>
+    <!-- /Profile -->
+
+    <!-- School -->
+    <string name="last_check_label">Letzte Kontrolle:</string>
+    <string name="school_start_year_label">Jahr (Schulstart):</string>
+    <string name="no_classes_hint">keine Klassen registriert</string>
+    <string name="classes_title">Klassen</string>
+    <string name="checks_title">Kontrollen</string>
+    <!-- /School -->
+
+    <!-- SchoolList -->
+    <string name="canton_title">Kanton</string>
+    <!-- /SchoolList -->
 
     <!-- Kalender -->
     <string name="material_calendar_monday">Mo</string>
@@ -80,7 +200,29 @@
     <string name="contact_idea_title"><![CDATA[Ideen & Verbesserungsvorschläge]]></string>
     <!-- -->
 
-    <string name="donation_message">Diese App habe ich in meiner Freizeit entwickelt und stelle sie Ihnen gratis zur Verfügung. Falls Sie jedoch eine kleine Spende leisten möchten, können Sie mir diese hier zukommen lassen.</string>
-    <string name="donation_message2">Diese App in meiner Freizeit entwickelt und wird Ihnen gratis zur Verfügung gestellt. Falls Sie jedoch eine kleine Spende leisten möchten, können Sie mir diese hier zukommen lassen.</string>
+
+    <!-- CONTENT DESCRIPTIONS -->
+    <string name="desc_iv_set_picture">school image</string>
+    <string name="desc_iv_set_picture2">change school image</string>
+    <string name="desc_image_contact_idea">Idea image</string>
+    <string name="desc_image_contact_beer">Beer image</string>
+    <string name="desc_image_contact_bug">Bug image</string>
+    <string name="desc_img_icon_google">Google</string>
+    <string name="desc_img_icon_facebook">Facebook</string>
+    <string name="desc_img_icon_instagram">Instagram</string>
+    <string name="desc_img_icon_twitter">Twitter</string>
+    <string name="desc_iv_new_check">New Check Image</string>
+    <string name="desc_iv_school_list">SchoolList Image</string>
+    <string name="desc_image_search_check">Search Checks Image</string>
+    <string name="desc_iv_profile">Profilecard Image</string>
+    <string name="desc_iv_signout">Signout Image</string>
+    <string name="desc_iv_signin">Signin Image</string>
+    <string name="desc_iv_info">Info Image</string>
+    <string name="desc_iv_students">Students Image</string>
+    <string name="desc_iv_louse">Louse Image</string>
+    <string name="desc_iv_profilepic">Profilepicture</string>
+    <string name="desc_ibtn_pick_date">Calendar Image</string>
+    <string name="desc_icon_add">Plus Icon</string>
+    <!-- /CONTENT DESCRIPTIONS -->
 
 </resources>

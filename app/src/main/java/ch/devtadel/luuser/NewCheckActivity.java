@@ -71,6 +71,8 @@ public class NewCheckActivity extends AppCompatActivity {
     public static List<String> schoolNames = new ArrayList<>();
     public static List<String> classNames = new ArrayList<>();
 
+    private String canton = "";
+
     private FirebaseAuth firebaseAuth;
 
     private BroadcastReceiver activityReceiver = new BroadcastReceiver() {
@@ -163,7 +165,7 @@ public class NewCheckActivity extends AppCompatActivity {
                 classNames.clear();
             }
         });
-        dao.setupSchoolSpinner(this);
+        dao.setupSchoolSpinner(this, canton);   //Todo: Kanton des Benutzers mitgeben!
 
         //Receiver registrieren
         if(activityReceiver != null){

@@ -1,11 +1,17 @@
 package ch.devtadel.luuser;
 
+import android.animation.ValueAnimator;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.MenuItem;
+import android.view.View;
+
+import ch.devtadel.luuser.helper.Animator;
 
 public class ContactActivity extends AppCompatActivity {
+    private Animator animator = new Animator();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,20 @@ public class ContactActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void toBeer(final View view){
+        animator.animateCardPress((CardView)view);
+
+    }
+
+    public void toBugReport(View view){
+        animator.animateCardPress((CardView)view);
+    }
+
+    public void toIdeas(View view){
+        animator.animateCardPress((CardView)view);
+
     }
 
     private void setupContentViews(){

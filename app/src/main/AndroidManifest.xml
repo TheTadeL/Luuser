@@ -21,7 +21,6 @@
         <activity android:name=".NewCheckActivity" />
         <activity android:name=".CheckListActivity" />
         <activity android:name=".CheckActivity" />
-        <activity android:name=".GraphActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

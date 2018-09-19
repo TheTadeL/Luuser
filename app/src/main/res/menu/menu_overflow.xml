@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/navigation_new_school"
-        android:title="@string/new_school" />
+        android:id="@+id/dev"
+        android:title="@string/dev" />
+    
     <item
-        android:id="@+id/navigation_test"
-        android:title="Developer" />
+        android:id="@+id/bug_report"
+        android:title="@string/bug_report" />
 
     <item
-    android:id="@+id/navigation_test2"
-    android:title="@string/test" />
+        android:id="@+id/contact"
+        android:title="@string/contact" />
 
     <item
-    android:id="@+id/navigation_test3"
-    android:title="@string/test" />
+        android:id="@+id/signout"
+        android:title="@string/sign_out" />
 
 </menu>

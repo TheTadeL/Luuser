@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import ch.devtadel.luuser.DAL.FireStore.SchoolDao;
-import ch.devtadel.luuser.R;
 
 public class DeveloperActivity extends AppCompatActivity {
 
@@ -72,8 +71,8 @@ public class DeveloperActivity extends AppCompatActivity {
         datatypeSP = findViewById(R.id.sp_dev_datatype);
 
         //EditText
-        fieldNameET = findViewById(R.id.tv_dev_field_name);
-        defaultValueET = findViewById(R.id.tv_dev_default_value);
+        fieldNameET = findViewById(R.id.et_dev_field_name);
+        defaultValueET = findViewById(R.id.et_dev_default_value);
 
         //Button
         commitBTN = findViewById(R.id.btn_dev_commit);

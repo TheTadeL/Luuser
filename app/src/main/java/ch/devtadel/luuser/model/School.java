@@ -6,13 +6,15 @@ import java.util.List;
 public class School {
     private String name;
     private String place;
+    private String canton;
     private int cntLouse;
     private int cntChecks;
     private List<SchoolClass> classes = new ArrayList<>();
 
-    public School(String name, String place){
+    public School(String name, String place, String canton){
         this.name = name;
         this.place = place;
+        this.canton = canton;
     }
 
     @Override
@@ -50,5 +52,11 @@ public class School {
     }
     public void setCntChecks(int cntChecks) {
         this.cntChecks = cntChecks;
+    }
+    public String getCanton() {
+        return canton;
+    }
+    public void setCanton(String canton) {
+        this.canton = canton;
     }
 }

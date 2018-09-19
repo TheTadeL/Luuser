@@ -1,23 +1,26 @@
 package ch.devtadel.luuser;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+
+import ch.devtadel.luuser.helper.Animator;
+import ch.devtadel.luuser.helper.UserHelper;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
+
+    private Animator animator;
 
     private FirebaseAuth firebaseAuth;
     private boolean loggedIn = false;
@@ -127,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void newCheck(View view){
+        animator.animateCardPress((CardView)view);
         if(loggedIn && verified) {
             startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
         } else if(!loggedIn) {
@@ -137,6 +141,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void schoolList(View view){
+        animator.animateCardPress((CardView)view);
         if(loggedIn && verified) {
             startActivity(new Intent(MainActivity.this, SchoolListActivity.class));
         } else if(!loggedIn) {
@@ -147,34 +152,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void checkList(View view){
+        animator.animateCardPress((CardView)view);
         startActivity(new Intent(MainActivity.this, CheckListActivity.class));
     }
 
     public void signOut(View view){
-        //Todo: Dialog zum Bestätigen.
-        firebaseAuth.signOut();
-        finish();
-        Intent intent = getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        animator.animateCardPress((CardView)view);
+        UserHelper.signOutDialog(firebaseAuth, this, getIntent());
     }
 
     public void signIn(View view){
+        animator.animateCardPress((CardView)view);
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 
     public void toInfo(View view){
+        animator.animateCardPress((CardView)view);
         startActivity(new Intent(MainActivity.this, InfoActivity.class));
     }
 
     public void toProfile(View view){
+        animator.animateCardPress((CardView)view);
         startActivity(new Intent(MainActivity.this, ProfileActivity.class).putExtra(ProfileActivity.ME, true));
     }
+
 
     /**
      * Prozedur um alle Views zu initialisieren.
      * Soll Platz in der OnCreate()-Methode sparen.
      */
     private void setupContentViews(){
+        animator = new Animator();
+
         //TextView
         welcomeTV = findViewById(R.id.tv_welcome_msg);
         notVerifiedTV = findViewById(R.id.tv_main_not_verified);
