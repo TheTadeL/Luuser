@@ -1,5 +1,6 @@
 package ch.devtadel.luuser;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import ch.devtadel.luuser.DAL.FireStore.SchoolDao;
@@ -92,7 +94,7 @@ public class SchoolActivity extends AppCompatActivity {
     private BroadcastReceiver activityReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ACTION_STRING_SCHOOL_LOADED)){
+            if(intent.getAction() != null && intent.getAction().equals(ACTION_STRING_SCHOOL_LOADED)){
                 Log.d(TAG, "SCHOOL LOADED BROADCAST RECEIVED!");
                 loadSchoolPage();
             } else if(intent.getAction().equals(ACTION_STRING_CLASSES_LOADED)){
@@ -114,7 +116,7 @@ public class SchoolActivity extends AppCompatActivity {
                 checksRecyclerAdapter.notifyDataSetChanged();
             } else if(intent.getAction().equals(ACTION_STRING_LAST_CHECK_LOADED)){
                 Log.d(TAG, "LAST CHECK LOADED BROADCAST RECEIVED!");
-                lastCheckTV.setText(intent.getExtras().getString(LAST_CHECK_DATE));
+                lastCheckTV.setText(Objects.requireNonNull(intent.getExtras()).getString(LAST_CHECK_DATE));
             }
         }
     };
@@ -273,6 +275,7 @@ public class SchoolActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private LineGraphSeries<DataPoint> loadGraph(){
         DateAsXAxisLabelFormatter dateLabelFormatter = new DateAsXAxisLabelFormatter(getBaseContext(), new SimpleDateFormat("dd.MMM"));
         graph.getGridLabelRenderer().setLabelFormatter(dateLabelFormatter);
@@ -341,6 +344,7 @@ public class SchoolActivity extends AppCompatActivity {
 
     private void newClassDialog(int year){
         LayoutInflater li = LayoutInflater.from(this);
+        @SuppressLint("InflateParams")
         View promptView = li.inflate(R.layout.prompt_add_class, null);
 
         //Promptbuilder.
@@ -359,7 +363,7 @@ public class SchoolActivity extends AppCompatActivity {
         final EditText startYearET = promptView.findViewById(R.id.prompt_new_class_start_year);
 
         //Wenn ein StartJahr mitgegeben wurde
-        String printString = "";
+        String printString;
         if(year != -1) {
             startYearET.setText(String.valueOf(year));
             printString = DateHelper.getShortYearString(year);
@@ -377,11 +381,8 @@ public class SchoolActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if(DateHelper.startYearToFinal(charSequence, getBaseContext(), startYearET, finalStartYearTV)){
-                    addClass = true;
-                } else {
-                    addClass = false;
-                }
+                //Festlegen ob die Klasse hinzugefügt werden darf, oder nicht.
+                addClass = DateHelper.startYearToFinal(charSequence, getBaseContext(), startYearET, finalStartYearTV);
             }
             @Override
             public void afterTextChanged(Editable editable) {

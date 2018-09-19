@@ -1,5 +1,6 @@
 package ch.devtadel.luuser;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
@@ -17,10 +18,11 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.Objects;
+
 public class ProfileActivity extends AppCompatActivity {
     public static final String ME = "my Profile";
     public static final String USERMAIL = "email";
-    private boolean myProfile;
 
     FirebaseAuth firebaseAuth;
 
@@ -30,6 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private TextView verifiedTV;
     private Button verifyBTN;
 
+    @SuppressLint("SetTextI18n")    //Todo: entfernen, wenn User einen Ort haben
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,28 +57,24 @@ public class ProfileActivity extends AppCompatActivity {
 
         //Check wessen Profil das ist.
         Bundle bundle = getIntent().getExtras();
+        boolean myProfile;  //Boolean der bestimmt ob es sich um mein Profil handelt, oder um ein fremdes.
         if(bundle != null) {
-            //Check ob eigenes Profil.
-            if (bundle.getBoolean(ME)) {
-                myProfile = true;
-            } else {
-                myProfile = false;  //Kann entfernt werden.
-            }
+            myProfile = bundle.getBoolean(ME);
             if(bundle.getString(USERMAIL) != null){
-                if (bundle.getString(USERMAIL).equals(firebaseAuth.getCurrentUser().getEmail())) {
-                    myProfile = true;
-                } else {
-                    myProfile = false;
+                //Wenn die mitgegebene Mail-Adresse die selbe ist wie die von dem eingeloggten User, wird myProfile = true;
+                if(firebaseAuth.getCurrentUser() != null && bundle.getString(USERMAIL) != null) {
+                    myProfile = Objects.equals(bundle.getString(USERMAIL), firebaseAuth.getCurrentUser().getEmail());
                 }
             }
         } else {
-            myProfile = false;      //Kann entfernt werden.
+            myProfile = false;   //Kann entfernt werden.
         }
         //
 
         //Profil einrichten.
         if(firebaseAuth.getCurrentUser() != null) {
             if (myProfile) {
+                //Mein Profil => verifiziert == unbekannt
                 setTitle("Mein Profil");
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 displayNameTV.setText(firebaseUser.getDisplayName());
@@ -83,15 +82,19 @@ public class ProfileActivity extends AppCompatActivity {
                 emailTV.setText(firebaseUser.getEmail());
                 myProfileCL.setVisibility(View.VISIBLE);
                 if (firebaseUser.isEmailVerified()) {
+                    //Mein Profil => verifiziert == true
                     verifiedTV.setText(R.string.verified);
                     verifiedTV.setTextColor(getResources().getColor(R.color.colorVerified, null));
                 } else {
+                    //Mein Profil => verifiziert == false
                     verifiedTV.setText(R.string.not_verified);
                     verifiedTV.setTextColor(getResources().getColor(R.color.colorNotVerified, null));
                     verifyBTN.setVisibility(View.VISIBLE);
                 }
             } else {
+                //Fremdes Profil
                 setTitle("Profil");
+                placeTV.setText("<Placeholder>"); //Todo: Platzhalter
                 otherProfileCL.setVisibility(View.VISIBLE);
             }
         }
@@ -119,6 +122,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void verifyEmailDialog(){
         LayoutInflater li = LayoutInflater.from(this);
+        @SuppressLint("InflateParams")
         final View promptView = li.inflate(R.layout.prompt_verify_email, null);
 
         //Promptbuilder.

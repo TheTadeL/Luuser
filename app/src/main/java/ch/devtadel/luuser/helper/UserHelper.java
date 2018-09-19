@@ -1,5 +1,6 @@
 package ch.devtadel.luuser.helper;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,7 @@ public abstract class UserHelper {
     public static void signOutDialog(final FirebaseAuth auth, final AppCompatActivity activity, final Intent intent){
 
         LayoutInflater li = LayoutInflater.from(activity);
+        @SuppressLint("InflateParams")
         View promptView = li.inflate(R.layout.prompt_sign_out, null);
 
         //Promptbuilder.

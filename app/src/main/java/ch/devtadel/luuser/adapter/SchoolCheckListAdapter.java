@@ -1,10 +1,10 @@
 package ch.devtadel.luuser.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 import ch.devtadel.luuser.CheckActivity;
 import ch.devtadel.luuser.R;
@@ -48,6 +47,7 @@ public class SchoolCheckListAdapter extends RecyclerView.Adapter<SchoolCheckList
         return new ViewHolder(constraintLayout);
     }
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         TextView schoolNameTV = holder.checkListItem.findViewById(R.id.tv_checkitem_school_name);

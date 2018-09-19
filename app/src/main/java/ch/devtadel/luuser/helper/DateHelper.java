@@ -10,11 +10,11 @@ import javax.annotation.Nullable;
 
 import ch.devtadel.luuser.R;
 
-/**
- * Methode die bei einem TextChangedListener verwendet wird. Wenn ein Jahr beim EditText StartYear eingegeben wird, wird die Zahl validiert: es wird gecheckt ob es ein valides Jahr ist.
- * @return Wenn das Jahr valid ist => true
- */
 public abstract class DateHelper {
+    /**
+     * Methode die bei einem TextChangedListener verwendet wird. Wenn ein Jahr beim EditText StartYear eingegeben wird, wird die Zahl validiert: es wird gecheckt ob es ein valides Jahr ist.
+     * @return Wenn das Jahr valid ist => true
+     */
     public static boolean startYearToFinal(CharSequence charSequence, Context context, EditText startYearET, @Nullable TextView finalStartYearTV ) {
         boolean valid = true;
 
@@ -41,7 +41,7 @@ public abstract class DateHelper {
 
     public static boolean validYear(EditText editText){
         boolean valid = false;
-        if (!editText.getText().equals("") && editText.getText().length() == 4) {
+        if (!editText.getText().toString().equals("") && editText.getText().length() == 4) {
             int startYear = Integer.valueOf(editText.getText().toString());
             if (startYear - 2000 > 0 && startYear - 2000 <= 2999) {
                 valid = true;

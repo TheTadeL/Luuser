@@ -49,16 +49,16 @@ public class ClassListAdapter extends RecyclerView.Adapter<ClassListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TextView klassennameTV = (TextView) holder.classListItem.findViewById(R.id.tv_card_name);
+        TextView klassennameTV = holder.classListItem.findViewById(R.id.tv_card_name);
         klassennameTV.setText(dataset.get(position).getName());
 
-        TextView cntStudentsTV = (TextView) holder.classListItem.findViewById(R.id.tv_cnt_students);
+        TextView cntStudentsTV = holder.classListItem.findViewById(R.id.tv_cnt_students);
         cntStudentsTV.setText(String.valueOf(dataset.get(position).getCntStudents()));
 
-        TextView cntChecksTV = (TextView) holder.classListItem.findViewById(R.id.tv_cnt_checks);
+        TextView cntChecksTV = holder.classListItem.findViewById(R.id.tv_cnt_checks);
         cntChecksTV.setText(String.valueOf(dataset.get(position).getCntChecks()));
 
-        TextView cntLouseTV = (TextView) holder.classListItem.findViewById(R.id.tv_cnt_louse);
+        TextView cntLouseTV = holder.classListItem.findViewById(R.id.tv_cnt_louse);
         cntLouseTV.setText(String.valueOf(dataset.get(position).getCntLouse()));
     }
 

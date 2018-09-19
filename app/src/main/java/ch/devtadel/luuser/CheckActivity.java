@@ -49,7 +49,7 @@ public class CheckActivity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getAction().equals(ACTION_STRING_CHECK_LOADED)) {
+            if(intent.getAction() != null && intent.getAction().equals(ACTION_STRING_CHECK_LOADED)) {
                 //Wenn check "null" ist, fehler anzeigen:
                 if (check != null) {
                     showCheck();
@@ -58,16 +58,19 @@ public class CheckActivity extends AppCompatActivity {
                 } else {
                     showErrorView();
                 }
-            } else if(intent.getAction().equals(ACTION_STRING_CHECKER_LOADED)){
-                String checkerName = intent.getExtras().getString(CHECKER);
-                String checkerUid = intent.getExtras().getString(CHECKER_UID);
-                checkerTV.setText(checkerName);
-                checkerPB.setVisibility(View.GONE);
+            } else if(intent.getExtras() != null && intent.getAction().equals(ACTION_STRING_CHECKER_LOADED)){
+                if(intent.getExtras().getString(CHECKER) != null && intent.getExtras().getString(CHECKER_UID) != null) {
+                    String checkerName = intent.getExtras().getString(CHECKER);
+                    String checkerUid = intent.getExtras().getString(CHECKER_UID);
+                    checkerTV.setText(checkerName);
+                    checkerPB.setVisibility(View.GONE);
 
-                if(firebaseAuth.getCurrentUser() != null) {
-                    //Wenn User der Ersteller des Checks ist, Adminpanel anzeigen.
-                    if (checkerUid.equals(firebaseAuth.getCurrentUser().getUid())) {
-                        adminCL.setVisibility(View.VISIBLE);
+                    if (firebaseAuth.getCurrentUser() != null) {
+                        //Wenn User der Ersteller des Checks ist, Adminpanel anzeigen.
+                        assert checkerUid != null;
+                        if (checkerUid.equals(firebaseAuth.getCurrentUser().getUid())) {
+                            adminCL.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
             } else if(intent.getAction().equals(ACTION_STRING_ADMINLIST_LOADED)){

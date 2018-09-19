@@ -1,5 +1,6 @@
 package ch.devtadel.luuser;
 
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -30,7 +31,6 @@ public class CalendarActivity extends AppCompatActivity {
     public static final String TAG = "CalendarActivity";
     public static List<Date> data = new ArrayList<>();
 
-    private CalendarView calendarView;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
@@ -43,7 +43,7 @@ public class CalendarActivity extends AppCompatActivity {
             Calendar calendar = Calendar.getInstance();
             events.add(new EventDay(calendar, R.drawable.laus));
 
-            CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+            CalendarView calendarView = findViewById(R.id.calendarView);
             calendarView.setEvents(events);
 
             List<EventDay> events2 = new ArrayList<>();
@@ -69,20 +69,19 @@ public class CalendarActivity extends AppCompatActivity {
             registerReceiver(broadcastReceiver, intentFilter);
         }
 
-        calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDayClickListener(new OnDayClickListener() {
-            @Override
-            public void onDayClick(EventDay eventDay) {
-                dayInfoDialog(eventDay.getCalendar().getTime());
-            }
-        });
 
         List<EventDay> events = new ArrayList<>();
 
         Calendar calendar = Calendar.getInstance();
         events.add(new EventDay(calendar, R.drawable.laus));
 
-        CalendarView calendarView = (CalendarView) findViewById(R.id.calendarView);
+        CalendarView calendarView = findViewById(R.id.calendarView);
+        calendarView.setOnDayClickListener(new OnDayClickListener() {
+            @Override
+            public void onDayClick(EventDay eventDay) {
+                dayInfoDialog(eventDay.getCalendar().getTime());
+            }
+        });
         calendarView.setEvents(events);
 
         SchoolDao dao = new SchoolDao();
@@ -110,8 +109,10 @@ public class CalendarActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint({"InflateParams", "SimpleDateFormat"})
     private void dayInfoDialog(Date date){
         LayoutInflater li = LayoutInflater.from(this);
+
         View promptView = li.inflate(R.layout.prompt_day_info, null);
 
         //Promptbuilder.
@@ -141,18 +142,18 @@ public class CalendarActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
-    private List<EventDay> createEventDays(){
-        List<EventDay> returnList = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-
-        for(Date date : data){
-            cal.setTime(date);
-            Log.d(TAG, cal.getTime().toString());
-            returnList.add(new EventDay(cal, R.drawable.untersuchung));
-        }
-
-        Log.d(TAG, "Grösse returnList: "+returnList.size());
-
-        return returnList;
-    }
+//    private List<EventDay> createEventDays(){
+//        List<EventDay> returnList = new ArrayList<>();
+//        Calendar cal = Calendar.getInstance();
+//
+//        for(Date date : data){
+//            cal.setTime(date);
+//            Log.d(TAG, cal.getTime().toString());
+//            returnList.add(new EventDay(cal, R.drawable.untersuchung));
+//        }
+//
+//        Log.d(TAG, "Grösse returnList: "+returnList.size());
+//
+//        return returnList;
+//    }
 }

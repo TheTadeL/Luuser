@@ -1,13 +1,14 @@
 package ch.devtadel.luuser.model;
 
+import android.annotation.SuppressLint;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Report {
-    List<SchoolClass> classes;
-    String name;
+    private List<SchoolClass> classes;
+    private String name;
 
     public String getName() {
         return name;
@@ -29,6 +30,7 @@ public class Report {
         return allChecks;
     }
 
+    @SuppressLint("SimpleDateFormat")
     public List<String> getDates(){
         List<String> allDates = new ArrayList<>();
         for(SchoolClass sClass : classes){

@@ -1,5 +1,6 @@
 package ch.devtadel.luuser.DAL.FireStore;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.TreeMap;
 
 import ch.devtadel.luuser.CalendarActivity;
@@ -45,29 +47,29 @@ import ch.devtadel.luuser.model.User;
 public class SchoolDao {
     private static final String TAG = "SchoolDao";
 
-    public static final String FS_NAME = "Name";
-    public static final String FS_PLACE = "Ort";
-    public static final String FS_CANTON = "Kanton";
-    public static final String FS_SCHOOL_NAME = "Schulname";
-    public static final String FS_CLASS_NAME = "Klassenname";
-    public static final String FS_CNT_STUDENTS = "Anzahl_Kinder";
-    public static final String FS_CNT_LOUSE = "Anzahl_Laeuse";
-    public static final String FS_DATE = "Datum";
-    public static final String FS_NO_LOUSE = "Lausfrei";
-    public static final String FS_PRENAME = "Vorname";
-    public static final String FS_SURNAME = "Nachname";
-    public static final String FS_EMAIL = "Email";
-    public static final String FS_UID = "uid";
-    public static final String FS_YEAR = "Jahr";
-    public static final String FS_START_YEAR = "Jahrgang";
-    public static final String FS_ERSTELLER = "Erstellt_durch";
+    private static final String FS_NAME = "Name";
+    private static final String FS_PLACE = "Ort";
+    private static final String FS_CANTON = "Kanton";
+    private static final String FS_SCHOOL_NAME = "Schulname";
+    private static final String FS_CLASS_NAME = "Klassenname";
+    private static final String FS_CNT_STUDENTS = "Anzahl_Kinder";
+    private static final String FS_CNT_LOUSE = "Anzahl_Laeuse";
+    private static final String FS_DATE = "Datum";
+    private static final String FS_NO_LOUSE = "Lausfrei";
+    private static final String FS_PRENAME = "Vorname";
+    private static final String FS_SURNAME = "Nachname";
+    private static final String FS_EMAIL = "Email";
+    private static final String FS_UID = "uid";
+    private static final String FS_YEAR = "Jahr";
+    private static final String FS_START_YEAR = "Jahrgang";
+    private static final String FS_ERSTELLER = "Erstellt_durch";
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    public static final String DB_SCHOOLS = "Schulen";
-    public static final String DB_CLASSES = "Klassen";
-    public static final String DB_CHECKS = "Kontrollen";
-    public static final String DB_USER = "Benutzer";
-    public static final String DB_ADMINS = "Administratoren";
+    private static final String DB_SCHOOLS = "Schulen";
+    private static final String DB_CLASSES = "Klassen";
+    private static final String DB_CHECKS = "Kontrollen";
+    private static final String DB_USER = "Benutzer";
+    private static final String DB_ADMINS = "Administratoren";
     public static final String[] DB_COLLECTIONS = {DB_SCHOOLS, DB_CLASSES, DB_CHECKS, DB_USER, DB_ADMINS};
 
     public void loadSchoolList(final RecyclerView.Adapter adapter, final RecyclerView recyclerView, String canton){
@@ -163,7 +165,7 @@ public class SchoolDao {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.d(TAG, "!=!=!=!=!=!=!=!=! Error adding document: " + e + " !=!=!=!=!=!=!=!=!");
                     }
                 });
     }
@@ -177,18 +179,15 @@ public class SchoolDao {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                School school = new School(document.getData().get(FS_NAME).toString(), document.getData().get(FS_PLACE).toString(), document.getData().get(FS_CANTON).toString());
-                                SchoolActivity.school = school;
-
-                                Intent intent = new Intent();
-                                intent.setAction(SchoolActivity.ACTION_STRING_SCHOOL_LOADED);
-                                intent.addCategory(Intent.CATEGORY_DEFAULT);
-                                context.sendBroadcast(intent);
-
-                                return;
+                                SchoolActivity.school = new School(document.getData().get(FS_NAME).toString(), document.getData().get(FS_PLACE).toString(), document.getData().get(FS_CANTON).toString());
                             }
+                            Intent intent = new Intent();
+                            intent.setAction(SchoolActivity.ACTION_STRING_SCHOOL_LOADED);
+                            intent.addCategory(Intent.CATEGORY_DEFAULT);
+                            context.sendBroadcast(intent);
+
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -213,7 +212,7 @@ public class SchoolDao {
                             intent.addCategory(Intent.CATEGORY_DEFAULT);
                             context.sendBroadcast(intent);
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -242,7 +241,7 @@ public class SchoolDao {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.d(TAG, "!=!=!=!=!=!=!=!=! Error adding document: " + e + " !=!=!=!=!=!=!=!=!");
                     }
                 });
     }
@@ -274,7 +273,7 @@ public class SchoolDao {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.d(TAG, "!=!=!=!=!=!=!=!=! Error adding document: " + e + " !=!=!=!=!=!=!=!=!");
                     }
                 });
     }
@@ -294,7 +293,7 @@ public class SchoolDao {
                                     .setAction(CheckListActivity.ACTION_STRING_VALUES_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -315,12 +314,13 @@ public class SchoolDao {
                                     .setAction(CheckListActivity.ACTION_STRING_VALUES_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
     }
 
+    @SuppressLint("SimpleDateFormat")
     public void keySpinnerDate(final Context context){
         db.collection(DB_CHECKS)
                 .get()
@@ -341,14 +341,14 @@ public class SchoolDao {
                                     .setAction(CheckListActivity.ACTION_STRING_VALUES_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
     }
 
 
-
+    @SuppressLint("SimpleDateFormat")
     public void getChecksToPage(final RecyclerView.Adapter adapter, final Context context, String key, String value){
         Object v = "";
         if(key.equals("Datum")){
@@ -388,7 +388,7 @@ public class SchoolDao {
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -421,7 +421,7 @@ public class SchoolDao {
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -454,12 +454,13 @@ public class SchoolDao {
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
     }
 
+    @SuppressLint("SimpleDateFormat")
     public void getLastCheckToSchool(final Context context, String schoolName){
         db.collection(DB_CHECKS)
                 .whereEqualTo(FS_SCHOOL_NAME, schoolName)
@@ -486,12 +487,13 @@ public class SchoolDao {
                                     .addCategory(Intent.CATEGORY_DEFAULT)
                                     .putExtra(SchoolActivity.LAST_CHECK_DATE, lastDateString));
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
     }
 
+    @SuppressLint("SimpleDateFormat")
     public void getChecksToCalendar(final Context context, final Date date) {
         String year = new SimpleDateFormat("yyyy").format(date);
         final SimpleDateFormat monthFormatter = new SimpleDateFormat("MM");
@@ -522,7 +524,7 @@ public class SchoolDao {
                                     .addCategory(Intent.CATEGORY_DEFAULT));
 
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -557,7 +559,7 @@ public class SchoolDao {
                                     .setAction(SchoolActivity.ACTION_STRING_GRAPH_LOADED)
                                     .addCategory(Intent.CATEGORY_DEFAULT));
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
@@ -584,7 +586,7 @@ public class SchoolDao {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
+                        Log.d(TAG, "!=!=!=!=!=!=!=!=! Error adding document: " + e + " !=!=!=!=!=!=!=!=!");
                     }
                 });
     }
@@ -598,17 +600,17 @@ public class SchoolDao {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if(task.isSuccessful()){
                             Check check = new Check();
-                            check.setStudentCount(Integer.valueOf(task.getResult().get(FS_CNT_STUDENTS).toString()));
-                            check.setLouseCount(Integer.valueOf(task.getResult().get(FS_CNT_LOUSE).toString()));
+                            check.setStudentCount(Integer.valueOf(Objects.requireNonNull(task.getResult().get(FS_CNT_STUDENTS)).toString()));
+                            check.setLouseCount(Integer.valueOf(Objects.requireNonNull(task.getResult().get(FS_CNT_LOUSE)).toString()));
                             check.setDate((Date)task.getResult().get(FS_DATE));
-                            check.setClassName(task.getResult().get(FS_CLASS_NAME).toString());
-                            check.setSchoolName(task.getResult().get(FS_SCHOOL_NAME).toString());
+                            check.setClassName(Objects.requireNonNull(task.getResult().get(FS_CLASS_NAME)).toString());
+                            check.setSchoolName(Objects.requireNonNull(task.getResult().get(FS_SCHOOL_NAME)).toString());
                             check.setNoLouse((boolean)task.getResult().get(FS_NO_LOUSE));
-                            check.setCheckerMail(task.getResult().get(FS_ERSTELLER).toString());
+                            check.setCheckerMail(Objects.requireNonNull(task.getResult().get(FS_ERSTELLER)).toString());
 
                             CheckActivity.check = check;
                         } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                             CheckActivity.check = null;
                         }
                         context.sendBroadcast(new Intent()
@@ -639,25 +641,19 @@ public class SchoolDao {
                                 .putExtra(CheckActivity.CHECKER, username)
                                 .putExtra(CheckActivity.CHECKER_UID, userUid));
                         } else {
-                            Log.d(TAG, "User nicht gefunden!");
+                            Log.d(TAG, "!=!=!=!=!=!=!=!=! Error getting documents: " + task.getException() + " !=!=!=!=!=!=!=!=!");
                         }
                     }
                 });
     }
 
     public void newField(final Context context, final String collectionStr, final String fieldNameStr, String datatypeStr, String defaultValue){
-        boolean valid = true;
-
         Object data = " ";
 
         //Datentyp bestimmen
         switch(datatypeStr){
             case "Boolean":
-                if(defaultValue.equals("true")){
-                    data = true;
-                } else {
-                    data = false;
-                }
+                data = defaultValue.equals("true");
                 break;
             case "String":
                 data = defaultValue;
@@ -666,7 +662,6 @@ public class SchoolDao {
                 data = Integer.valueOf(defaultValue);
                 break;
             default:
-                valid = false;
         }
         final Object finalData = data;
 

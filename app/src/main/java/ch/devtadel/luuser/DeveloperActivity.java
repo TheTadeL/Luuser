@@ -64,7 +64,7 @@ public class DeveloperActivity extends AppCompatActivity {
      */
     private void setupContentViews(){
         //Spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, SchoolDao.DB_COLLECTIONS);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, SchoolDao.DB_COLLECTIONS);
         collectionSP = findViewById(R.id.sp_dev_collection);
         collectionSP.setAdapter(adapter);
 

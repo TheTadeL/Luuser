@@ -63,12 +63,14 @@ public class CheckListActivity extends AppCompatActivity {
     private RecyclerView mainRecyclerView;
     private ProgressBar mainProgressBar;
 
+    private final static String TEMP_FILE_NAME = "Kontrollen_Raport";
+
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             Log.d(TAG, "VALUES LOADED BROADCAST RECEIVED!");
 
-            if(intent.getAction().equals(ACTION_STRING_VALUES_LOADED)) {
+            if(intent.getAction() != null && intent.getAction().equals(ACTION_STRING_VALUES_LOADED)) {
                 ArrayAdapter<String> valueSpinnerAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, valueList);
                 valueSpinnerAdapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
                 valueSP.setAdapter(valueSpinnerAdapter);
@@ -96,7 +98,7 @@ public class CheckListActivity extends AppCompatActivity {
         textExcelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(generateExcelFile("Kontrollen_Raport")){
+                if(generateExcelFile(TEMP_FILE_NAME)){
                     Toast.makeText(getBaseContext(), "Raport mit dem Namen \"Kontrollen_Raport.xls\" wurde erstellt!", Toast.LENGTH_LONG).show();
                 }
             }
@@ -296,7 +298,7 @@ public class CheckListActivity extends AppCompatActivity {
 
         //Neues Workbook
         Workbook workbook = new HSSFWorkbook();
-        Cell cell = null;
+        Cell cell;
 
         //CELL-STYLES
         CellStyle cs = workbook.createCellStyle();
@@ -366,10 +368,10 @@ public class CheckListActivity extends AppCompatActivity {
         //END CELL_STYLES
 
         //Neue Seite
-        Sheet sheet1 = null;
+        Sheet sheet1;
         sheet1 = workbook.createSheet("CHECK");
 
-        int widthFlag = 0;
+        int widthFlag;
         int heightFlag = 0;
         for(Report report : reportList){
             //START REPORT
@@ -490,6 +492,7 @@ public class CheckListActivity extends AppCompatActivity {
                 if (null != os)
                     os.close();
             } catch (Exception ex) {
+                Log.d(TAG , "!=!=!=!=!=!=!=!=! " + ex.getMessage() + "!=!=!=!=!=!=!=!=!");
             }
         }
        return success;
@@ -497,18 +500,14 @@ public class CheckListActivity extends AppCompatActivity {
 
     private static boolean isExternalStorageReadOnly() {
         String extStorageState = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
-            return true;
-        }
-        return false;
+
+        return Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState);
     }
 
     public static boolean isExternalStorageAvailable() {
         String extStorageState = Environment.getExternalStorageState();
-        if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
-            return true;
-        }
-        return false;
+
+        return Environment.MEDIA_MOUNTED.equals(extStorageState);
     }
 
     private List<Report> generateReports() {

@@ -164,23 +164,28 @@ public class RegisterActivity extends AppCompatActivity {
 
                             SchoolDao dao = new SchoolDao();
                             final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                            dao.createUserInFS(user, firebaseUser.getUid());
+                            if(firebaseUser != null)
+                                dao.createUserInFS(user, firebaseUser.getUid());
+
                             //Displaynamen setzen
                             UserProfileChangeRequest request = new UserProfileChangeRequest.Builder()
                                     .setDisplayName(user.getSurname() + " " + user.getPrename())
                                     .build();
-                            firebaseUser.updateProfile(request)
-                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if(task.isSuccessful()){
-                                                Log.d(TAG, "Displayname gesetzt: " + firebaseUser.getDisplayName());
-                                                startActivity(new Intent(RegisterActivity.this, LoginActivity.class).putExtra(LoginActivity.EMAIL, firebaseUser.getEmail()));
-                                            } else {
-                                                Log.d(TAG, "Fehler beim Setzen des Displaynamen");
+
+                            if(firebaseUser != null) {
+                                firebaseUser.updateProfile(request)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "Displayname gesetzt: " + firebaseUser.getDisplayName());
+                                                    startActivity(new Intent(RegisterActivity.this, LoginActivity.class).putExtra(LoginActivity.EMAIL, firebaseUser.getEmail()));
+                                                } else {
+                                                    Log.d(TAG, "Fehler beim Setzen des Displaynamen");
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                            }
                             //
                             updateUI(firebaseUser);
                         } else {
@@ -195,10 +200,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user){
         if(user == null){
-
+            Log.d(TAG, "Kein User!!!");
         } else {
             //TODO: Dialog anzeigen: Email registrierung an diese Email <mail> [Ok] [Neu anfordern] [Emailadresse ändern]
-            if(!firebaseAuth.getCurrentUser().isEmailVerified()){
+            if(firebaseAuth.getCurrentUser() != null && !firebaseAuth.getCurrentUser().isEmailVerified()){
                 firebaseAuth.getCurrentUser().sendEmailVerification();
             }
         }

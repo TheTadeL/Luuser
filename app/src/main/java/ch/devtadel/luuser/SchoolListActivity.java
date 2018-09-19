@@ -1,16 +1,14 @@
 package ch.devtadel.luuser;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -30,12 +28,6 @@ public class SchoolListActivity extends AppCompatActivity {
     RecyclerView.Adapter mainRecyclerAdapter;
     RecyclerView mainRecyclerView;
 
-    private EditText cantonET;
-
-    private String canton = UserHelper.DEFAULT_CANTON; //Todo: angemeldeter Kanton
-
-    private FirebaseAuth firebaseAuth;
-
     public static List<School> data = new ArrayList<>();
 
     @Override
@@ -43,7 +35,8 @@ public class SchoolListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_list);
 
-        cantonET = findViewById(R.id.et_school_list_canton);
+        String canton = UserHelper.DEFAULT_CANTON;
+        EditText cantonET = findViewById(R.id.et_school_list_canton);
         cantonET.setText(canton);
 
         //UP-Button hinzufügen
@@ -53,7 +46,7 @@ public class SchoolListActivity extends AppCompatActivity {
         }
 
         //Check ob der User authoriziert ist, um Einträge zu machen.
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         if(firebaseAuth.getCurrentUser() == null){
             startActivity(new Intent(SchoolListActivity.this, MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             Toast.makeText(SchoolListActivity.this, R.string.pls_login, Toast.LENGTH_LONG).show();

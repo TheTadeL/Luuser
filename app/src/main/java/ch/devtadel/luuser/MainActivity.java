@@ -11,14 +11,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 
 import ch.devtadel.luuser.helper.Animator;
 import ch.devtadel.luuser.helper.UserHelper;
 
 public class MainActivity extends AppCompatActivity {
-    public static final String TAG = "MainActivity";
+//    public static final String TAG = "MainActivity";
 
     private Animator animator;
 
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
     private CardView newCheckCV;
     private CardView schoolListCV;
-    private CardView checkListCV;
     private CardView loginCV;
     private CardView logoutCV;
     private CardView profileCV;
@@ -112,11 +110,9 @@ public class MainActivity extends AppCompatActivity {
             }
             // Die Willkommen Nachricht setzen (" Willkommen zurück, <Vorname> ")
             String prename = " ";
-            try {
+            if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().getDisplayName() != null)
                 prename += firebaseAuth.getCurrentUser().getDisplayName().split(" ")[1];
-            } catch(java.lang.NullPointerException e){
-               e.printStackTrace();
-            }
+
             welcomeTV.setText(getResources().getString(R.string.welcome_back) + prename);
         } else {
             profileCV.setVisibility(View.GONE);
@@ -189,7 +185,6 @@ public class MainActivity extends AppCompatActivity {
         notVerifiedTV = findViewById(R.id.tv_main_not_verified);
 
         //CardView
-        checkListCV = findViewById(R.id.cv_main_search_check);
         schoolListCV = findViewById(R.id.cv_main_school_list);
         newCheckCV = findViewById(R.id.cv_main_new_check);
         profileCV = findViewById(R.id.cv_main_profile);

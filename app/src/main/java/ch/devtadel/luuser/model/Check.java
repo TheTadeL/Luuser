@@ -1,6 +1,6 @@
 package ch.devtadel.luuser.model;
 
-import com.google.firebase.firestore.DocumentReference;
+import android.annotation.SuppressLint;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -20,6 +20,7 @@ public class Check {
     private int classStartYear;
 
     public String getDateString(){
+        @SuppressLint("SimpleDateFormat")
         SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         return sdf.format(date);
     }

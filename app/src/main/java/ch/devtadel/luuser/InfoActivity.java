@@ -1,5 +1,6 @@
 package ch.devtadel.luuser;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.ActionBar;
@@ -11,16 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import ch.devtadel.luuser.helper.Animator;
-
 public class InfoActivity extends AppCompatActivity {
     public static final String VERSION_NR = "0.2.0";
 
-    private Animator animator;
-
-    private CardView toWebsiteCV;
-    private Button toBugReportBTN;
-
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +30,7 @@ public class InfoActivity extends AppCompatActivity {
         setupContentViews();
 
         TextView versionTV = findViewById(R.id.tv_version_nr);
+
         versionTV.setText("Luuser v."+VERSION_NR);
     }
 
@@ -51,9 +47,7 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     private void setupContentViews(){
-        animator = new Animator();
-
-        toWebsiteCV = findViewById(R.id.cv_info_to_website);
+        CardView toWebsiteCV = findViewById(R.id.cv_info_to_website);
         toWebsiteCV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +56,7 @@ public class InfoActivity extends AppCompatActivity {
             }
         });
 
-        toBugReportBTN = findViewById(R.id.btn_info_to_bug_report);
+        Button toBugReportBTN = findViewById(R.id.btn_info_to_bug_report);
         toBugReportBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

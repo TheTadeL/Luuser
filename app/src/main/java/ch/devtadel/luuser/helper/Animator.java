@@ -2,7 +2,6 @@ package ch.devtadel.luuser.helper;
 
 import android.animation.ValueAnimator;
 import android.support.v7.widget.CardView;
-import android.widget.Button;
 
 public class Animator {
     private ValueAnimator cardPressAnim;
@@ -23,7 +22,4 @@ public class Animator {
         cardPressAnim.start();
     }
 
-    public ValueAnimator getCardPressAnim() {
-        return cardPressAnim;
-    }
 }
