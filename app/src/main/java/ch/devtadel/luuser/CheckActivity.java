@@ -44,6 +44,7 @@ public class CheckActivity extends AppCompatActivity {
     private TextView checkDateTV;
     private TextView countStudentsTV;
     private TextView countLouseTV;
+    private TextView countLiceTV;
     private TextView checkerTV;
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
@@ -170,6 +171,7 @@ public class CheckActivity extends AppCompatActivity {
 
         countStudentsTV.setText(String.valueOf(check.getStudentCount()));
         countLouseTV.setText(String.valueOf(check.getLouseCount()));
+        countLiceTV.setText(String.valueOf(check.getLiceCount()));
 
         //Checker suchen
         SchoolDao dao = new SchoolDao();
@@ -212,6 +214,7 @@ public class CheckActivity extends AppCompatActivity {
         checkDateTV = findViewById(R.id.tv_check_date);
         countStudentsTV = findViewById(R.id.tv_check_cnt_students);
         countLouseTV = findViewById(R.id.tv_check_cnt_louse);
+        countLiceTV = findViewById(R.id.tv_check_cnt_lice);
         checkerTV = findViewById(R.id.tv_check_name);
         /* === === === === */
     }

@@ -27,6 +27,7 @@ public class SchoolListActivity extends AppCompatActivity {
     FloatingActionButton addSchoolFAB;
     RecyclerView.Adapter mainRecyclerAdapter;
     RecyclerView mainRecyclerView;
+    String canton = UserHelper.DEFAULT_CANTON;
 
     public static List<School> data = new ArrayList<>();
 
@@ -35,7 +36,6 @@ public class SchoolListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_school_list);
 
-        String canton = UserHelper.DEFAULT_CANTON;
         EditText cantonET = findViewById(R.id.et_school_list_canton);
         cantonET.setText(canton);
 
@@ -71,6 +71,13 @@ public class SchoolListActivity extends AppCompatActivity {
             }
         });
 
+        SchoolDao dao = new SchoolDao();
+        dao.loadSchoolList(mainRecyclerAdapter, mainRecyclerView, canton);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
         SchoolDao dao = new SchoolDao();
         dao.loadSchoolList(mainRecyclerAdapter, mainRecyclerView, canton);
     }

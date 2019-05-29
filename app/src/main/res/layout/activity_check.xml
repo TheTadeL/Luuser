@@ -152,18 +152,38 @@
                 app:layout_constraintStart_toStartOf="@+id/tv_check_cnt_students"
                 app:layout_constraintTop_toBottomOf="@+id/tv_check_cnt_students" />
 
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="@string/checked_lice_label"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_check_cnt_lice"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tv_check_cnt_lice" />
+
+            <TextView
+                android:id="@+id/tv_check_cnt_lice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintStart_toStartOf="@+id/tv_check_cnt_students"
+                app:layout_constraintTop_toBottomOf="@+id/tv_check_cnt_louse" />
+
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/constraint_adminpanel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
                 android:background="@drawable/control_panel_gradient"
                 android:elevation="5dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button6">
+                tools:layout_editor_absoluteY="187dp">
 
                 <Button
                     android:id="@+id/button4"
@@ -185,8 +205,8 @@
                     android:id="@+id/btn_adminpanel_delete"
                     android:layout_width="0dp"
                     android:layout_height="32dp"
-                    android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@android:color/transparent"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -201,9 +221,9 @@
                     android:id="@+id/button3"
                     android:layout_width="0dp"
                     android:layout_height="32dp"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginStart="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@android:color/transparent"
                     android:clickable="true"
                     android:foreground="?android:attr/selectableItemBackground"
@@ -229,20 +249,18 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </android.support.constraint.ConstraintLayout>
 
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/button_bg_gradient"
-                android:elevation="5dp"
-                android:text="@string/btn_follow_up_check"
-                android:textColor="@color/common_google_signin_btn_text_dark_default"
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/add_check_comming_soon"
+                android:textSize="24sp"
+                android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView32" />
+                app:layout_constraintStart_toStartOf="@+id/constraint_adminpanel"
+                app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
         </android.support.constraint.ConstraintLayout>
 

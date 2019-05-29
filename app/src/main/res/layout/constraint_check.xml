@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="2dp"
@@ -86,12 +87,31 @@
 
     <TextView
         android:id="@+id/tv_checkitem_count_louse"
-        android:layout_width="wrap_content"
+        android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_students"
         app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_students" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/desc_iv_louse"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_lice"
+        app:layout_constraintStart_toEndOf="@+id/tv_checkitem_count_louse"
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_lice"
+        app:srcCompat="@drawable/nisse" />
+
+    <TextView
+        android:id="@+id/tv_checkitem_count_lice"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_checkitem_count_louse"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/tv_checkitem_count_louse" />
 
     <ImageButton
         android:id="@+id/btn_follow_up_check"

@@ -1,5 +1,6 @@
 package ch.devtadel.luuser;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -40,16 +41,20 @@ public class ContactActivity extends AppCompatActivity {
 
     public void toBeer(final View view){
         animator.animateCardPress((CardView)view);
-
+        startActivity(new Intent(ContactActivity.this, BugReportActivity.class)
+                .putExtra(BugReportActivity.TYPE, BugReportActivity.TYPE_BEER));
     }
 
     public void toBugReport(View view){
         animator.animateCardPress((CardView)view);
+        startActivity(new Intent(ContactActivity.this, BugReportActivity.class)
+                .putExtra(BugReportActivity.TYPE, BugReportActivity.TYPE_BUG));
     }
 
     public void toIdeas(View view){
         animator.animateCardPress((CardView)view);
-
+        startActivity(new Intent(ContactActivity.this, BugReportActivity.class)
+                .putExtra(BugReportActivity.TYPE, BugReportActivity.TYPE_SUGGESTION));
     }
 
     private void setupContentViews(){

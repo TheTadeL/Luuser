@@ -1,0 +1,35 @@
+
+™
+9
+android*http://schemas.android.com/apk/res/androidmenu*
+    A*ù
+ğitem"y
+*http://schemas.android.com/apk/res/androidid@+id/navigation_new_school"(Ğ„2"
+ å¤øid/navigation_new_school"m
+*http://schemas.android.com/apk/res/androidtitle@string/new_school"(áƒ„2
+É¼østring/new_school*
+    -*Ã
+ºitem"m
+*http://schemas.android.com/apk/res/androidid@+id/navigation_test"(Ğ„2
+æ¤øid/navigation_test"C
+*http://schemas.android.com/apk/res/androidtitle	Developer(áƒ„*
+
+    $*ã
+Úitem"o
+*http://schemas.android.com/apk/res/androidid@+id/navigation_test2"
+(Ğ„2
+ç¤øid/navigation_test2"a
+*http://schemas.android.com/apk/res/androidtitle@string/test"
+(áƒ„2
+î¼østring/test
+*
+
+    #*ã
+Úitem"o
+*http://schemas.android.com/apk/res/androidid@+id/navigation_test3"(Ğ„2
+è¤øid/navigation_test3"a
+*http://schemas.android.com/apk/res/androidtitle@string/test"(áƒ„2
+î¼østring/test*
+
+
+#

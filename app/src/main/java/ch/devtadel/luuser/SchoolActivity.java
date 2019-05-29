@@ -207,6 +207,23 @@ public class SchoolActivity extends AppCompatActivity {
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
         }
+
+        //Wenn kein Schulname mitgegeben wurde, umleiten auf die SchoolListActivity.
+        Bundle bundle = getIntent().getExtras();
+        if(bundle!=null) {
+            if (bundle.getBoolean(TO_NEW_CLASS)){
+                toCreateClass = true;
+                startYear = bundle.getInt(SCHOOL_YEAR);
+            }
+            if (bundle.getString(SCHOOL_NAME) != null) {
+                SchoolDao dao = new SchoolDao();
+                dao.getSchoolToPage(bundle.getString(SCHOOL_NAME), this);
+            } else {
+                startActivity(new Intent(SchoolActivity.this, SchoolListActivity.class));
+            }
+        } else {
+            startActivity(new Intent(SchoolActivity.this, SchoolListActivity.class));
+        }
     }
 
     //Actionbar Komponente wird benutzt

@@ -64,6 +64,9 @@ public class SchoolCheckListAdapter extends RecyclerView.Adapter<SchoolCheckList
         TextView cntLouseTV = holder.checkListItem.findViewById(R.id.tv_checkitem_count_louse);
         cntLouseTV.setText(String.valueOf(dataset.get(position).getLouseCount()));
 
+        TextView cntLiceTV = holder.checkListItem.findViewById(R.id.tv_checkitem_count_lice);
+        cntLiceTV.setText(String.valueOf(dataset.get(position).getLiceCount()));
+
         TextView cntStudentsTV = holder.checkListItem.findViewById(R.id.tv_checkitem_count_students);
         cntStudentsTV.setText(String.valueOf(dataset.get(position).getStudentCount()));
 

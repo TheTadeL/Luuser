@@ -167,10 +167,10 @@
                 android:id="@+id/btn_new_check"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
-                android:layout_marginBottom="32dp"
-                android:layout_marginEnd="32dp"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/button_bg_gradient"
                 android:elevation="5dp"
                 android:paddingLeft="10dp"
@@ -179,8 +179,10 @@
                 android:textColor="@color/common_google_signin_btn_text_dark_default"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout8" />
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout8"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/textView35"
@@ -242,24 +244,16 @@
                     android:id="@+id/tv_louse_count_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:labelFor="@+id/et_louse_count"
                     android:text="@string/louse_count_label"
                     android:textAppearance="@style/TextAppearance.AppCompat"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_student_count_label" />
 
                 <!-- Dummy item to prevent EditText from receiving focus -->
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    tools:ignore="UselessLeaf" />
 
                 <EditText
                     android:id="@+id/et_louse_count"
@@ -289,6 +283,48 @@
                     app:layout_constraintEnd_toEndOf="@+id/et_louse_count"
                     app:layout_constraintTop_toTopOf="@+id/et_louse_count"
                     app:srcCompat="@drawable/laus" />
+
+                <ImageView
+                    android:id="@+id/iv_lice"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/desc_iv_lice"
+                    app:layout_constraintBottom_toBottomOf="@+id/et_lice_count"
+                    app:layout_constraintEnd_toEndOf="@+id/et_lice_count"
+                    app:layout_constraintTop_toTopOf="@+id/et_lice_count"
+                    app:srcCompat="@drawable/nisse" />
+
+                <TextView
+                    android:id="@+id/tv_lice_count_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:labelFor="@+id/et_louse_count"
+                    android:text="@string/lice_count_label"
+                    android:textAppearance="@style/TextAppearance.AppCompat"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_louse_count_label" />
+
+                <EditText
+                    android:id="@+id/et_lice_count"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:background="#11FF0000"
+                    android:ems="10"
+                    android:inputType="number"
+                    android:padding="5dp"
+                    android:selectAllOnFocus="true"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_lice_count_label"
+                    app:layout_constraintStart_toEndOf="@+id/tv_louse_count_label"
+                    app:layout_constraintTop_toTopOf="@+id/tv_lice_count_label" />
 
                 <TextView
                     android:id="@+id/tv_student_count_label"

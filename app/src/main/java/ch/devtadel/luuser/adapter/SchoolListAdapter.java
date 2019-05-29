@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import ch.devtadel.luuser.R;
@@ -16,6 +17,7 @@ import ch.devtadel.luuser.SchoolActivity;
 import ch.devtadel.luuser.model.School;
 
 public class SchoolListAdapter extends RecyclerView.Adapter<SchoolListAdapter.ViewHolder>{
+    public static Date lastCheck = null;
     private List<School> dataset;
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -58,7 +60,6 @@ public class SchoolListAdapter extends RecyclerView.Adapter<SchoolListAdapter.Vi
 
         TextView schoolPlaceTV = holder.schoolListItem.findViewById(R.id.tv_place);
         schoolPlaceTV.setText(String.valueOf(dataset.get(position).getPlace()));
-
     }
 
     @Override

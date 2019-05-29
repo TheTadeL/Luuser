@@ -9,7 +9,9 @@ import java.util.List;
 
 public class Check {
     private boolean noLouse;
+    private boolean noLice;
     private int louseCount;
+    private int liceCount;
     private int studentCount;
     private Date date;
     private String className;
@@ -35,11 +37,23 @@ public class Check {
     public void setNoLouse(boolean noLouse) {
         this.noLouse = noLouse;
     }
+    public boolean isNoLice() {
+        return noLice;
+    }
+    public void setNoLice(boolean noLice) {
+        this.noLice = noLice;
+    }
     public int getLouseCount() {
         return louseCount;
     }
     public void setLouseCount(int louseCount) {
         this.louseCount = louseCount;
+    }
+    public int getLiceCount() {
+        return liceCount;
+    }
+    public void setLiceCount(int liceCount) {
+        this.liceCount = liceCount;
     }
     public int getStudentCount() {
         return studentCount;

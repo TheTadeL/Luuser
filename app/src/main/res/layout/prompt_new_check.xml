@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/prompt_new_check"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -131,5 +132,26 @@
         android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="@+id/prompt_new_check_cnt_students"
         app:layout_constraintTop_toTopOf="@+id/textView56" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/students_count_w_lice"
+        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/textView52"
+        app:layout_constraintTop_toBottomOf="@+id/textView56" />
+
+    <TextView
+        android:id="@+id/prompt_new_check_cnt_lice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@+id/prompt_new_check_cnt_students"
+        app:layout_constraintTop_toTopOf="@+id/textView" />
 
 </android.support.constraint.ConstraintLayout>

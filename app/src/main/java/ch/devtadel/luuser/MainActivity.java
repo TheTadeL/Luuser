@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Check ob der User authoriziert ist, um Einträge zu machen.
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser() == null){
+        if (firebaseAuth.getCurrentUser() == null) {
             //Nicht eingeloggt.
             loggedIn = false;
         } else if (!firebaseAuth.getCurrentUser().isEmailVerified()) {
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu){
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Fügt das menu der Actionbar hinzu.
         getMenuInflater().inflate(R.menu.menu_overflow, menu);
         return true;
@@ -76,14 +76,17 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_new_school:
                 startActivity(new Intent(MainActivity.this, AddSchoolActivity.class));
                 return true;
-            case R.id.navigation_test:
-                startActivity(new Intent(MainActivity.this, DeveloperActivity.class));
+            case R.id.bug_report:
+                startActivity(new Intent(MainActivity.this, BugReportActivity.class).putExtra(BugReportActivity.TYPE, BugReportActivity.TYPE_BUG));
                 return true;
-            case R.id.navigation_test2:
+            case R.id.profile:
                 startActivity(new Intent(MainActivity.this, ProfileActivity.class).putExtra(ProfileActivity.ME, true));
                 return true;
-            case R.id.navigation_test3:
-                startActivity(new Intent(MainActivity.this, CalendarActivity.class));
+            case R.id.info:
+                startActivity(new Intent(MainActivity.this, InfoActivity.class));
+                return true;
+            case R.id.signout:
+                UserHelper.signOutDialog(firebaseAuth, this, getIntent());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -91,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @SuppressLint("SetTextI18n")
-    private void setupMenuCards(){
-        if(loggedIn){
+    private void setupMenuCards() {
+        if (loggedIn) {
             newCheckCV.setVisibility(View.VISIBLE);
             schoolListCV.setVisibility(View.VISIBLE);
             logoutCV.setVisibility(View.VISIBLE);
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
             //Profil sichtbar wenn eingeloggt;
             profileCV.setVisibility(View.VISIBLE);
 
-            if(!verified) {
+            if (!verified) {
                 profileCV.setCardBackgroundColor(getResources().getColor(R.color.colorNotVerifiedBG, null));
                 notVerifiedTV.setVisibility(View.VISIBLE);
             } else {
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
             }
             // Die Willkommen Nachricht setzen (" Willkommen zurück, <Vorname> ")
             String prename = " ";
-            if(firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().getDisplayName() != null)
+            if (firebaseAuth.getCurrentUser() != null && firebaseAuth.getCurrentUser().getDisplayName() != null)
                 prename += firebaseAuth.getCurrentUser().getDisplayName().split(" ")[1];
 
             welcomeTV.setText(getResources().getString(R.string.welcome_back) + prename);
@@ -125,50 +128,50 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void newCheck(View view){
-        animator.animateCardPress((CardView)view);
-        if(loggedIn && verified) {
+    public void newCheck(View view) {
+        animator.animateCardPress((CardView) view);
+        if (loggedIn && verified) {
             startActivity(new Intent(MainActivity.this, NewCheckActivity.class));
-        } else if(!loggedIn) {
-            Toast.makeText(getBaseContext(),R.string.pls_login, Toast.LENGTH_LONG).show();
+        } else if (!loggedIn) {
+            Toast.makeText(getBaseContext(), R.string.pls_login, Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getBaseContext(),R.string.pls_verify, Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), R.string.pls_verify, Toast.LENGTH_LONG).show();
         }
     }
 
-    public void schoolList(View view){
-        animator.animateCardPress((CardView)view);
-        if(loggedIn && verified) {
+    public void schoolList(View view) {
+        animator.animateCardPress((CardView) view);
+        if (loggedIn && verified) {
             startActivity(new Intent(MainActivity.this, SchoolListActivity.class));
-        } else if(!loggedIn) {
-            Toast.makeText(getBaseContext(),R.string.pls_login, Toast.LENGTH_LONG).show();
+        } else if (!loggedIn) {
+            Toast.makeText(getBaseContext(), R.string.pls_login, Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(getBaseContext(),R.string.pls_verify, Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), R.string.pls_verify, Toast.LENGTH_LONG).show();
         }
     }
 
-    public void checkList(View view){
-        animator.animateCardPress((CardView)view);
+    public void checkList(View view) {
+        animator.animateCardPress((CardView) view);
         startActivity(new Intent(MainActivity.this, CheckListActivity.class));
     }
 
-    public void signOut(View view){
-        animator.animateCardPress((CardView)view);
+    public void signOut(View view) {
+        animator.animateCardPress((CardView) view);
         UserHelper.signOutDialog(firebaseAuth, this, getIntent());
     }
 
-    public void signIn(View view){
-        animator.animateCardPress((CardView)view);
+    public void signIn(View view) {
+        animator.animateCardPress((CardView) view);
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
     }
 
-    public void toInfo(View view){
-        animator.animateCardPress((CardView)view);
+    public void toInfo(View view) {
+        animator.animateCardPress((CardView) view);
         startActivity(new Intent(MainActivity.this, InfoActivity.class));
     }
 
-    public void toProfile(View view){
-        animator.animateCardPress((CardView)view);
+    public void toProfile(View view) {
+        animator.animateCardPress((CardView) view);
         startActivity(new Intent(MainActivity.this, ProfileActivity.class).putExtra(ProfileActivity.ME, true));
     }
 
@@ -177,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
      * Prozedur um alle Views zu initialisieren.
      * Soll Platz in der OnCreate()-Methode sparen.
      */
-    private void setupContentViews(){
+    private void setupContentViews() {
         animator = new Animator();
 
         //TextView

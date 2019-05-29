@@ -1,0 +1,44 @@
+
+¦
+
+9
+android*http://schemas.android.com/apk/res/androidmenu*
+    A*…
+üitem"y
+*http://schemas.android.com/apk/res/androidid@+id/navigation_new_school"(Ğ„2"
+ å¤øid/navigation_new_school"y
+*http://schemas.android.com/apk/res/androidtitle@string/new_school_title"(áƒ„2!
+Ê¼østring/new_school_title*
+
+    3*ã
+Úitem"]
+*http://schemas.android.com/apk/res/androidid@+id/profile"(Ğ„2
+ş¤ø
+id/profile"s
+*http://schemas.android.com/apk/res/androidtitle@string/profile_label"(áƒ„2
+×¼østring/profile_label*
+
+    	0*ã
+Úitem"c
+*http://schemas.android.com/apk/res/androidid@+id/bug_report"(Ğ„2
+¸€¤øid/bug_report"m
+*http://schemas.android.com/apk/res/androidtitle@string/bug_report"(áƒ„2
+À€¼østring/bug_report*
+
+    -*×
+Îitem"W
+*http://schemas.android.com/apk/res/androidid	@+id/info"(Ğ„2
+Â¤øid/info"m
+*http://schemas.android.com/apk/res/androidtitle@string/info_label"(áƒ„2
+¬¼østring/info_label*
+
+    -*Ù
+Ğitem"]
+*http://schemas.android.com/apk/res/androidid@+id/signout"(Ğ„2
+¶‚¤ø
+id/signout"i
+*http://schemas.android.com/apk/res/androidtitle@string/sign_out"(áƒ„2
+à¼østring/sign_out*
+
+
++

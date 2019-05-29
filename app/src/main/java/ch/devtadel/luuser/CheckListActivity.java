@@ -74,7 +74,7 @@ public class CheckListActivity extends AppCompatActivity {
                 ArrayAdapter<String> valueSpinnerAdapter = new ArrayAdapter<>(getApplicationContext(), R.layout.spinner_item, valueList);
                 valueSpinnerAdapter.setDropDownViewResource(R.layout.spinner_item_dropdown);
                 valueSP.setAdapter(valueSpinnerAdapter);
-
+                mainProgressBar.setVisibility(View.GONE);
                 valueSpinnerPB.setVisibility(View.GONE);
             } else if(intent.getAction().equals(ACTION_STRING_CHECKS_LOADED)){
                 mainRecyclerView.setVisibility(View.VISIBLE);
@@ -159,10 +159,12 @@ public class CheckListActivity extends AppCompatActivity {
     private void setupKeyList(){
         keyList.add("Alle");
         keyList.add("Schule");
-        keyList.add("Klasse");
-        keyList.add("Datum");
         keyList.add("Läuse gefunden");
         keyList.add("keine Läuse");
+        keyList.add("Nissen gefunden");
+        keyList.add("keine Nissen");
+        keyList.add("Nissen oder Läuse");
+        keyList.add("weder Nissen noch Läuse");
     }
 
     private void setupSpinner(){
@@ -177,6 +179,7 @@ public class CheckListActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 Log.d(TAG, "KEY SPINNER item selected!!!!");
+                mainProgressBar.setVisibility(View.VISIBLE);
 
                 SchoolDao dao = new SchoolDao();
                 String key = adapterView.getItemAtPosition(i).toString();
@@ -191,27 +194,13 @@ public class CheckListActivity extends AppCompatActivity {
                         //Valuespinner Daten laden.
                         dao.keySpinnerSchools(getBaseContext());
                         break;
-                    case "Klasse":
-                        valueSpinnerPB.setVisibility(View.VISIBLE);
-                        valueSP.setVisibility(View.VISIBLE);
-
-                        //Valuespinner Daten laden.
-                        dao.keySpinnerClasses(getBaseContext());
-                        break;
-                    case "Datum":
-                        valueSpinnerPB.setVisibility(View.VISIBLE);
-                        valueSP.setVisibility(View.VISIBLE);
-
-                        //Valuespinner Daten laden.
-                        dao.keySpinnerDate(getBaseContext());
-                        break;
                     case "Läuse gefunden":
                         valueSP.setVisibility(View.GONE);
-
+                        dao.getChecksToPage(mainRecyclerAdapter, getBaseContext(), SchoolDao.FS_NO_LOUSE, "false");
                         break;
                     case "keine Läuse":
                         valueSP.setVisibility(View.GONE);
-
+                        dao.getChecksToPage(mainRecyclerAdapter, getBaseContext(), SchoolDao.FS_NO_LOUSE, "true");
                         break;
                     default:
                         dao.getAllChecksToPage(mainRecyclerAdapter, getBaseContext());

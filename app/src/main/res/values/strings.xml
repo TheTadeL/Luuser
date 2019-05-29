@@ -5,13 +5,12 @@
     <string name="new_school_title">Neue Einrichtung hinzufügen</string>
     <string name="place_label">Ort:</string>
     <string name="name_label">Name:</string>
-    <string name="canton_label">Name:</string>
+    <string name="canton_label">Kanton:</string>
     <string name="hint_school_name">z.B: Primarschule Muster</string>
     <string name="hint_place">z.B: Hünibach</string>
     <string name="hint_canton">z.B. Bern</string>
     <string name="btn_save">SPEICHERN</string>
     <!-- /AddSchool -->
-
 
 
     <string name="newClass">Neue Klasse</string>
@@ -220,10 +219,21 @@
     <string name="desc_iv_info">Info Image</string>
     <string name="desc_iv_students">Students Image</string>
     <string name="desc_iv_louse">Louse Image</string>
+    <string name="desc_iv_lice">Lice Image</string>
     <string name="desc_iv_profilepic">Profilepicture</string>
     <string name="desc_ibtn_pick_date">Calendar Image</string>
     <string name="desc_icon_add">Plus Icon</string>
     <string name="desc_image_tadel">TadeL Icon</string>
+    <string name="lice_count_label">Anzahl Schüler mit Nissen:</string>
+    <string name="students_count_w_lice">Schüler mit Nissen:</string>
+    <string name="checked_lice_label">Kinder mit Nissen:</string>
+    <string name="add_check_comming_soon">Nachkontrollen folgen bald</string>
+    <string name="check_cnt">Anzahl Kontrollen:</string>
+    <string name="how_2_describe_error">Bitte beschreiben Sie den Fehler so genau wie möglich, damit dieser schnell gefunden und behoben werden kann.</string>
+    <string name="btn_submit_bug">Fehler melden</string>
+    <string name="btn_submit_suggestion">Vorschlag senden</string>
+    <string name="suggestion_report">Verbesserungsvorschlag</string>
+    <string name="description_suggestion">Bringen Sie ihren Verbesserungsvorschlag an.</string>
     <!-- /CONTENT DESCRIPTIONS -->
 
 </resources>

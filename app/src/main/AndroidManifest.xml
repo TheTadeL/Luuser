@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ch.devtadel.luuser">
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -15,6 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".BugReportActivity"></activity>
         <activity android:name=".SchoolListActivity" />
         <activity android:name=".SchoolActivity" />
         <activity android:name=".AddSchoolActivity" />
@@ -34,7 +34,7 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".CalendarActivity" />
         <activity android:name=".DeveloperActivity" />
-        <activity android:name=".ContactActivity"></activity>
+        <activity android:name=".ContactActivity" />
     </application>
 
 </manifest>

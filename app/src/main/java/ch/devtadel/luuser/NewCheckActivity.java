@@ -60,6 +60,7 @@ public class NewCheckActivity extends AppCompatActivity {
 
     private EditText studentCountET;
     private EditText louseCountET;
+    private EditText liceCountET;
     private EditText startYearET;
 
     private TextView finalStartYearTV;
@@ -203,15 +204,16 @@ public class NewCheckActivity extends AppCompatActivity {
                     check.setClassName(classSP.getSelectedItem().toString());
                     check.setSchoolName(schoolSP.getSelectedItem().toString());
                     check.setLouseCount(Integer.valueOf(louseCountET.getText().toString()));
+                    check.setLiceCount(Integer.valueOf(liceCountET.getText().toString()));
                     check.setStudentCount(Integer.valueOf(studentCountET.getText().toString()));
                     check.setNoLouse(check.getLouseCount() == 0);
+                    check.setNoLice(check.getLiceCount() == 0);
                     check.setClassStartYear(Integer.valueOf(startYearET.getText().toString()));
 
                     newConfirmNewCheckPrompt(check);
                 }
             }
         });
-        //TODO: PROMPT EINGABEN ÜBERPRÜFEN
     }
 
     @Override
@@ -224,6 +226,14 @@ public class NewCheckActivity extends AppCompatActivity {
             intentFilter.addAction(ACTION_STRING_CLASSNAMES_LOADED);
             intentFilter.addCategory(Intent.CATEGORY_DEFAULT);
             registerReceiver(activityReceiver, intentFilter);
+        }
+
+        SchoolDao dao = new SchoolDao();
+        if(DateHelper.validYear(startYearET)) {
+            int startYear = Integer.valueOf(startYearET.getText().toString());
+            loadClassSpinner(dao, startYear);
+        } else {
+            Toast.makeText(getBaseContext(), "Ungültigen Jahrgang gewählt!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -285,6 +295,14 @@ public class NewCheckActivity extends AppCompatActivity {
             louseCountET.setError(null);
         }
 
+        if(TextUtils.isEmpty(liceCountET.getText().toString()) || !TextUtils.isDigitsOnly(liceCountET.getText().toString())){
+            liceCountET.setError("Required.");
+            valid = false;
+        }
+        else{
+            liceCountET.setError(null);
+        }
+
         if(TextUtils.isEmpty(dateTV.getText())){
             dateTV.setError("Required.");
             valid = false;
@@ -321,9 +339,11 @@ public class NewCheckActivity extends AppCompatActivity {
     }
 
     private void loadClassSpinner(SchoolDao dao, int startYear){
-        dao.setupClassSpinner(getApplicationContext(), schoolSP.getSelectedItem().toString(), startYear);
-        classSP.setVisibility(View.INVISIBLE);
-        classPB.setVisibility(View.VISIBLE);
+        if(schoolSP.getSelectedItem() != null) {
+            dao.setupClassSpinner(getApplicationContext(), schoolSP.getSelectedItem().toString(), startYear);
+            classSP.setVisibility(View.INVISIBLE);
+            classPB.setVisibility(View.VISIBLE);
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -349,6 +369,8 @@ public class NewCheckActivity extends AppCompatActivity {
         promptCntStudentsTV.setText(String.valueOf(check.getStudentCount()));
         final TextView promptCntLouseTV = promptView.findViewById(R.id.prompt_new_check_cnt_louse);
         promptCntLouseTV.setText(String.valueOf(check.getLouseCount()));
+        final TextView promptCntLiceTV = promptView.findViewById(R.id.prompt_new_check_cnt_lice);
+        promptCntLiceTV.setText(String.valueOf(check.getLiceCount()));
 
         // Dialognachricht setzen
         alertDialogBuilder
@@ -396,6 +418,7 @@ public class NewCheckActivity extends AppCompatActivity {
         //EditText
         studentCountET = findViewById(R.id.et_student_count);
         louseCountET = findViewById(R.id.et_louse_count);
+        liceCountET = findViewById(R.id.et_lice_count);
         startYearET = findViewById(R.id.et_new_check_starting_year);    //TODO: startYear anhand des Datums setzen.
                                                                         //TODO; finalStartYear anhand von startYearET setzen.
 

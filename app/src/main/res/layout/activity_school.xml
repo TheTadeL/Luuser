@@ -10,11 +10,12 @@
         android:id="@+id/btn_new_check"
         android:layout_width="0dp"
         android:layout_height="36dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/button_bg_gradient"
         android:elevation="5dp"
+        android:text="@string/new_check_button"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -124,12 +125,6 @@
                         app:layout_constraintTop_toTopOf="@+id/et_school_year" />
 
                     <!-- Dummy item to prevent EditText from receiving focus -->
-                    <LinearLayout
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:layout_width="0px"
-                        android:layout_height="0px"
-                        tools:ignore="UselessLeaf" />
 
                     <EditText
                         android:id="@+id/et_school_year"
